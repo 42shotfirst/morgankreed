@@ -19,36 +19,43 @@ export default function Nav() {
           </a>
           <div className="flex gap-6 text-sm">
             <a
-              className="transition-colors hover:text-foreground/80"
+              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
               onClick={() => scrollToSection("about")}
               href="#about"
-              className="cursor-pointer"
             >
               About
             </a>
             <a
-              className="transition-colors hover:text-foreground/80"
+              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
+              onClick={() => scrollToSection("experience")}
+              href="#experience"
+            >
+              Experience
+            </a>
+            <a
+              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
               onClick={() => scrollToSection("projects")}
               href="#projects"
-              className="cursor-pointer"
             >
               Projects
             </a>
             <a
-              className="transition-colors hover:text-foreground/80"
+              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
               onClick={() => scrollToSection("skills")}
               href="#skills"
-              className="cursor-pointer"
             >
               Skills
             </a>
+            <a
+              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
+              onClick={() => scrollToSection("contact")}
+              href="#contact"
+            >
+              Contact
+            </a>
           </div>
         </div>
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <Button variant="ghost" className="px-2">
-            Contact
-          </Button>
-        </div>
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end"></div>
       </nav>
     </header>
   );

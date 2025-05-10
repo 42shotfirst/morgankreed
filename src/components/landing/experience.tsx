@@ -8,12 +8,6 @@ interface Position {
   highlights: string[];
 }
 
-interface SpecialProject {
-  title: string;
-  company: string;
-  highlights: string[];
-}
-
 const recentPositions: Position[] = [
   {
     title: "PreSales Engineering Manager",
@@ -59,100 +53,73 @@ const recentPositions: Position[] = [
 
 const previousPositions: Position[] = [
   {
-    title: "Senior Project Manager",
-    company: "Harmon Solar",
-    period: "January 2019 - September 2019",
+    title: "Agile Coach (Contractor)",
+    company: "TriWest Healthcare",
+    period: "June 2019 - September 2019",
     highlights: [
-      "Led digital transformation initiatives",
-      "Implemented Salesforce platform",
-      "Improved operational efficiency by 35%",
+      "Led Agile Warehouse transformation process",
+      "Reduced outages and soft costs by 95%",
+      "Provided real-time Business Intelligence dashboards",
     ],
   },
   {
-    title: "Technology Program Manager",
-    company: "Vanguard",
-    period: "March 2018 - January 2019",
+    title: "Agile Coach (Contractor)",
+    company: "Axway",
+    period: "December 2018 - June 2019",
     highlights: [
-      "Managed $10M+ technology programs",
-      "Led cloud migration initiatives",
-      "Reduced system downtime by 40%",
+      "Led cross-functional scrum teams",
+      "Coordinated work between product owners and program managers",
+      "Provided direction to internal scrum community",
     ],
   },
   {
-    title: "IT Project Manager",
+    title: "Senior Manager (Contractor)",
+    company: "AAA",
+    period: "October 2017 - December 2018",
+    highlights: [
+      "Led Scrum cross-functional development teams",
+      "Increased monitoring/testing/deployment by 70%",
+      "Improved business satisfaction scores by 10-15%",
+    ],
+  },
+  {
+    title: "Senior Project Manager (Contractor)",
+    company: "McKesson",
+    period: "July 2017 - October 2017",
+    highlights: [
+      "Led Salesforce transformation project",
+      "Managed ETL utilizing Informatica ICRT",
+      "Handled project planning and resource management",
+    ],
+  },
+  {
+    title: "PMO Head/Product Manager (Contractor)",
+    company: "Pearson",
+    period: "January 2016 - July 2017",
+    highlights: [
+      "Led initiative replacing 42 legacy systems",
+      "Scaled up PMO staff by 30%",
+      "Achieved overall savings of 15% on resources",
+    ],
+  },
+  {
+    title: "Scrum Master, Mobile Applications (Contractor)",
     company: "American Express",
-    period: "June 2017 - March 2018",
+    period: "October 2013 - September 2015",
     highlights: [
-      "Delivered enterprise-scale projects",
-      "Implemented security protocols",
-      "Optimized IT infrastructure",
+      "Led mobile development and QA team",
+      "Coordinated two-week Agile Sprint cycles",
+      "Managed project funding and executive communication",
     ],
   },
   {
-    title: "Technical Project Lead",
-    company: "Wells Fargo",
-    period: "January 2016 - June 2017",
+    title: "Senior Software Engineer/Project Manager",
+    company: "Limelight Networks",
+    period: "September 2012 - September 2013",
     highlights: [
-      "Led development team of 15",
-      "Modernized legacy systems",
-      "Improved deployment processes",
-    ],
-  },
-];
-
-const specialProjects: SpecialProject[] = [
-  {
-    title: "CIO",
-    company: "Birdiescope",
-    highlights: [
-      "Led digital transformation initiatives",
-      "Implemented cloud-first strategy",
-      "Established IT governance framework",
-    ],
-  },
-  {
-    title: "E-Commerce Consultant",
-    company: "Private Client",
-    highlights: [
-      "Optimized online sales platform",
-      "Integrated payment systems",
-      "Improved customer experience",
-    ],
-  },
-  {
-    title: "AI Instructor",
-    company: "Learn Good Things",
-    highlights: [
-      "Developed AI curriculum",
-      "Trained professionals in AI implementation",
-      "Created hands-on workshops",
-    ],
-  },
-  {
-    title: "Salesforce Architect",
-    company: "Harmon Solar",
-    highlights: [
-      "Designed custom Salesforce solutions",
-      "Integrated third-party systems",
-      "Optimized business processes",
-    ],
-  },
-  {
-    title: "Web Software Architect",
-    company: "Universal Liaison",
-    highlights: [
-      "Led web application development",
-      "Implemented microservices architecture",
-      "Improved system performance",
-    ],
-  },
-  {
-    title: "SOC and Security Auditor",
-    company: "Private Client",
-    highlights: [
-      "Conducted security assessments",
-      "Implemented security controls",
-      "Provided compliance guidance",
+      "Led migration to Salesforce for customer support",
+      "Resolved bugs in in-house Content Management System",
+      "Provided technical troubleshooting",
     ],
   },
 ];
@@ -241,10 +208,10 @@ export default function Experience() {
               key={position.title}
               front={
                 <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 hover:shadow-lg transition-all">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  <h3 className="text-lg font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent break-words hyphens-auto">
                     {position.title}
                   </h3>
-                  <p className="text-lg text-muted-foreground">
+                  <p className="text-base text-muted-foreground">
                     {position.company}
                   </p>
                   <p className="text-sm text-muted-foreground/80">
@@ -256,39 +223,6 @@ export default function Experience() {
                 <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10">
                   <ul className="list-disc list-inside space-y-2 text-sm">
                     {position.highlights.map((highlight, index) => (
-                      <li key={index} className="text-muted-foreground">
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              }
-            />
-          ))}
-        </div>
-
-        {/* Special Projects */}
-        <h3 className="text-3xl font-bold tracking-tight mb-8 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-          Special Projects
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {specialProjects.map((project) => (
-            <FlipCard
-              key={project.title}
-              front={
-                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 hover:shadow-lg transition-all">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                    {project.title}
-                  </h3>
-                  <p className="text-lg text-muted-foreground">
-                    {project.company}
-                  </p>
-                </Card>
-              }
-              back={
-                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10">
-                  <ul className="list-disc list-inside space-y-2 text-sm">
-                    {project.highlights.map((highlight, index) => (
                       <li key={index} className="text-muted-foreground">
                         {highlight}
                       </li>

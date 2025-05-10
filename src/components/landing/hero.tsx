@@ -1,44 +1,43 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 export default function Hero() {
   return (
-    <div className="relative flex min-h-[85vh] flex-col items-center justify-center bg-gradient-to-b from-background to-background/95 px-4 overflow-hidden">
-      {/* Background decorative elements */}
+    <div className="relative flex min-h-screen flex-col items-center justify-center px-4 overflow-hidden">
+      {/* Background image */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 transform">
-          <div className="h-[50rem] w-[50rem] rounded-full bg-primary/5 blur-3xl" />
-        </div>
-        <div className="absolute -bottom-1/2 right-1/2 translate-x-1/2 transform">
-          <div className="h-[50rem] w-[50rem] rounded-full bg-primary/5 blur-3xl" />
-        </div>
+        <div className="absolute inset-0 bg-black/25 z-10"></div>
+        <img
+          src="/images/nordwood-themes-kRNZiGKtz48-unsplash.jpg"
+          alt="Technology Leadership"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
       </div>
 
       {/* Content */}
-      <div className="relative w-full max-w-[85rem] text-center space-y-8">
-        <div className="space-y-4">
-          <h1 className="text-5xl font-bold tracking-tight sm:text-7xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            Digital Transformation Leader
+      <div className="relative w-full max-w-[85rem] text-center space-y-8 z-20">
+        <div className="space-y-6">
+          <h1 className="text-5xl font-bold tracking-tight sm:text-7xl text-[#00a2ff]">
+            Technology Leadership That Scales With Your Business
           </h1>
-          <div className="flex justify-center gap-x-3 text-lg sm:text-xl font-semibold text-muted-foreground">
-            <span>Strategy Expert</span>
-            <span className="text-primary">|</span>
-            <span>IT Operations</span>
-            <span className="text-primary">|</span>
-            <span>Trusted Advisor</span>
-          </div>
+          <h2 className="text-3xl sm:text-4xl font-semibold">
+            <span className="text-[#0080ff]">Fractional CIO</span> |{" "}
+            <span className="text-[#0047ff]">AI Implementation Expert</span> |{" "}
+            <span className="text-[#00a2ff]">Technology Strategist</span>
+          </h2>
         </div>
 
-        <p className="text-lg sm:text-xl leading-8 text-muted-foreground max-w-3xl mx-auto">
-          Driving innovative solutions for cloud digital transformations,
-          implementing best practices for applications, cloud platforms, and
-          cyber security.
+        <p className="text-lg sm:text-xl leading-8 text-[#0047ff] max-w-3xl mx-auto">
+          Empowering small businesses to leverage enterprise-grade technology
+          solutions through strategic guidance, custom applications, and
+          practical AI implementation. Translating complex tech into competitive
+          advantage without the enterprise price tag.
         </p>
 
-        <div className="mt-10 flex items-center justify-center gap-x-6">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
           <Button
             size="lg"
-            className="text-lg px-8 py-6"
+            className="text-lg px-8 py-6 w-full sm:w-auto bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90"
             onClick={() =>
               document
                 .getElementById("projects")
@@ -50,7 +49,7 @@ export default function Hero() {
           <Button
             size="lg"
             variant="outline"
-            className="text-lg px-8 py-6"
+            className="text-lg px-8 py-6 w-full sm:w-auto border-primary/30 hover:border-primary/60"
             onClick={() =>
               document
                 .getElementById("contact")
@@ -60,6 +59,11 @@ export default function Hero() {
             Contact Me
           </Button>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <ChevronDown className="h-8 w-8 text-primary/60" />
       </div>
     </div>
   );
