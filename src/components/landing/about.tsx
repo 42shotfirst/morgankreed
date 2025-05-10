@@ -133,9 +133,9 @@ export default function About() {
               <div className="flex justify-center">
                 <Avatar className="h-40 w-40 ring-4 ring-primary/20">
                   <AvatarImage
-                    src="/headshot.jpg"
+                    src="/images/MR Headshot 2022.PNG"
                     alt="Morgan K. Reed"
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                   <AvatarFallback>MR</AvatarFallback>
                 </Avatar>

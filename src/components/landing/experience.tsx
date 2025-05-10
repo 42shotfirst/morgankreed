@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 
 interface Position {
   title: string;
+  subtitle?: string;
   company: string;
   period: string;
   highlights: string[];
@@ -20,7 +21,8 @@ const recentPositions: Position[] = [
     ],
   },
   {
-    title: "Director of Technology",
+    title: "Chief Technology Officer",
+    subtitle: "(Formerly Director of Technology)",
     company: "Foundations Investment Advisors",
     period: "November 2020 - March 2023",
     highlights: [
@@ -174,6 +176,11 @@ export default function Experience() {
                 <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 hover:shadow-lg transition-all">
                   <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                     {position.title}
+                    {position.subtitle && (
+                      <span className="text-xs font-light block">
+                        {position.subtitle}
+                      </span>
+                    )}
                   </h3>
                   <p className="text-lg text-muted-foreground">
                     {position.company}
@@ -210,6 +217,11 @@ export default function Experience() {
                 <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 hover:shadow-lg transition-all">
                   <h3 className="text-lg font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent break-words hyphens-auto">
                     {position.title}
+                    {position.subtitle && (
+                      <span className="text-xs font-light block">
+                        {position.subtitle}
+                      </span>
+                    )}
                   </h3>
                   <p className="text-base text-muted-foreground">
                     {position.company}

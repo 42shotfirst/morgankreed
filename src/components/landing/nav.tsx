@@ -19,35 +19,35 @@ export default function Nav() {
           </a>
           <div className="flex gap-6 text-sm">
             <a
-              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
+              className="transition-colors hover:text-background hover:bg-primary px-3 py-1.5 rounded-md cursor-pointer"
               onClick={() => scrollToSection("about")}
               href="#about"
             >
               About
             </a>
             <a
-              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
-              onClick={() => scrollToSection("experience")}
-              href="#experience"
-            >
-              Experience
-            </a>
-            <a
-              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
+              className="transition-colors hover:text-background hover:bg-primary px-3 py-1.5 rounded-md cursor-pointer"
               onClick={() => scrollToSection("projects")}
               href="#projects"
             >
               Projects
             </a>
             <a
-              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
+              className="transition-colors hover:text-background hover:bg-primary px-3 py-1.5 rounded-md cursor-pointer"
+              onClick={() => scrollToSection("experience")}
+              href="#experience"
+            >
+              Experience
+            </a>
+            <a
+              className="transition-colors hover:text-background hover:bg-primary px-3 py-1.5 rounded-md cursor-pointer"
               onClick={() => scrollToSection("skills")}
               href="#skills"
             >
               Skills
             </a>
             <a
-              className="transition-colors hover:text-primary hover:bg-secondary/20 px-3 py-1 rounded-md cursor-pointer"
+              className="transition-colors hover:text-background hover:bg-primary px-3 py-1.5 rounded-md cursor-pointer"
               onClick={() => scrollToSection("contact")}
               href="#contact"
             >

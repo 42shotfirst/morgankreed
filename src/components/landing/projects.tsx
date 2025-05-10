@@ -136,13 +136,6 @@ export default function Projects() {
               className="overflow-hidden bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 transform transition-all hover:scale-[1.02] hover:shadow-xl shadow-lg shadow-primary/5 flex flex-col"
             >
               <CardHeader>
-                <div className="flex justify-center mb-4 h-16">
-                  <img
-                    src={project.logo}
-                    alt={`${project.title} logo`}
-                    className="h-full object-contain"
-                  />
-                </div>
                 <CardTitle className="text-2xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                   {project.title}
                 </CardTitle>
