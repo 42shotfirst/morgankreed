@@ -261,39 +261,6 @@ export default function About() {
             </div>
           </div>
         </div>
-
-        {/* Special Projects */}
-        <h3 className="text-3xl font-bold tracking-tight mt-16 mb-8 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-          Special Projects
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {specialProjects.map((project) => (
-            <FlipCard
-              key={project.title}
-              front={
-                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 hover:shadow-lg transition-all">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                    {project.title}
-                  </h3>
-                  <p className="text-lg text-muted-foreground">
-                    {project.company}
-                  </p>
-                </Card>
-              }
-              back={
-                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10">
-                  <ul className="list-disc list-inside space-y-2 text-sm">
-                    {project.highlights.map((highlight, index) => (
-                      <li key={index} className="text-muted-foreground">
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              }
-            />
-          ))}
-        </div>
       </div>
     </section>
   );

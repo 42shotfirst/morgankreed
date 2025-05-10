@@ -108,7 +108,12 @@ export default function Contact() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-6">
+                <form
+                  className="space-y-6"
+                  action="mailto:morgan@morgankreed.com"
+                  method="post"
+                  encType="text/plain"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Input

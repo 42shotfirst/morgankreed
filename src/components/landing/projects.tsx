@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
 const newProjects = [
   {
@@ -32,6 +33,99 @@ const newProjects = [
       "https://images.unsplash.com/photo-1496262967815-132206202600?w=800&q=80",
   },
 ];
+
+interface SpecialProject {
+  title: string;
+  company: string;
+  highlights: string[];
+}
+
+const specialProjects: SpecialProject[] = [
+  {
+    title: "CIO",
+    company: "Birdiescope",
+    highlights: [
+      "Led digital transformation initiatives",
+      "Implemented cloud-first strategy",
+      "Established IT governance framework",
+    ],
+  },
+  {
+    title: "E-Commerce Consultant",
+    company: "Private Client",
+    highlights: [
+      "Optimized online sales platform",
+      "Integrated payment systems",
+      "Improved customer experience",
+    ],
+  },
+  {
+    title: "AI Instructor",
+    company: "Learn Good Things",
+    highlights: [
+      "Developed AI curriculum",
+      "Trained professionals in AI implementation",
+      "Created hands-on workshops",
+    ],
+  },
+  {
+    title: "Salesforce Architect",
+    company: "Harmon Solar",
+    highlights: [
+      "Designed custom Salesforce solutions",
+      "Integrated third-party systems",
+      "Optimized business processes",
+    ],
+  },
+  {
+    title: "Web Software Architect",
+    company: "Universal Liaison",
+    highlights: [
+      "Led web application development",
+      "Implemented microservices architecture",
+      "Improved system performance",
+    ],
+  },
+  {
+    title: "SOC and Security Auditor",
+    company: "Private Client",
+    highlights: [
+      "Conducted security assessments",
+      "Implemented security controls",
+      "Provided compliance guidance",
+    ],
+  },
+];
+
+function FlipCard({
+  front,
+  back,
+}: {
+  front: React.ReactNode;
+  back: React.ReactNode;
+}) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <div
+      className="relative w-full h-[200px] cursor-pointer"
+      onClick={() => setIsFlipped(!isFlipped)}
+      style={{ perspective: "1000px" }}
+    >
+      <div
+        className={`absolute w-full h-full transition-all duration-500 ${
+          isFlipped ? "[transform:rotateY(180deg)]" : ""
+        }`}
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        <div className="absolute w-full h-full backface-hidden">{front}</div>
+        <div className="absolute w-full h-full backface-hidden [transform:rotateY(180deg)]">
+          {back}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const existingProjects = [
   {
@@ -129,7 +223,7 @@ export default function Projects() {
         </div>
 
         {/* Existing Projects Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {existingProjects.map((project) => (
             <Card
               key={project.title}
@@ -157,6 +251,39 @@ export default function Projects() {
                 </div>
               </CardContent>
             </Card>
+          ))}
+        </div>
+
+        {/* Special Projects */}
+        <h3 className="text-3xl font-bold tracking-tight mt-16 mb-8 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+          Special Projects
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {specialProjects.map((project) => (
+            <FlipCard
+              key={project.title}
+              front={
+                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 hover:shadow-lg transition-all">
+                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    {project.title}
+                  </h3>
+                  <p className="text-lg text-muted-foreground">
+                    {project.company}
+                  </p>
+                </Card>
+              }
+              back={
+                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10">
+                  <ul className="list-disc list-inside space-y-2 text-sm">
+                    {project.highlights.map((highlight, index) => (
+                      <li key={index} className="text-muted-foreground">
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              }
+            />
           ))}
         </div>
       </div>
