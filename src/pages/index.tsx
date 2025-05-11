@@ -10,24 +10,27 @@ import { motion } from "framer-motion";
 
 const IndexPage = () => {
   useEffect(() => {
-    // Handle smooth scrolling for anchor links
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.tagName === "A" &&
-        target.getAttribute("href")?.startsWith("#")
-      ) {
-        e.preventDefault();
-        const id = target.getAttribute("href")?.substring(1);
-        const element = document.getElementById(id || "");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+    // Check if we're in the browser environment before accessing document
+    if (typeof window !== "undefined") {
+      // Handle smooth scrolling for anchor links
+      const handleAnchorClick = (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (
+          target.tagName === "A" &&
+          target.getAttribute("href")?.startsWith("#")
+        ) {
+          e.preventDefault();
+          const id = target.getAttribute("href")?.substring(1);
+          const element = document.getElementById(id || "");
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
         }
-      }
-    };
+      };
 
-    document.addEventListener("click", handleAnchorClick);
-    return () => document.removeEventListener("click", handleAnchorClick);
+      document.addEventListener("click", handleAnchorClick);
+      return () => document.removeEventListener("click", handleAnchorClick);
+    }
   }, []);
   return (
     <div className="min-h-screen bg-white">
