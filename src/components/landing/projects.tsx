@@ -16,18 +16,21 @@ const newProjects = [
     tech: ["AI", "Web Scraping", "Data Extraction", "No-Code"],
     image:
       "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
+    link: "https://www.aiscraiper.com",
   },
   {
-    title: "Fuzzy Match",
+    title: "Fuzzy Matcher",
     description:
       "Have imperfect data? No problem! Plug different data feeds from multiple sources and train our interface to match and merge the correct data, ignoring mistakes. Works with data files, API feeds, and Databases alike.",
     tech: ["Data Matching", "Machine Learning", "Data Integration", "ETL"],
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    link: "https://www.fuzzymatcher.com",
   },
   {
-    title: "Coming Soon",
-    description: "Info coming soon",
+    title: "Neurocalendar",
+    description:
+      "A calendar for the neurodivergent created to help them organize their life in ways that ease distraction, anxiety, and promote overall mental and emotional wellness",
     tech: [],
     image:
       "https://images.unsplash.com/photo-1496262967815-132206202600?w=800&q=80",
@@ -188,7 +191,8 @@ export default function Projects() {
           {newProjects.map((project) => (
             <Card
               key={project.title}
-              className="overflow-hidden bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 transform transition-all hover:scale-[1.02] hover:shadow-xl shadow-lg shadow-primary/5 flex flex-col"
+              className="overflow-hidden bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 transform transition-all hover:scale-[1.02] hover:shadow-xl shadow-lg shadow-primary/5 flex flex-col cursor-pointer"
+              onClick={() => project.link && window.open(project.link, "_blank")}
             >
               <div className="aspect-video relative overflow-hidden">
                 <img

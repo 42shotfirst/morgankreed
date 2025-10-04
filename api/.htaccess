@@ -1,0 +1,10 @@
+# Allow PHP execution
+<Files "*.php">
+    Order allow,deny
+    Allow from all
+</Files>
+
+# Enable CORS for API endpoints
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "POST, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type"

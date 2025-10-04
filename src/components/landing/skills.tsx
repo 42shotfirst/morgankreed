@@ -16,12 +16,12 @@ const skillCategories = [
   {
     title: "Technical Expertise",
     skills: [
+      "AI",
+      "Mobile and Web App Development",
       "Salesforce SME",
       "Cloud Transformation",
       "Software Architecture",
-      "Mobile Apps",
-      "Web Apps",
-      "Test Automation",
+      "Advanced Automation",
     ],
   },
   {
