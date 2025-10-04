@@ -10,6 +10,13 @@ export interface EmailData {
 // Option 1: PHP endpoint handler (recommended for GCP VM)
 export const sendEmailViaPHP = async (data: EmailData) => {
   try {
+    // In development, use the client-side fallback since PHP isn't available
+    if (import.meta.env.DEV) {
+      console.log('Development mode: Using client-side email fallback');
+      sendEmailViaClient(data);
+      return { success: true, method: 'client_dev' };
+    }
+
     const response = await fetch('/api/send-email.php', {
       method: 'POST',
       headers: {
@@ -124,16 +131,7 @@ export const sendContactMessage = async (data: EmailData) => {
   } catch (phpError) {
     console.error('PHP email method failed:', phpError);
     
-    // Fallback to EmailJS if configured
-    try {
-      if (import.meta.env.VITE_EMAILJS_SERVICE_ID) {
-        return await sendEmailViaEmailJS(data);
-      }
-    } catch (emailjsError) {
-      console.error('EmailJS fallback failed:', emailjsError);
-    }
-    
-    // Final fallback to client-side email
+    // Fallback to client-side email (no EmailJS to avoid errors)
     try {
       sendEmailViaClient(data);
       return { success: true, method: 'client_fallback' };
