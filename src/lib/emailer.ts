@@ -58,41 +58,7 @@ This message was sent from your portfolio contact form.
   window.open(mailtoLink, '_blank');
 };
 
-// Option 2: EmailJS integration (requires environment variables)
-export const sendEmailViaEmailJS = async (data: EmailData) => {
-  try {
-    // Dynamically import EmailJS to avoid issues if not configured
-    const emailjs = await import('@emailjs/browser');
-    
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-    
-    if (!serviceId || !templateId || !publicKey) {
-      throw new Error('EmailJS environment variables not configured');
-    }
-    
-    // Initialize EmailJS if not already done
-    emailjs.init(publicKey);
-    
-    const result = await emailjs.send(
-      serviceId,
-      templateId,
-      {
-        from_name: data.name,
-        reply_to: data.email,
-        subject: data.subject || 'Contact Form Message',
-        message: data.message,
-      },
-      publicKey
-    );
-    
-    return { success: true, result };
-  } catch (error) {
-    console.error('EmailJS error:', error);
-    throw new Error('Failed to send email via EmailJS');
-  }
-};
+// EmailJS function removed to prevent errors
 
 // Option 3: Supabase integration (if you want to store messages in database)
 export const saveMessageToSupabase = async (data: EmailData) => {

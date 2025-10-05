@@ -18,13 +18,8 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
-import emailjs from "@emailjs/browser";
-
+import { sendContactMessage } from "@/lib/emailer";
 export default function Contact() {
-  // Initialize EmailJS once when component mounts
-  React.useEffect(() => {
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
-  }, []);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -39,22 +34,12 @@ export default function Contact() {
     setError(null);
 
     try {
-      // Replace these with your actual EmailJS service, template and user IDs
-      // EmailJS is already initialized in useEffect
-
-      const result = await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: name,
-          reply_to: email,
-          subject: subject,
-          message: message,
-        },
-        import.meta.env.VITE_EMAILJS_PRIVATE_KEY,
-      );
-
-      console.log("Email sent successfully:", result.text);
+      await sendContactMessage({
+        name,
+        email,
+        subject,
+        message,
+      });
 
       // Reset form
       setName("");
