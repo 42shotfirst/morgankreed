@@ -1,8 +1,9 @@
 # Server Setup for morgankreed.com
 
 ## Current Issues
-- **405 Method Not Allowed**: Server not configured to handle POST requests to PHP files
+- **405 Method Not Allowed**: Nginx not configured to handle POST requests to PHP files
 - **HTML response instead of JSON**: PHP files not executing properly
+- **Server**: Nginx/1.22.1 (confirmed from error log)
 
 ## Quick Fixes
 
@@ -38,16 +39,28 @@ RewriteEngine On
 </Limit>
 ```
 
-#### Nginx Configuration
-If using Nginx, add to your server block:
-```nginx
-location ~ \.php$ {
-    fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    include fastcgi_params;
-}
+#### Nginx Configuration (YOUR SERVER)
+Your server is running Nginx/1.22.1. Use the complete configuration in `nginx-config.conf`:
+
+```bash
+# Copy the nginx configuration
+sudo cp nginx-config.conf /etc/nginx/sites-available/morgankreed.com
+
+# Enable the site
+sudo ln -s /etc/nginx/sites-available/morgankreed.com /etc/nginx/sites-enabled/
+
+# Test configuration
+sudo nginx -t
+
+# Reload Nginx
+sudo systemctl reload nginx
 ```
+
+**Key Nginx Settings:**
+- Enable CORS for `/api/` endpoints
+- Process PHP files with FastCGI
+- Handle POST requests to PHP files
+- Proper fallback routing
 
 ### 4. Check File Permissions
 ```bash
