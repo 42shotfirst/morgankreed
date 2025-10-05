@@ -25,6 +25,14 @@ export const sendEmailViaPHP = async (data: EmailData) => {
       body: JSON.stringify(data),
     });
 
+    // Check if response is HTML (server error) instead of JSON
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('Server returned HTML instead of JSON:', text.substring(0, 200));
+      throw new Error('Server configuration error - PHP not executing properly');
+    }
+
     const result = await response.json();
 
     if (!response.ok) {

@@ -1,4 +1,5 @@
 <?php
+// Set proper headers first
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -13,7 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
+    echo json_encode(['error' => 'Method not allowed', 'method' => $_SERVER['REQUEST_METHOD']]);
+    exit();
+}
+
+// Check if PHP mail function is available
+if (!function_exists('mail')) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Mail function not available on this server']);
     exit();
 }
 
