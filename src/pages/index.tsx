@@ -1,29 +1,28 @@
 import React, { useEffect } from "react";
 import Header from "@/components/landing/Header";
-import ServiceSection from "@/components/landing/ServiceSection";
-import PortfolioSection from "@/components/landing/PortfolioSection";
-import SpeakingSection from "@/components/landing/SpeakingSection";
-import CertificationsSection from "@/components/landing/CertificationsSection";
-import ContactSection from "@/components/landing/ContactSection";
+import HeroSection from "@/components/landing/HeroSection";
 import About from "@/components/landing/about";
-import { motion } from "framer-motion";
+import ExperienceTimeline from "@/components/landing/ExperienceTimeline";
+import ResultsSection from "@/components/landing/ResultsSection";
+import ExpertiseSection from "@/components/landing/ExpertiseSection";
+import Testimonials from "@/components/landing/testimonials";
+import ContactSection from "@/components/landing/ContactSection";
+import PageLoader from "@/components/landing/PageLoader";
+import { smoothScrollTo } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const IndexPage = () => {
   useEffect(() => {
-    // Check if we're in the browser environment before accessing document
+    // Handle smooth scrolling for anchor links
     if (typeof window !== "undefined") {
-      // Handle smooth scrolling for anchor links
       const handleAnchorClick = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
-        if (
-          target.tagName === "A" &&
-          target.getAttribute("href")?.startsWith("#")
-        ) {
+        const anchor = target.closest("a");
+        if (anchor && anchor.getAttribute("href")?.startsWith("#")) {
           e.preventDefault();
-          const id = target.getAttribute("href")?.substring(1);
-          const element = document.getElementById(id || "");
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
+          const id = anchor.getAttribute("href")?.substring(1);
+          if (id) {
+            smoothScrollTo(id, 80);
           }
         }
       };
@@ -32,69 +31,81 @@ const IndexPage = () => {
       return () => document.removeEventListener("click", handleAnchorClick);
     }
   }, []);
+
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
+    <>
+      {/* Page Loader */}
+      <PageLoader minDisplayTime={500} />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Morgan K Reed
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Technology Leadership Consultant specializing in AI
-              implementation, cybersecurity, and digital transformation
-            </p>
-            <div className="flex justify-center gap-4">
-              <motion.img
-                src="/headshot.jpg"
-                alt="Morgan K Reed"
-                className="rounded-full w-48 h-48 object-cover shadow-lg"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                loading="eager"
-              />
+      <div className="min-h-screen bg-background">
+        <Header />
+
+        {/* Hero Section */}
+        <HeroSection />
+
+        {/* About Section */}
+        <About />
+
+        {/* Experience Timeline */}
+        <ExperienceTimeline />
+
+        {/* Results/Achievements Section */}
+        <ResultsSection />
+
+        {/* Expertise Section */}
+        <ExpertiseSection />
+
+        {/* Testimonials Section */}
+        <Testimonials />
+
+        {/* Contact Section */}
+        <ContactSection />
+
+        {/* Footer */}
+        <footer className="bg-secondary/50 border-t border-border py-8">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-muted-foreground text-sm">
+                &copy; {new Date().getFullYear()} Morgan K Reed. All rights reserved.
+              </p>
+              <div className="flex items-center gap-6">
+                <a
+                  href="#home"
+                  className={cn(
+                    "text-sm link-underline",
+                    "text-muted-foreground hover:text-primary transition-colors"
+                  )}
+                >
+                  Back to Top
+                </a>
+                <a
+                  href="https://linkedin.com/in/morgankreed"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "text-sm link-underline",
+                    "text-muted-foreground hover:text-primary transition-colors"
+                  )}
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href="https://github.com/morgankreed"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "text-sm link-underline",
+                    "text-muted-foreground hover:text-primary transition-colors"
+                  )}
+                >
+                  GitHub
+                </a>
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <About />
-
-      {/* Services Section */}
-      <ServiceSection />
-
-      {/* Portfolio Section */}
-      <PortfolioSection />
-
-      {/* Speaking Section */}
-      <SpeakingSection />
-
-      {/* Certifications Section */}
-      <CertificationsSection />
-
-      {/* Contact Section */}
-      <ContactSection />
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p>
-            &copy; {new Date().getFullYear()} Morgan K Reed. All rights
-            reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 };
 
