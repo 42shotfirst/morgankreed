@@ -36,24 +36,15 @@ export function Logo({
     );
   }
 
-  // Full lockup — render inline so text aligns with the glyph baseline.
+  // Full lockup — the brand SVG (CT⏻ / ON DEMAND). Aspect ratio ~2.67:1,
+  // so callers should set a height (e.g. `h-12 w-auto`) and the width follows.
   return (
-    <span
-      aria-label="CTO on Demand"
-      className={cn("inline-flex flex-col items-center leading-none", className)}
-    >
-      <span className="inline-flex items-center font-bold tracking-tight text-[1.5em]">
-        <span>CT</span>
-        <Power
-          aria-hidden="true"
-          strokeWidth={strokeWidth}
-          className="h-[1em] w-[1em] mx-[0.05em]"
-        />
-      </span>
-      <span className="mt-1 text-[0.45em] tracking-[0.35em] uppercase text-muted-foreground">
-        On Demand
-      </span>
-    </span>
+    <img
+      src="/logo.svg"
+      alt="CTO on Demand"
+      className={cn("select-none", className)}
+      draggable={false}
+    />
   );
 }
 
