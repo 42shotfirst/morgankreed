@@ -15,6 +15,10 @@ import {
   Cpu,
   LineChart,
   Layers,
+  Target,
+  BarChart3,
+  Boxes,
+  KanbanSquare,
 } from "lucide-react";
 
 interface Expertise {
@@ -83,6 +87,26 @@ const expertiseAreas: Expertise[] = [
     icon: <Cpu className="w-6 h-6" />,
     title: "API Development",
     category: "Integration",
+  },
+  {
+    icon: <Target className="w-6 h-6" />,
+    title: "Product Ownership",
+    category: "Product",
+  },
+  {
+    icon: <BarChart3 className="w-6 h-6" />,
+    title: "Business Analysis",
+    category: "Analysis",
+  },
+  {
+    icon: <Boxes className="w-6 h-6" />,
+    title: "Software Architecture",
+    category: "Architecture",
+  },
+  {
+    icon: <KanbanSquare className="w-6 h-6" />,
+    title: "Project Management",
+    category: "Delivery",
   },
 ];
 

@@ -15,45 +15,55 @@ interface Experience {
   logo?: string;
   title: string;
   dateRange: string;
-  description: string;
+  description?: string;
   linkedInUrl?: string;
 }
 
 const experiences: Experience[] = [
   {
+    company: "Transbridge Advisors",
+    title: "CTO",
+    dateRange: "2026",
+  },
+  {
     company: "Western Alliance Bank",
-    title: "VP, Software Development Engineer",
-    dateRange: "2022 - Present",
-    description:
-      "Leading digital transformation initiatives and AI implementation for enterprise banking solutions. Driving innovation in secure, compliant financial technology.",
+    title: "AI Software Architect",
+    dateRange: "2025",
+  },
+  {
+    company: "Fruth Group",
+    title: "Cybersecurity Manager and Fractional CTO",
+    dateRange: "2023 – 2024",
   },
   {
     company: "Foundations Investment Advisors",
-    title: "Director of Technology",
-    dateRange: "2019 - 2022",
-    description:
-      "Architected and deployed cloud-first technology strategy. Established IT governance framework and led digital transformation across the organization.",
-  },
-  {
-    company: "American Express",
-    title: "Senior Software Engineer",
-    dateRange: "2016 - 2019",
-    description:
-      "Developed secure payment processing systems and enterprise-scale applications. Implemented cybersecurity best practices across critical financial infrastructure.",
+    title: "CTO",
+    dateRange: "2020 – 2023",
   },
   {
     company: "USAA",
-    title: "Software Developer",
-    dateRange: "2012 - 2016",
-    description:
-      "Built member-facing applications and internal tools supporting millions of military members and their families. Focused on security and accessibility.",
+    title: "Program Manager",
+    dateRange: "2020",
   },
   {
-    company: "Early Career",
-    title: "Various Technology Roles",
-    dateRange: "2005 - 2012",
-    description:
-      "Progressive experience in software development, systems administration, and IT consulting. Built foundation in full-stack development and enterprise architecture.",
+    company: "Progress Residential",
+    title: "Project Manager",
+    dateRange: "2019",
+  },
+  {
+    company: "AAA",
+    title: "Senior Manager",
+    dateRange: "2017 – 2018",
+  },
+  {
+    company: "Pearson",
+    title: "PMO Head",
+    dateRange: "2016 – 2017",
+  },
+  {
+    company: "American Express",
+    title: "Scrum Master",
+    dateRange: "2013 – 2016",
   },
 ];
 
@@ -156,10 +166,12 @@ const ExperienceTimeline = () => {
                     {exp.dateRange}
                   </p>
 
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {exp.description}
-                  </p>
+                  {/* Description — optional */}
+                  {exp.description && (
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {exp.description}
+                    </p>
+                  )}
                 </div>
               </motion.div>
             );
