@@ -52,9 +52,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Email configuration
-$to = 'morgan@morgankreed.com';
+$to = 'morgan@ctoondemandinc.com';
 $email_subject = "[Portfolio Contact] " . $subject;
-$from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'morgankreed.com'); // Dynamic domain
+$from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'ctoondemandinc.com'); // Dynamic domain
 $from_name = 'Portfolio Contact Form';
 
 // Create email body
@@ -98,7 +98,7 @@ if ($mail_sent) {
 } else {
     http_response_code(500);
     echo json_encode([
-        'error' => 'Failed to send message. Please try again or contact directly at morgan@morgankreed.com'
+        'error' => 'Failed to send message. Please try again or contact directly at morgan@ctoondemandinc.com'
     ]);
 }
 ?>

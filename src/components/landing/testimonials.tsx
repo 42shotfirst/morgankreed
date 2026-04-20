@@ -69,12 +69,17 @@ export default function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
+          <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
+            // voices
+          </p>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Client <span className="text-primary">Testimonials</span>
+            Client <span className="text-primary">Voices</span>
           </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Feedback from leaders and colleagues I've had the privilege of working with.
+            What clients, boards, and engineering leaders have said about
+            working with the firm — on shipped engagements, not theoretical
+            capability.
           </p>
         </motion.div>
 

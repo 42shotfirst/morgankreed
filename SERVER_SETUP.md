@@ -1,4 +1,4 @@
-# Server Setup for morgankreed.com
+# Server Setup for ctoondemandinc.com
 
 ## Current Issues
 - **405 Method Not Allowed**: Nginx not configured to handle POST requests to PHP files
@@ -15,7 +15,7 @@ Make sure these files are uploaded to your server:
 - `.htaccess` (root directory)
 
 ### 2. Test PHP is Working
-Visit: `https://morgankreed.com/api/test.php`
+Visit: `https://ctoondemandinc.com/api/test.php`
 You should see JSON output, not HTML.
 
 ### 3. Common Server Configuration Issues
@@ -44,10 +44,10 @@ Your server is running Nginx/1.22.1. Use the complete configuration in `nginx-co
 
 ```bash
 # Copy the nginx configuration
-sudo cp nginx-config.conf /etc/nginx/sites-available/morgankreed.com
+sudo cp nginx-config.conf /etc/nginx/sites-available/ctoondemandinc.com
 
 # Enable the site
-sudo ln -s /etc/nginx/sites-available/morgankreed.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/ctoondemandinc.com /etc/nginx/sites-enabled/
 
 # Test configuration
 sudo nginx -t
@@ -95,8 +95,8 @@ $mail->Password = 'your-password';
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
 
-$mail->setFrom('noreply@morgankreed.com', 'Portfolio Contact');
-$mail->addAddress('morgan@morgankreed.com');
+$mail->setFrom('noreply@ctoondemandinc.com', 'Portfolio Contact');
+$mail->addAddress('morgan@ctoondemandinc.com');
 $mail->addReplyTo($email, $name);
 
 $mail->isHTML(false);
@@ -108,13 +108,13 @@ $mail->send();
 
 ## Debugging Steps
 
-1. **Check if PHP is working**: Visit `https://morgankreed.com/api/test.php`
+1. **Check if PHP is working**: Visit `https://ctoondemandinc.com/api/test.php`
 2. **Check server logs**: Look at Apache/Nginx error logs
 3. **Test mail function**: Check if `mail()` is available
 4. **Check file permissions**: Ensure PHP files are readable
 5. **Test with curl**:
 ```bash
-curl -X POST https://morgankreed.com/api/test.php \
+curl -X POST https://ctoondemandinc.com/api/test.php \
   -H "Content-Type: application/json" \
   -d '{"test": "data"}'
 ```

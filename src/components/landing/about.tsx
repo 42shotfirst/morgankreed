@@ -20,25 +20,25 @@ const attributes: AttributeCard[] = [
     icon: <Brain className="w-8 h-8" />,
     title: "AI Software Architect",
     description:
-      "Designing and implementing practical AI solutions that drive measurable business value.",
+      "Designs and ships practical AI systems for growth-stage and mid-market clients — measurable business outcomes, not demo-ware.",
   },
   {
     icon: <Users className="w-8 h-8" />,
     title: "Technology Leadership",
     description:
-      "Building high-performing teams and transforming IT from cost center to growth engine.",
+      "Builds the engineering leadership and team structure clients are missing, turning IT from a cost line into a function that compounds enterprise value.",
   },
   {
     icon: <Code className="w-8 h-8" />,
     title: "Full-Stack Developer",
     description:
-      "Creating secure, scalable applications across web, mobile, and cloud platforms.",
+      "Delivers secure, scalable applications across web, mobile, and cloud — with the hands-on engineering credibility to back every architectural call.",
   },
   {
     icon: <Lightbulb className="w-8 h-8" />,
     title: "Strategic Innovation",
     description:
-      "Converting complex challenges into competitive advantages through digital transformation.",
+      "Converts complex technical challenges into durable competitive advantages through transformation engagements that move the P&L.",
   },
 ];
 
@@ -63,9 +63,9 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            About <span className="text-primary">Me</span>
-          </h2>
+          <h3 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            The <span className="text-primary">Principal</span>
+          </h3>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
         </motion.div>
 
@@ -78,20 +78,62 @@ export default function About() {
         >
           <div className="bg-card/50 rounded-2xl p-8 border border-border/50 backdrop-blur-sm">
             <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              I am a strategic technology leader who transforms digital ecosystems into
-              competitive advantage. At <span className="text-foreground font-medium">American Express</span>,{" "}
-              <span className="text-foreground font-medium">USAA</span>, and other leading institutions,
-              I've consistently delivered secure, compliant solutions that drive measurable business value.
+              <span className="text-foreground font-medium">
+                Morgan K Reed
+              </span>{" "}
+              embeds senior technology leadership inside growth-stage and
+              mid-market companies — owning the roadmap, running the vendor and
+              stack decisions, hiring and mentoring engineering leads, and
+              sitting in the exec room as the accountable technology voice. He
+              founded{" "}
+              <span className="text-foreground font-medium">
+                CTO on Demand, Inc.
+              </span>{" "}
+              after two decades of engineering, architecture, and executive
+              leadership at{" "}
+              <span className="text-foreground font-medium">
+                American Express
+              </span>
+              ,{" "}
+              <span className="text-foreground font-medium">USAA</span>,{" "}
+              <span className="text-foreground font-medium">
+                Foundations Investment Advisors
+              </span>
+              , and{" "}
+              <span className="text-foreground font-medium">
+                Western Alliance Bank
+              </span>
+              {" "}— institutions where regulators are in the room and the
+              margin for error is zero.
             </p>
             <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              I excel at navigating complex regulatory environments while accelerating digital innovation.
-              My leadership converts IT from cost center to growth engine, creating resilient platforms
-              that enhance customer experience while safeguarding critical data.
+              The firm's engagements convert technology from a cost center into
+              a compounding advantage. Recent outcomes include roughly{" "}
+              <span className="text-foreground font-medium">
+                $5M saved in nine months
+              </span>
+              , a{" "}
+              <span className="text-foreground font-medium">
+                75% reduction in cyber incidents
+              </span>
+              ,{" "}
+              <span className="text-foreground font-medium">
+                35 SMB clients
+              </span>{" "}
+              brought under a single managed-services umbrella, and a{" "}
+              <span className="text-foreground font-medium">
+                400% acquisition uplift
+              </span>{" "}
+              on a digital transformation — work that moved the P&amp;L, not
+              the deck.
             </p>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              I build high-performing teams that execute flawlessly, balancing technological ambition
-              with pragmatic governance to deliver what matters:{" "}
-              <span className="text-primary font-medium">results that strengthen the bottom line</span>.
+              Every engagement is founder-led. No account managers, no
+              second-string bench — the principal on the sales call is the
+              principal on the work.{" "}
+              <span className="text-primary font-medium">
+                If it isn't the right call, clients hear that first.
+              </span>
             </p>
           </div>
         </motion.div>

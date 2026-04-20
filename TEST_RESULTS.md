@@ -31,7 +31,7 @@
 - **Expected**: Browser validation prevents submission
 - **Status**: ✅ WORKING (HTML5 validation)
 
-## ✅ Production Mode Testing (morgankreed.com)
+## ✅ Production Mode Testing (ctoondemandinc.com)
 
 ### Current Issues Identified:
 1. **405 Method Not Allowed** → Server configuration issue
@@ -85,10 +85,10 @@
 ### Test Commands for Server:
 ```bash
 # Test PHP is working
-curl https://morgankreed.com/api/test.php
+curl https://ctoondemandinc.com/api/test.php
 
 # Test email endpoint
-curl -X POST https://morgankreed.com/api/send-email.php \
+curl -X POST https://ctoondemandinc.com/api/send-email.php \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","message":"Test message"}'
 ```

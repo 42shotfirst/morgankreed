@@ -17,21 +17,21 @@ const stats: Stat[] = [
     suffix: "+",
     label: "Organizations Served",
     description:
-      "Successfully delivered technology solutions across diverse industries and company sizes.",
+      "Engagements delivered across diverse industries, stages, and company sizes.",
   },
   {
     value: 20,
     suffix: "+",
-    label: "Years Experience",
+    label: "Years In The Work",
     description:
-      "Two decades of progressive technology leadership and hands-on development expertise.",
+      "Two decades of engineering, architecture, and executive leadership behind every SOW.",
   },
   {
     value: 50,
     suffix: "%",
     label: "Cost Reduction",
     description:
-      "Average operational cost savings achieved through strategic technology optimization.",
+      "Average operational savings delivered on engagements with a cost-optimization mandate.",
   },
   {
     value: 15,
@@ -39,7 +39,7 @@ const stats: Stat[] = [
     prefix: "$",
     label: "Projects Delivered",
     description:
-      "Total value of technology projects successfully delivered and implemented.",
+      "Total value of technology initiatives scoped, led, and shipped under engagement.",
   },
 ];
 
@@ -94,13 +94,17 @@ const ResultsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
+          <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
+            // outcomes
+          </p>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Proven <span className="text-primary">Results</span>
+            What Engagements Have <span className="text-primary">Delivered</span>
           </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Measurable impact across technology leadership, digital transformation,
-            and enterprise solutions delivery.
+            Numbers from real engagements — not a resume summary. Each is
+            tied to a specific client outcome in technology leadership, digital
+            transformation, or enterprise delivery.
           </p>
         </motion.div>
 

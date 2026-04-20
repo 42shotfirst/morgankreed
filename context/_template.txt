@@ -1,0 +1,20 @@
+ROLE: [Title] at [Company], [Start Date] – [End Date]
+
+SITUATION:
+[What did you inherit or walk into? What was broken, missing, or at risk? 2-3 sentences.]
+
+ACTIONS:
+[What specific decisions did you make and why? What did you build, change, or lead?
+4-6 sentences. Be specific about the technical or strategic choices — not just what
+you did but how you thought about it.]
+
+OUTCOME:
+[What measurably changed? Numbers where you have them. Honest about what you don't
+have data on.]
+
+LESSON LEARNED:
+[One sentence of genuine reflection. What would you do differently or what did this
+change about how you work?]
+
+TECHNOLOGIES / METHODS:
+[Comma-separated list of specific tools, languages, frameworks, methodologies involved]

@@ -2,31 +2,39 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { useScrollDirection, useActiveSection, smoothScrollTo } from "@/hooks/useScrollAnimation";
+import {
+  useScrollDirection,
+  useActiveSection,
+  smoothScrollTo,
+} from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   links?: Array<{ href: string; label: string }>;
-  logoText?: string;
+  firmName?: string;
 }
 
 const Header = ({
   links = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
-    { href: "#results", label: "Results" },
-    { href: "#expertise", label: "Expertise" },
-    { href: "#testimonials", label: "Testimonials" },
+    { href: "#engagements", label: "Engagements" },
+    { href: "#operator", label: "The Operator" },
+    { href: "#track-record", label: "Track Record" },
+    { href: "#capabilities", label: "Capabilities" },
+    { href: "#testimonials", label: "Voices" },
     { href: "#contact", label: "Contact" },
   ],
-  logoText = "Morgan K Reed",
+  firmName = "cto-on-demand",
 }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollDirection, isAtTop, isScrolled } = useScrollDirection(100);
-  const activeSection = useActiveSection(links.map((l) => l.href.replace("#", "")));
+  const activeSection = useActiveSection(
+    links.map((l) => l.href.replace("#", ""))
+  );
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     e.preventDefault();
     const id = href.replace("#", "");
     smoothScrollTo(id, 80);
@@ -43,29 +51,34 @@ const Header = ({
       className={cn(
         "fixed top-0 left-0 right-0 z-50",
         "transition-all duration-300 ease-out",
-        // Background states
-        isAtTop
-          ? "bg-transparent"
-          : "glass-strong border-b border-border/50",
-        // Scrolled state adds shadow
+        isAtTop ? "bg-transparent" : "glass-strong border-b border-border/50",
         isScrolled && !isAtTop && "header-scrolled",
-        // Hide on scroll down (after threshold)
         scrollDirection === "down" && isScrolled
           ? "header-hidden"
           : "translate-y-0"
       )}
     >
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        {/* Logo */}
+        {/* Wordmark */}
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, "#home")}
           className={cn(
-            "text-xl font-bold transition-colors duration-300",
-            "text-foreground hover:text-primary"
+            "flex items-center gap-2 transition-colors duration-300",
+            "text-foreground hover:text-primary group"
           )}
+          aria-label="CTO on Demand, Inc. — home"
         >
-          {logoText}
+          <span
+            className="text-primary font-mono text-base leading-none group-hover:animate-pulse"
+            aria-hidden="true"
+          >
+            ▮
+          </span>
+          <span className="font-mono text-base font-medium tracking-tight">
+            {firmName}
+            <span className="text-muted-foreground">.inc</span>
+          </span>
         </a>
 
         {/* Desktop Navigation */}
@@ -95,14 +108,19 @@ const Header = ({
               "bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
             )}
           >
-            Contact Me
+            Book a call
           </Button>
         </nav>
 
         {/* Mobile Navigation */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="lg:hidden">
-            <Button variant="ghost" size="icon" className="text-foreground">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-foreground"
+              aria-label="Open navigation menu"
+            >
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
@@ -111,8 +129,12 @@ const Header = ({
             className="w-[300px] sm:w-[400px] bg-background/98 backdrop-blur-lg border-border"
           >
             <div className="flex flex-col space-y-6 mt-8">
+              <div className="font-mono text-xs tracking-[0.2em] uppercase text-muted-foreground pb-2 border-b border-border/50">
+                ▮ {firmName}.inc
+              </div>
               {links.map((link, index) => {
-                const isActive = activeSection === link.href.replace("#", "");
+                const isActive =
+                  activeSection === link.href.replace("#", "");
                 return (
                   <a
                     key={link.href}
@@ -138,7 +160,7 @@ const Header = ({
                   "bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
                 )}
               >
-                Contact Me
+                Book a call
               </Button>
             </div>
           </SheetContent>

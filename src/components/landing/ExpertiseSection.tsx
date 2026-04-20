@@ -107,13 +107,17 @@ const ExpertiseSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
+          <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
+            // capabilities
+          </p>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Technical <span className="text-primary">Expertise</span>
+            Firm <span className="text-primary">Capabilities</span>
           </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Comprehensive skill set spanning development, architecture, security,
-            and leadership across modern technology stacks.
+            What the firm can be hired to do — spanning development, architecture,
+            security, and leadership across modern technology stacks. Every
+            engagement is scoped against these capabilities, not sold by the hour.
           </p>
         </motion.div>
 
@@ -166,8 +170,8 @@ const ExpertiseSection = () => {
           className="mt-12 text-center"
         >
           <p className="text-muted-foreground">
-            Continuously expanding expertise through hands-on projects,
-            certifications, and industry engagement.
+            Capability depth is continuously reinforced through active client
+            engagements, current certifications, and hands-on delivery work.
           </p>
         </motion.div>
       </div>

@@ -25,7 +25,7 @@ interface ContactSectionProps {
 }
 
 const ContactSection = ({
-  email = "morgan@morgankreed.com",
+  email = "morgan@ctoondemandinc.com",
   linkedin = "https://linkedin.com/in/morgankreed",
   github = "https://github.com/morgankreed",
   location = "Phoenix, Arizona",
@@ -110,12 +110,18 @@ const ContactSection = ({
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
+          <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
+            // start an engagement
+          </p>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Get In <span className="text-primary">Touch</span>
+            Start an <span className="text-primary">Engagement</span>
           </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Ready to discuss how technology can transform your business? Let's connect.
+            Every engagement begins with a short fit conversation. Share the
+            situation — roadmap, initiative, incident, or transition — and the
+            firm will come back with a candid read on shape, scope, and
+            whether it's the right call.
           </p>
         </motion.div>
 
@@ -138,11 +144,11 @@ const ContactSection = ({
                     <CheckCircle className="h-8 w-8 text-green-500" />
                   </div>
                   <h3 className="text-xl font-semibold text-foreground">
-                    Message Sent!
+                    Message received.
                   </h3>
                   <p className="text-muted-foreground">
-                    Thank you for reaching out. I'll get back to you as soon as
-                    possible.
+                    The firm will reach out within 1–2 business days to set up
+                    a fit conversation.
                   </p>
                 </div>
               ) : error ? (
@@ -198,7 +204,7 @@ const ContactSection = ({
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder="How can I help you?"
+                      placeholder="Describe the situation — the roadmap that needs an owner, the initiative that needs shipped, the decision that needs a second opinion."
                       rows={5}
                       value={formData.message}
                       onChange={handleInputChange}
@@ -215,7 +221,7 @@ const ContactSection = ({
                       "Sending..."
                     ) : (
                       <>
-                        Send Message
+                        Book an intro call
                         <Send className="w-4 h-4 ml-2" />
                       </>
                     )}
@@ -234,12 +240,13 @@ const ContactSection = ({
           >
             <div>
               <h3 className="text-2xl font-semibold text-foreground mb-4">
-                Let's Connect
+                Direct channels
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                I'm always interested in discussing new opportunities, innovative
-                projects, and ways to help organizations leverage technology for
-                growth. Feel free to reach out through any of these channels.
+                Prefer not to use the form? The firm can also be reached
+                through any of the channels below. Inquiries about fractional
+                leadership, scoped projects, and advisory retainers are all
+                welcome — as are honest "is this a fit?" questions.
               </p>
             </div>
 
@@ -288,7 +295,7 @@ const ContactSection = ({
             </div>
 
             <p className="text-sm text-muted-foreground">
-              I typically respond within 24-48 hours during business days.
+              The firm typically responds within 1–2 business days.
             </p>
           </motion.div>
         </div>

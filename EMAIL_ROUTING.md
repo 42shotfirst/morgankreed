@@ -1,6 +1,6 @@
 # Email Routing Guide
 
-## 📧 Email Destination: `morgan@morgankreed.com`
+## 📧 Email Destination: `morgan@ctoondemandinc.com`
 
 All contact form submissions route to the same destination regardless of the method used.
 
@@ -10,22 +10,22 @@ All contact form submissions route to the same destination regardless of the met
 ```
 User fills form → sendContactMessage() → sendEmailViaPHP() 
 → Detects DEV mode → sendEmailViaClient() → Opens email client
-→ User's default email app → Sends to morgan@morgankreed.com
+→ User's default email app → Sends to morgan@ctoondemandinc.com
 ```
 
-### **Production Mode** (morgankreed.com) - Current
+### **Production Mode** (ctoondemandinc.com) - Current
 ```
 User fills form → sendContactMessage() → sendEmailViaPHP() 
 → Fetches /api/send-email.php → Server error (405/HTML response)
 → Falls back to sendEmailViaClient() → Opens email client
-→ User's default email app → Sends to morgan@morgankreed.com
+→ User's default email app → Sends to morgan@ctoondemandinc.com
 ```
 
-### **Production Mode** (morgankreed.com) - After Server Fix
+### **Production Mode** (ctoondemandinc.com) - After Server Fix
 ```
 User fills form → sendContactMessage() → sendEmailViaPHP() 
 → Fetches /api/send-email.php → PHP mail() function
-→ Server sends email directly → morgan@morgankreed.com
+→ Server sends email directly → morgan@ctoondemandinc.com
 ```
 
 ## 📍 Specific Code Locations
@@ -33,27 +33,27 @@ User fills form → sendContactMessage() → sendEmailViaPHP()
 ### PHP Email Handler (`api/send-email.php`):
 ```php
 // Line 55
-$to = 'morgan@morgankreed.com';
+$to = 'morgan@ctoondemandinc.com';
 ```
 
 ### Client-Side Fallback (`src/lib/emailer.ts`):
 ```typescript
 // Line 64
-const mailtoLink = `mailto:morgan@morgankreed.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+const mailtoLink = `mailto:morgan@ctoondemandinc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 ```
 
 ### From Email Address:
 ```php
 // Line 58 in send-email.php
-$from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'morgankreed.com');
+$from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'ctoondemandinc.com');
 ```
 
 ## 📨 Email Content Examples
 
 ### Via PHP (Production - After Fix):
 ```
-To: morgan@morgankreed.com
-From: noreply@morgankreed.com
+To: morgan@ctoondemandinc.com
+From: noreply@ctoondemandinc.com
 Subject: [Portfolio Contact] User's Subject
 
 New message from your portfolio contact form:
@@ -66,14 +66,14 @@ Message:
 Hi Morgan, I'd like to discuss a potential project...
 
 ---
-Sent from: morgankreed.com
+Sent from: ctoondemandinc.com
 IP Address: 123.456.789.0
 Timestamp: 2024-01-15 14:30:25 PST
 ```
 
 ### Via Email Client (Development/Current Production):
 ```
-To: morgan@morgankreed.com
+To: morgan@ctoondemandinc.com
 From: User's actual email address
 Subject: User's Subject
 
@@ -102,21 +102,21 @@ If `mail()` doesn't work, you can configure SMTP in `send-email.php`:
 $mail->Host = 'smtp.gmail.com';  // or your SMTP server
 $mail->Username = 'your-email@gmail.com';
 $mail->Password = 'your-app-password';
-$mail->setFrom('noreply@morgankreed.com', 'Portfolio Contact');
-$mail->addAddress('morgan@morgankreed.com');
+$mail->setFrom('noreply@ctoondemandinc.com', 'Portfolio Contact');
+$mail->addAddress('morgan@ctoondemandinc.com');
 ```
 
 ## 📊 Current Status
 
 | Environment | Method | Status | Email Destination |
 |-------------|--------|--------|-------------------|
-| Development | Email Client | ✅ Working | morgan@morgankreed.com |
-| Production (Current) | Email Client | ✅ Working | morgan@morgankreed.com |
-| Production (After Fix) | PHP Direct | ⏳ Pending | morgan@morgankreed.com |
+| Development | Email Client | ✅ Working | morgan@ctoondemandinc.com |
+| Production (Current) | Email Client | ✅ Working | morgan@ctoondemandinc.com |
+| Production (After Fix) | PHP Direct | ⏳ Pending | morgan@ctoondemandinc.com |
 
 ## 🎯 Summary
 
-**All emails route to: `morgan@morgankreed.com`**
+**All emails route to: `morgan@ctoondemandinc.com`**
 
 - **Currently**: Users' email clients send to you
 - **After server fix**: Server sends directly to you
