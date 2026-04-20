@@ -1,0 +1,62 @@
+id: 02-consolidate-docs
+title: "Task: Consolidate documentation and stray files"
+epic: repo-restructure-and-infra
+status: completed
+priority: high
+phase: 1
+
+estimate:
+  optimistic: 15m
+  realistic: 30m
+  pessimistic: 1h
+
+dependencies:
+  - 01-restructure-dirs
+
+skills_required:
+  - shell
+  - git
+
+files_to_touch:
+  - documents/operational/DEPLOYMENT.md
+  - documents/operational/SERVER_SETUP.md
+  - documents/operational/QUICK_FIX.md
+  - documents/operational/EMAIL_ROUTING.md
+  - documents/operational/MEDIA_SECTION_GUIDE.md
+  - documents/operational/TEST_RESULTS.md
+  - context/system_prompt_chat.txt
+  - context/system_prompt_fit.txt
+  - infrastructure/nginx-config.conf
+  - code/site/public/images/nordwood-themes-unsplash.jpg
+
+outputs:
+  - All operational docs under documents/operational/
+  - System prompts under context/
+  - Stray image moved to public/images/
+  - Legacy nginx config archived under infrastructure/
+
+acceptance_criteria:
+  - "[ ] documents/operational/ contains all 6 markdown docs"
+  - "[ ] context/ contains system_prompt_chat.txt and system_prompt_fit.txt"
+  - "[ ] nordwood-themes-unsplash.jpg moved to code/site/public/images/"
+  - "[ ] nginx-config.conf moved to infrastructure/"
+  - "[ ] No stray markdown docs, images, or config files at repository root"
+
+description: |
+  ## Objective
+  Move scattered documentation, system prompts, and stray files into their proper directories following the pinpoint layout convention.
+
+  ## Steps
+  1. Create `documents/operational/` directory
+  2. Move these files to `documents/operational/`:
+     - DEPLOYMENT.md, SERVER_SETUP.md, QUICK_FIX.md
+     - EMAIL_ROUTING.md, MEDIA_SECTION_GUIDE.md, TEST_RESULTS.md
+  3. Move `system_prompt_chat.txt` and `system_prompt_fit.txt` to `context/`
+  4. Move `nordwood-themes-unsplash.jpg` to `code/site/public/images/`
+  5. Move `nginx-config.conf` to `infrastructure/` (legacy reference)
+  6. Update any internal cross-references between moved docs (if any)
+
+  ## Verification
+  - `ls documents/operational/` shows 6 files
+  - `ls context/` shows 3 files (template + 2 prompts)
+  - Root has no .md files except README.md

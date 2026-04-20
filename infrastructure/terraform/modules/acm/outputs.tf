@@ -1,15 +1,16 @@
 output "certificate_arn" {
-  description = "ARN of the ACM certificate"
-  value       = aws_acm_certificate.site.arn
+  description = "ARN of the validated ACM certificate (empty string if no domain)"
+  value       = length(aws_acm_certificate.site) > 0 ? aws_acm_certificate.site[0].arn : ""
 }
 
-output "validation_records" {
-  description = "DNS validation records that must be created to validate the certificate"
-  value = {
-    for dvo in aws_acm_certificate.site.domain_validation_options : dvo.domain_name => {
-      name  = dvo.resource_record_name
-      type  = dvo.resource_record_type
-      value = dvo.resource_record_value
+output "domain_validation_options" {
+  description = "Domain validation options for creating DNS records"
+  value = length(aws_acm_certificate.site) > 0 ? [
+    for dvo in aws_acm_certificate.site[0].domain_validation_options : {
+      domain_name           = dvo.domain_name
+      resource_record_name  = dvo.resource_record_name
+      resource_record_type  = dvo.resource_record_type
+      resource_record_value = dvo.resource_record_value
     }
-  }
+  ] : []
 }

@@ -1,0 +1,102 @@
+id: 10-root-cleanup
+title: "Task: Final root cleanup and verification"
+epic: repo-restructure-and-infra
+status: completed
+priority: medium
+phase: 3
+
+estimate:
+  optimistic: 15m
+  realistic: 30m
+  pessimistic: 1h
+
+dependencies:
+  - 01-restructure-dirs
+  - 02-consolidate-docs
+  - 03-fix-build-paths
+  - 04-port-latex
+  - 05-terraform
+  - 06-docker-setup
+  - 07-github-actions-ci
+  - 08-github-actions-deploy
+  - 09-project-metadata
+
+skills_required:
+  - shell
+  - git
+
+files_to_touch:
+  - .gitignore
+
+outputs:
+  - Clean repository root matching target layout
+  - Updated .gitignore for new structure
+  - Verification that build, terraform validate, and docker build all pass
+
+acceptance_criteria:
+  - "[ ] Root contains ONLY: .claude/, .github/, code/, context/, documents/, infrastructure/, spoq/, .gitignore, .mcp.json, CLAUDE.md, README.md, journal.md, package.json"
+  - "[ ] No stray files at root: no .md docs (except README/CLAUDE/journal), no images, no .conf files, no .txt files"
+  - "[ ] .gitignore covers: node_modules, dist/, .terraform/, *.tfstate*, .env, .DS_Store"
+  - "[ ] cd code/site && npm run build succeeds"
+  - "[ ] terraform -chdir=infrastructure/terraform validate succeeds"
+  - "[ ] docker compose -f infrastructure/docker/docker-compose.yml config validates"
+  - "[ ] git status shows all moves tracked (renamed files, not delete+create)"
+
+description: |
+  ## Objective
+  Final sweep to ensure the repository root is clean and all restructured pieces work together. This is the verification and polish task.
+
+  ## Steps
+  1. Audit root directory - list ALL files and flag anything unexpected
+  2. Remove any leftover files that should have been moved:
+     - Check for: *.md (besides README, CLAUDE, journal), *.txt, *.jpg, *.conf, *.php
+     - Check for empty directories left behind after moves
+  3. Update `.gitignore` to be comprehensive:
+     ```gitignore
+     # Dependencies
+     node_modules/
+
+     # Build
+     dist/
+     .next/
+
+     # Terraform
+     .terraform/
+     *.tfstate
+     *.tfstate.*
+     *.tfplan
+
+     # Environment
+     .env
+     .env.*
+     !.env.example
+
+     # OS
+     .DS_Store
+     Thumbs.db
+
+     # IDE
+     .vscode/
+     .idea/
+
+     # LaTeX
+     *.aux
+     *.log
+     *.out
+     *.toc
+     *.bbl
+     *.blg
+     *.fls
+     *.fdb_latexmk
+     *.synctex.gz
+     ```
+  4. Run full verification suite:
+     - `cd code/site && npm run build`
+     - `terraform -chdir=infrastructure/terraform validate`
+     - `docker compose -f infrastructure/docker/docker-compose.yml config`
+  5. Check git status to confirm file moves are properly tracked
+
+  ## Verification
+  - `ls -la` at root shows only expected entries
+  - All three verification commands pass
+  - `git diff --stat` shows renames, not delete+create pairs

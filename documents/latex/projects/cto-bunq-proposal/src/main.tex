@@ -1,0 +1,87 @@
+% CTO on Demand — Engagement Proposal: US Payment Network Integration
+% Compiler: lualatex
+% Style: doc-reed
+
+\documentclass[11pt,letterpaper]{article}
+
+% Style packages
+\usepackage[block]{doc-reed}
+\usepackage{doc-tables}
+
+% Additional packages
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{needspace}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric, fit}
+
+% Custom list style for checkmarks
+\newlist{highlights}{itemize}{1}
+\setlist[highlights]{label=\textcolor{ReedCyan}{\bfseries\checkmark}, leftmargin=1.5em, itemsep=3pt}
+
+% Confidentiality footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{ReedMuted}Confidential\quad\textbar\quad CTO on Demand Inc.\quad\textbar\quad\thepage}
+
+\begin{document}
+
+% ── Title Page ──
+\begin{titlepage}
+\setlength{\parskip}{0pt}%
+\centering
+\vspace*{1.8in}
+{\fontsize{28}{36}\selectfont\bfseries\sffamily\textcolor{ReedNavy}{US Payment Network\\Integration}\par}
+\vspace{8mm}
+{\Large\sffamily\textcolor{ReedMuted}{Engagement Proposal\quad\textbar\quad FedWire\enspace·\enspace ACH\enspace·\enspace RTP}\par}
+\vspace{6mm}
+{\color{ReedCyan}\rule{6cm}{0.6pt}\par}
+\vspace{8mm}
+{\large\sffamily\textcolor{ReedNavy}{CTO on Demand Inc.}\par}
+\vspace{4mm}
+{\sffamily\textcolor{ReedMuted}{April 2026}\par}
+
+\vfill
+
+\begin{tabular}{@{}r@{\quad}l@{}}
+\textcolor{ReedMuted}{\sffamily Prepared for:} & \textsf{\textbf{bunq B.V.}} \\[4pt]
+\textcolor{ReedMuted}{\sffamily Prepared by:} & \textsf{\textbf{CTO on Demand Inc.}} \\[4pt]
+\textcolor{ReedMuted}{\sffamily Engagement:} & \textsf{FedWire + ACH + RTP Integration} \\[4pt]
+\textcolor{ReedMuted}{\sffamily Classification:} & \textsf{Confidential, v2.0} \\
+\end{tabular}
+
+\vspace{1.5cm}
+
+{\small\color{ReedMuted} This proposal is submitted in confidence by CTO on Demand Inc.\ and is intended solely for the use of bunq B.V. The information contained herein is proprietary and may not be shared, reproduced, or distributed without prior written consent.}
+
+\end{titlepage}
+\setcounter{page}{1}
+
+\newpage
+
+% ── Table of Contents ──
+{%
+\setlength{\parskip}{0pt}%
+\renewcommand{\baselinestretch}{0.95}%
+\tableofcontents
+}
+\newpage
+
+% ── Sections ──
+\input{sections/opportunity}
+\input{sections/the_build}
+\input{sections/under_the_hood}
+\input{sections/the_plan}
+\input{sections/the_team}
+\input{sections/testing}
+\input{sections/compliance}
+\input{sections/why_ctod}
+\input{sections/expectations}
+\input{sections/scope}
+\input{sections/requirements}
+\input{sections/next_steps}
+
+\end{document}

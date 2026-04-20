@@ -1,0 +1,77 @@
+id: 09-project-metadata
+title: "Task: Create CLAUDE.md, journal.md, and rewrite README.md"
+epic: repo-restructure-and-infra
+status: completed
+priority: medium
+phase: 2
+
+estimate:
+  optimistic: 30m
+  realistic: 45m
+  pessimistic: 1.5h
+
+dependencies:
+  - 01-restructure-dirs
+  - 02-consolidate-docs
+
+skills_required:
+  - markdown
+  - documentation
+
+files_to_touch:
+  - CLAUDE.md
+  - journal.md
+  - README.md
+
+outputs:
+  - CLAUDE.md with SPOQ methodology and project conventions
+  - journal.md empty template for session tracking
+  - README.md rewritten with project-specific content
+
+acceptance_criteria:
+  - "[ ] CLAUDE.md exists with SPOQ workflow guidance (audit, discuss, plan)"
+  - "[ ] CLAUDE.md documents build commands (dev, build, lint from code/site/)"
+  - "[ ] CLAUDE.md describes project structure (code/, documents/, infrastructure/, spoq/)"
+  - "[ ] CLAUDE.md includes coding conventions (TypeScript, React, Tailwind)"
+  - "[ ] CLAUDE.md states: no auto-commits, update journal for significant work"
+  - "[ ] journal.md exists with empty session template"
+  - "[ ] README.md describes the project (Morgan K. Reed portfolio)"
+  - "[ ] README.md includes: local dev setup, build, deploy overview, architecture"
+  - "[ ] README.md does NOT contain generic Vite template text"
+
+description: |
+  ## Objective
+  Create the three key project metadata files that orient both human developers and AI agents.
+
+  ## Steps
+  1. **CLAUDE.md** - Project guidelines modeled after pinpoint's CLAUDE.md:
+     - SPOQ methodology reference (audit, discuss, plan with /epic-planning)
+     - Build commands: `cd code/site && npm run dev/build/lint`
+     - Project structure overview (each top-level directory's purpose)
+     - Coding conventions: TypeScript strict, React functional components, Tailwind utility-first
+     - Rules: no auto-commits, no auto-push, update journal.md for significant work
+     - Common workflows: adding components, updating content, deploying
+
+  2. **journal.md** - Empty template:
+     ```markdown
+     # Development Journal
+
+     Session entries are recorded below. Archive when exceeding 1500 lines.
+
+     ---
+     ```
+
+  3. **README.md** - Project-specific rewrite:
+     - Project name and description (Morgan K. Reed technology portfolio)
+     - Tech stack summary (React, TypeScript, Vite, Tailwind, shadcn/ui)
+     - Prerequisites (Node 20+, npm)
+     - Local development: `cd code/site && npm install && npm run dev`
+     - Building: `cd code/site && npm run build`
+     - Deployment overview (S3 + CloudFront via GitHub Actions)
+     - Project structure diagram
+     - Documentation pointers (documents/operational/, documents/latex/)
+
+  ## Verification
+  - All three files exist at repository root
+  - CLAUDE.md references correct paths (code/site/, not src/)
+  - README.md contains no Vite template boilerplate

@@ -1,0 +1,68 @@
+id: 03-fix-build-paths
+title: "Task: Fix build paths and imports after restructure"
+epic: repo-restructure-and-infra
+status: completed
+priority: critical
+phase: 1
+
+estimate:
+  optimistic: 30m
+  realistic: 1h
+  pessimistic: 2h
+
+dependencies:
+  - 01-restructure-dirs
+
+skills_required:
+  - vite
+  - typescript
+  - react
+  - npm-workspaces
+
+files_to_touch:
+  - code/site/vite.config.ts
+  - code/site/tsconfig.json
+  - code/site/tsconfig.node.json
+  - code/site/index.html
+  - code/site/components.json
+  - code/site/tailwind.config.js
+
+outputs:
+  - Site builds successfully from code/site/
+  - All path aliases resolve correctly
+  - Dev server starts without errors
+
+acceptance_criteria:
+  - "[ ] cd code/site && npm install completes without errors"
+  - "[ ] cd code/site && npm run build produces dist/ with no errors"
+  - "[ ] cd code/site && npm run dev starts dev server successfully"
+  - "[ ] TypeScript path aliases (@/) resolve correctly"
+  - "[ ] Tailwind CSS processes all component files"
+  - "[ ] No broken imports in any .tsx or .ts file"
+
+description: |
+  ## Objective
+  After moving the site into `code/site/`, update all configuration files so the build pipeline works from the new location.
+
+  ## Steps
+  1. Update `vite.config.ts`:
+     - Verify `root` and path alias configurations
+     - Ensure `@` alias points to `./src`
+  2. Update `tsconfig.json`:
+     - Verify `paths` mapping for `@/*`
+     - Verify `include` patterns cover `src/`
+  3. Update `tailwind.config.js`:
+     - Verify `content` globs match new structure
+  4. Update `components.json`:
+     - Verify shadcn/ui paths for aliases
+  5. Update `index.html`:
+     - Verify script src path to `/src/main.tsx`
+  6. Run `npm install` from `code/site/` to regenerate lockfile
+  7. Run `npm run build` to verify compilation
+  8. Run `npm run dev` to verify dev server
+
+  ## Verification
+  ```bash
+  cd code/site && npm install && npm run build
+  ```
+  Build must complete with zero errors.

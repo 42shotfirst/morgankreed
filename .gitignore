@@ -55,3 +55,6 @@ lerna-debug.log*
 **/tempobook/storyboards/
 
 core
+
+# Claude Code worktrees
+.claude/worktrees/

@@ -14,7 +14,7 @@ templates:
     compiler: lualatex
     bib_tool: bibtex
     packages:
-      - doc-premium
+      - doc-reed
       - doc-tables
       - doc-code
     sections:
@@ -40,7 +40,7 @@ templates:
     compiler: lualatex
     bib_tool: bibtex
     packages:
-      - doc-premium
+      - doc-reed
       - doc-tables
       - doc-math
     sections:
@@ -66,7 +66,7 @@ templates:
     compiler: lualatex
     bib_tool: none
     packages:
-      - doc-premium
+      - doc-reed
       - doc-tables
     sections:
       - executive_summary
@@ -111,7 +111,7 @@ templates:
     compiler: lualatex
     bib_tool: none
     packages:
-      - doc-premium
+      - doc-reed
       - doc-tables
       - doc-code
     sections:

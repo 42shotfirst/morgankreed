@@ -1,0 +1,114 @@
+id: 05-terraform
+title: "Task: Create Terraform modules for S3 + CloudFront hosting"
+epic: repo-restructure-and-infra
+status: completed
+priority: high
+phase: 0
+
+estimate:
+  optimistic: 1h
+  realistic: 2h
+  pessimistic: 3h
+
+dependencies: []
+
+skills_required:
+  - terraform
+  - aws
+  - cloudfront
+  - s3
+  - iam
+
+files_to_touch:
+  - infrastructure/terraform/main.tf
+  - infrastructure/terraform/variables.tf
+  - infrastructure/terraform/outputs.tf
+  - infrastructure/terraform/provider.tf
+  - infrastructure/terraform/backend.tf
+  - infrastructure/terraform/versions.tf
+  - infrastructure/terraform/modules/s3-site/main.tf
+  - infrastructure/terraform/modules/s3-site/variables.tf
+  - infrastructure/terraform/modules/s3-site/outputs.tf
+  - infrastructure/terraform/modules/cloudfront/main.tf
+  - infrastructure/terraform/modules/cloudfront/variables.tf
+  - infrastructure/terraform/modules/cloudfront/outputs.tf
+  - infrastructure/terraform/modules/acm/main.tf
+  - infrastructure/terraform/modules/acm/variables.tf
+  - infrastructure/terraform/modules/acm/outputs.tf
+  - infrastructure/terraform/modules/iam-deploy/main.tf
+  - infrastructure/terraform/modules/iam-deploy/variables.tf
+  - infrastructure/terraform/modules/iam-deploy/outputs.tf
+  - infrastructure/terraform/README.md
+
+outputs:
+  - Terraform root module wiring S3 + CloudFront + ACM + IAM
+  - 4 reusable modules (s3-site, cloudfront, acm, iam-deploy)
+  - README with usage instructions and variable documentation
+  - terraform plan runs without errors (no apply)
+
+acceptance_criteria:
+  - "[ ] terraform -chdir=infrastructure/terraform init succeeds (with backend commented out for local)"
+  - "[ ] terraform -chdir=infrastructure/terraform validate passes"
+  - "[ ] S3 module creates bucket with website hosting, versioning, and OAC policy"
+  - "[ ] CloudFront module creates distribution with S3 origin, HTTPS redirect, custom domain support"
+  - "[ ] ACM module requests certificate with DNS validation"
+  - "[ ] IAM module creates deploy user/role with s3:PutObject, s3:DeleteObject, cloudfront:CreateInvalidation"
+  - "[ ] variables.tf parameterizes: domain_name, environment, project_name"
+  - "[ ] outputs.tf exposes: bucket_name, cloudfront_distribution_id, cloudfront_domain, deploy_role_arn"
+  - "[ ] README.md documents prerequisites, variables, and usage"
+
+description: |
+  ## Objective
+  Create Terraform infrastructure-as-code for hosting the static portfolio site on AWS S3 + CloudFront. Keep it simple and production-ready.
+
+  ## Steps
+  1. Create `infrastructure/terraform/` directory structure:
+     ```
+     terraform/
+     ├── main.tf            # Module composition
+     ├── variables.tf       # Input variables
+     ├── outputs.tf         # Outputs
+     ├── provider.tf        # AWS provider (us-east-1 for CloudFront/ACM)
+     ├── backend.tf         # S3 backend (commented out for initial setup)
+     ├── versions.tf        # Required providers + versions
+     ├── README.md
+     └── modules/
+         ├── s3-site/       # Static website bucket
+         ├── cloudfront/    # CDN distribution
+         ├── acm/           # SSL certificate
+         └── iam-deploy/    # CI/CD deploy permissions
+     ```
+
+  2. **s3-site module:**
+     - S3 bucket with versioning enabled
+     - Block all public access (serve only via CloudFront OAC)
+     - Bucket policy granting CloudFront OAC read access
+     - Lifecycle rule for old versions (optional)
+
+  3. **cloudfront module:**
+     - Distribution with S3 origin using Origin Access Control (OAC)
+     - Default root object: index.html
+     - Custom error response: 403/404 → /index.html (SPA routing)
+     - HTTPS redirect (viewer-protocol-policy)
+     - Optional custom domain aliases + ACM cert ARN
+     - Cache policy for static assets
+
+  4. **acm module:**
+     - Certificate request with DNS validation
+     - Support for domain + wildcard (*.domain.com)
+     - Output validation records for manual DNS setup
+
+  5. **iam-deploy module:**
+     - IAM user or role for GitHub Actions OIDC
+     - Policy: s3:PutObject, s3:DeleteObject on site bucket
+     - Policy: cloudfront:CreateInvalidation on distribution
+     - Output access credentials or role ARN
+
+  6. **Root main.tf:** Wire all modules together with variable passthrough
+
+  ## Verification
+  ```bash
+  cd infrastructure/terraform
+  terraform init    # (with backend commented out)
+  terraform validate
+  ```

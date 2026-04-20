@@ -13,7 +13,7 @@ output "distribution_domain_name" {
   value       = aws_cloudfront_distribution.site.domain_name
 }
 
-output "oac_arn" {
-  description = "ARN of the Origin Access Control"
-  value       = aws_cloudfront_origin_access_control.site.id
+output "distribution_hosted_zone_id" {
+  description = "Route53 hosted zone ID for the CloudFront distribution (used for alias records)"
+  value       = aws_cloudfront_distribution.site.hosted_zone_id
 }

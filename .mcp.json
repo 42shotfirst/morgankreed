@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "spoq": {
+      "command": "spoq",
+      "args": [
+        "mcp"
+      ]
+    }
+  }
+}

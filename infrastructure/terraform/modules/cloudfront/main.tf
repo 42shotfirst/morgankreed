@@ -1,6 +1,6 @@
 resource "aws_cloudfront_origin_access_control" "site" {
-  name                              = "${var.project_name}-oac"
-  description                       = "Origin Access Control for ${var.project_name} S3 bucket"
+  name                              = "${var.project_name}-${var.environment}-oac"
+  description                       = "Origin Access Control for ${var.project_name} ${var.environment} S3 bucket"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -10,7 +10,7 @@ resource "aws_cloudfront_distribution" "site" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  comment             = "${var.project_name} static site distribution"
+  comment             = "${var.project_name} ${var.environment} static site distribution"
   aliases             = var.domain_aliases
   price_class         = "PriceClass_100"
 
@@ -27,17 +27,8 @@ resource "aws_cloudfront_distribution" "site" {
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
 
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl     = 0
-    default_ttl = 3600
-    max_ttl     = 86400
+    # Managed-CachingOptimized policy (recommended for S3 origins)
+    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
   }
 
   # SPA routing: serve index.html for 403/404 errors
