@@ -1,0 +1,316 @@
+{
+  "/CtoOnDemandContentEngine/PostsTable": [
+    {
+      "type": "aws:cdk:hasPhysicalName",
+      "data": {
+        "Ref": "PostsTableC82B36F0"
+      }
+    }
+  ],
+  "/CtoOnDemandContentEngine/AdminUser": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminUser"
+    }
+  ],
+  "/CtoOnDemandContentEngine/ApiUrl": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiUrl"
+    }
+  ],
+  "/CtoOnDemandContentEngine/UserPoolId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPoolId"
+    }
+  ],
+  "/CtoOnDemandContentEngine/UserPoolClientId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPoolClientId"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Region": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Region"
+    }
+  ],
+  "/CtoOnDemandContentEngine/AdminEmail": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminEmail"
+    }
+  ],
+  "/CtoOnDemandContentEngine/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    }
+  ],
+  "/CtoOnDemandContentEngine/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    }
+  ],
+  "/CtoOnDemandContentEngine/PostsTable/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PostsTableC82B36F0"
+    }
+  ],
+  "/CtoOnDemandContentEngine/ClaudeApiKey/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ClaudeApiKey6E1BA474"
+    }
+  ],
+  "/CtoOnDemandContentEngine/AdminPool/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminPoolED44AAEC"
+    }
+  ],
+  "/CtoOnDemandContentEngine/AdminPoolClient/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminPoolClient48608487"
+    }
+  ],
+  "/CtoOnDemandContentEngine/BlogListFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BlogListFn7E2644DA"
+    }
+  ],
+  "/CtoOnDemandContentEngine/ContentGenerateFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ContentGenerateFn6F798D84"
+    }
+  ],
+  "/CtoOnDemandContentEngine/SaveDraftFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SaveDraftFnAEB5331F"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiF70053CD"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Account": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiAccountA18C9B29"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Endpoint": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiEndpoint4F160690"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Authorizer/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AuthorizerBD825682"
+    }
+  ],
+  "/CtoOnDemandContentEngine/CDKMetadata/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadata"
+    }
+  ],
+  "/CtoOnDemandContentEngine/BlogListFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BlogListFnServiceRole78E06D33"
+    }
+  ],
+  "/CtoOnDemandContentEngine/ContentGenerateFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ContentGenerateFnServiceRoleC1C66724"
+    }
+  ],
+  "/CtoOnDemandContentEngine/SaveDraftFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SaveDraftFnServiceRole87D277EE"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/CloudWatchRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiCloudWatchRole73EC6FC4"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Deployment/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiDeploymentB17BE62Deb780e669c8b1528113cc9816ed6ae67"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/DeploymentStage.prod/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiDeploymentStageprod3EB9684E"
+    }
+  ],
+  "/CtoOnDemandContentEngine/BlogListFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BlogListFnServiceRoleDefaultPolicy83072579"
+    }
+  ],
+  "/CtoOnDemandContentEngine/ContentGenerateFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ContentGenerateFnServiceRoleDefaultPolicyBFA7EEFF"
+    }
+  ],
+  "/CtoOnDemandContentEngine/SaveDraftFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SaveDraftFnServiceRoleDefaultPolicy90DB5C91"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/OPTIONS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiOPTIONS5886EA5D"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Apiapi0E601135"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/OPTIONS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapiOPTIONSC6F70CE1"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/blog/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Apiapiblog2579CE74"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentABC73FC5"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/blog/OPTIONS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapiblogOPTIONSE8270AD0"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/blog/posts/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Apiapiblogposts57A404AB"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/OPTIONS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentOPTIONS0305E6C0"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/generate/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Apiapicontentgenerate8A0B27AC"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/posts/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentpostsEA18A079"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/blog/posts/OPTIONS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapiblogpostsOPTIONS089F798D"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/blog/posts/GET/ApiPermission.CtoOnDemandContentEngineApiD6C76796.GET..api.blog.posts": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapiblogpostsGETApiPermissionCtoOnDemandContentEngineApiD6C76796GETapiblogposts15E938E0"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/blog/posts/GET/ApiPermission.Test.CtoOnDemandContentEngineApiD6C76796.GET..api.blog.posts": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapiblogpostsGETApiPermissionTestCtoOnDemandContentEngineApiD6C76796GETapiblogpostsA055E2F9"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/blog/posts/GET/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapiblogpostsGETFF5E78D2"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/generate/OPTIONS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentgenerateOPTIONS5C121204"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/generate/POST/ApiPermission.CtoOnDemandContentEngineApiD6C76796.POST..api.content.generate": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentgeneratePOSTApiPermissionCtoOnDemandContentEngineApiD6C76796POSTapicontentgenerateCE326CE8"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/generate/POST/ApiPermission.Test.CtoOnDemandContentEngineApiD6C76796.POST..api.content.generate": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentgeneratePOSTApiPermissionTestCtoOnDemandContentEngineApiD6C76796POSTapicontentgenerate93308509"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/generate/POST/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentgeneratePOSTC0598377"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/posts/OPTIONS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentpostsOPTIONSF556281C"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/posts/POST/ApiPermission.CtoOnDemandContentEngineApiD6C76796.POST..api.content.posts": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentpostsPOSTApiPermissionCtoOnDemandContentEngineApiD6C76796POSTapicontentpostsEF2297B2"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/posts/POST/ApiPermission.Test.CtoOnDemandContentEngineApiD6C76796.POST..api.content.posts": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentpostsPOSTApiPermissionTestCtoOnDemandContentEngineApiD6C76796POSTapicontentpostsC2334C32"
+    }
+  ],
+  "/CtoOnDemandContentEngine/Api/Default/api/content/posts/POST/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiapicontentpostsPOSTBD7084EB"
+    }
+  ]
+}

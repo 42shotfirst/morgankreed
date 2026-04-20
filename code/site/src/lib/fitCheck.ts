@@ -17,12 +17,22 @@ interface FitCheckRequest {
   input: string;
 }
 
+// TODO: Backend endpoint is not implemented yet. When built, the server must:
+//   1. Load /system_prompt_fit.txt as the system prompt.
+//   2. Call Anthropic with model `claude-sonnet-4-6` (per project memory),
+//      passing the user input as the user turn.
+//   3. Return `{ result: string }` where `result` is the model's raw output
+//      (this file's parseFitResponse expects the **Verdict/Why/... headers
+//      from the prompt's output format — do not post-process on the server).
+// The endpoint path defaults to /api/fit-check; override with VITE_FIT_CHECK_API_URL.
+// Until wired, DEV mode returns a canned sample (see DEV_SAMPLE below) and
+// production will 404.
 const ENDPOINT =
   import.meta.env.VITE_FIT_CHECK_API_URL ?? "/api/fit-check";
 
 const DEV_SAMPLE = `**Verdict**: PARTIAL FIT — WORTH A CONVERSATION
 
-**Why**: The role leans on regulated-industry fluency and a senior operator who can own the roadmap end-to-end — both square with CTO on Demand's strongest pattern. The unknown is scale: the JD implies a 40+ engineer org, which is beyond what the practice is currently staffed to lead full-time.
+**Why**: This is a partial fit because the role leans on regulated-industry fluency and a senior operator who can own the roadmap end-to-end — both square with CTO on Demand's strongest pattern. The unknown is scale: the JD implies a 40+ engineer org, which is beyond what a fractional engagement is shaped for.
 
 **What transfers well**:
 - Regulated-industry compliance posture (SOC 2, PCI) → direct experience at Western Alliance Bank, Amex, USAA
@@ -33,7 +43,7 @@ const DEV_SAMPLE = `**Verdict**: PARTIAL FIT — WORTH A CONVERSATION
 - Has not managed a 40+ engineer organization as a line manager
 - No public-company reporting cadence experience
 
-**Recommendation**: Worth a 30-minute fit call. If the role can be framed as fractional leadership alongside an existing VP of Engineering, the match is strong. If it requires full-time line management at that scale, it's the wrong shape.`;
+**Recommendation**: Worth a 30-minute fit call. If the role can be framed as fractional leadership alongside an existing VP of Engineering, the match is strong. If it truly requires full-time line management at that scale, hire full-time — a fractional engagement is the wrong shape.`;
 
 export function parseFitResponse(raw: string): FitCheckResponse {
   const section = (label: string) => {

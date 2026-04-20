@@ -61,7 +61,7 @@ ${message}
 This message was sent from your portfolio contact form.
   `.trim();
 
-  const mailtoLink = `mailto:morgan@ctoondemandinc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+  const mailtoLink = `mailto:morgan.reed@ctoondemandinc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
   
   window.open(mailtoLink, '_blank');
 };
@@ -111,7 +111,7 @@ export const sendContactMessage = async (data: EmailData) => {
       return { success: true, method: 'client_fallback' };
     } catch (fallbackError) {
       console.error('All email methods failed:', fallbackError);
-      throw new Error('Unable to send message. Please try contacting directly at morgan@ctoondemandinc.com');
+      throw new Error('Unable to send message. Please try contacting directly at morgan.reed@ctoondemandinc.com');
     }
   }
 };

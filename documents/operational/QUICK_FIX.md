@@ -54,7 +54,7 @@ If you prefer to keep the current email client approach:
 
 1. **No server changes needed** - Form works perfectly
 2. **Users get email client popup** - They click "Send" to contact you
-3. **You receive emails normally** - All emails go to morgan@ctoondemandinc.com
+3. **You receive emails normally** - All emails go to morgan.reed@ctoondemandinc.com
 
 ## What's Happening Now
 ```

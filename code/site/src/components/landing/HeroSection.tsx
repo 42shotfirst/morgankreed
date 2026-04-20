@@ -197,6 +197,11 @@ const HeroSection = ({
               Schedule an intro
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
+            {/* TODO: "Talk to the operator" chat is not wired yet. When the chat
+                component + /api/chat endpoint ship (using system_prompt_chat.txt
+                against claude-sonnet-4-6), swap scrollToOperator for a handler
+                that opens the chat drawer/modal. Keep the scroll as a fallback
+                if the chat endpoint 404s. */}
             <Button
               onClick={scrollToOperator}
               size="lg"

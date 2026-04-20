@@ -96,7 +96,7 @@ $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
 
 $mail->setFrom('noreply@ctoondemandinc.com', 'Portfolio Contact');
-$mail->addAddress('morgan@ctoondemandinc.com');
+$mail->addAddress('morgan.reed@ctoondemandinc.com');
 $mail->addReplyTo($email, $name);
 
 $mail->isHTML(false);

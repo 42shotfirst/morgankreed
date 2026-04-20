@@ -17,10 +17,11 @@ interface HeaderProps {
 const Header = ({
   links = [
     { href: "#engagements", label: "Engagements" },
-    { href: "#operator", label: "The Operator" },
+    { href: "#operator", label: "Operator" },
     { href: "#track-record", label: "Track Record" },
-    { href: "#capabilities", label: "Capabilities" },
-    { href: "#testimonials", label: "Voices" },
+    { href: "#media", label: "Media" },
+    { href: "#writing", label: "Writing" },
+    { href: "#blog", label: "Blog" },
     { href: "#contact", label: "Contact" },
   ],
   firmName = "cto-on-demand",
@@ -81,8 +82,8 @@ const Header = ({
           </span>
         </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-8">
+        {/* Desktop Navigation — shown at xl+ now since the link list is longer */}
+        <nav className="hidden xl:flex items-center space-x-7">
           {links.map((link) => {
             const isActive = activeSection === link.href.replace("#", "");
             return (
@@ -112,9 +113,9 @@ const Header = ({
           </Button>
         </nav>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation — open below xl so tablets use drawer */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="lg:hidden">
+          <SheetTrigger asChild className="xl:hidden">
             <Button
               variant="ghost"
               size="icon"

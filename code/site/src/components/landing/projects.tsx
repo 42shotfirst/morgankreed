@@ -1,295 +1,362 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import React from "react";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, Clock } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
-const newProjects = [
+interface ClientOutcome {
+  outcome: string;
+  client: string;
+  role: string;
+  tech?: string[];
+  logo?: string;
+}
+
+interface OwnedProduct {
+  title: string;
+  tagline: string;
+  description: string;
+  tech: string[];
+  image: string;
+  link?: string;
+  status: "live" | "in-development";
+}
+
+const clientOutcomes: ClientOutcome[] = [
+  {
+    outcome: "Cut policy change processing time and labor costs",
+    client: "AAA",
+    role: "Self-Service Customer Portal",
+    tech: ["Salesforce", "API Integration", "Process Automation"],
+    logo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/AAA_logo.svg/1200px-AAA_logo.svg.png",
+  },
+  {
+    outcome: "Home acquisition compressed from weeks to hours",
+    client: "Progress Residential",
+    role: "Automated Purchase System",
+    tech: ["Salesforce", "Workflow Automation", "Real Estate Tech"],
+    logo:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Progress_Residential_logo.svg/2560px-Progress_Residential_logo.svg.png",
+  },
+  {
+    outcome: "90% reduction in database crashes",
+    client: "TriWest",
+    role: "Data Warehouse Transformation",
+    tech: ["Data Warehouse", "Agile", "Business Intelligence"],
+    logo: "https://www.triwest.com/content/dam/triwest/images/logo/triwest-logo.png",
+  },
+  {
+    outcome: "Ran digital transformation as acting CIO",
+    client: "Birdiescope",
+    role: "Fractional CIO engagement",
+  },
+  {
+    outcome: "Rebuilt online sales and payments integration",
+    client: "Private client",
+    role: "E-commerce consulting",
+  },
+  {
+    outcome: "Built and taught an AI curriculum for working professionals",
+    client: "Learn Good Things",
+    role: "AI instructor",
+  },
+  {
+    outcome: "Custom Salesforce architecture and third-party integrations",
+    client: "Harmon Solar",
+    role: "Salesforce Architect",
+  },
+  {
+    outcome: "Microservices web platform with improved performance",
+    client: "Universal Liaison",
+    role: "Web Software Architect",
+  },
+  {
+    outcome: "SOC audit, controls, and compliance guidance",
+    client: "Private client",
+    role: "Security Auditor",
+  },
+];
+
+const ownedProducts: OwnedProduct[] = [
+  {
+    title: "AI-Powered Real Estate Virtual Tours",
+    tagline: "End-to-end MLS-ready walkthrough platform",
+    description:
+      "Turns raw property footage into polished, narrated virtual walkthroughs — auto-generated listing copy, multi-camera stitching, AI voiceover, and one-click MLS publishing.",
+    tech: [
+      "Python",
+      "TensorFlow",
+      "OpenCV",
+      "React",
+      "Node.js",
+      "AWS",
+      "FFmpeg",
+      "WebRTC",
+    ],
+    image: "/images/ai-virtual-tour-showcase.png",
+    status: "in-development",
+  },
   {
     title: "ScrAIper",
+    tagline: "Trainable web data extraction",
     description:
-      "A web program designed to help users find, download, and format info from websites. Unlike other applications, ScrAIper not only requires no code knowledge, but gets smarter over time as you train it.",
+      "A no-code tool for finding, downloading, and structuring web data. Gets smarter over time as users train it — no engineering required.",
     tech: ["AI", "Web Scraping", "Data Extraction", "No-Code"],
     image:
       "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
     link: "https://www.aiscraiper.com",
+    status: "live",
   },
   {
     title: "Fuzzy Matcher",
+    tagline: "Imperfect-data integration engine",
     description:
-      "Have imperfect data? No problem! Plug different data feeds from multiple sources and train our interface to match and merge the correct data, ignoring mistakes. Works with data files, API feeds, and Databases alike.",
+      "Plug in feeds from files, APIs, or databases; train the interface to match and merge records across sources, tolerating mistakes and inconsistencies.",
     tech: ["Data Matching", "Machine Learning", "Data Integration", "ETL"],
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
     link: "https://www.fuzzymatcher.com",
+    status: "live",
   },
   {
     title: "Neurocalendar",
+    tagline: "Calendar for neurodivergent minds",
     description:
-      "A calendar for the neurodivergent created to help them organize their life in ways that ease distraction, anxiety, and promote overall mental and emotional wellness",
+      "A calendar built for the neurodivergent — structured to ease distraction and anxiety, and support mental and emotional wellness day-to-day.",
     tech: [],
     image:
       "https://images.unsplash.com/photo-1496262967815-132206202600?w=800&q=80",
-  },
-];
-
-interface SpecialProject {
-  title: string;
-  company: string;
-  highlights: string[];
-}
-
-const specialProjects: SpecialProject[] = [
-  {
-    title: "CIO",
-    company: "Birdiescope",
-    highlights: [
-      "Led digital transformation initiatives",
-      "Implemented cloud-first strategy",
-      "Established IT governance framework",
-    ],
-  },
-  {
-    title: "E-Commerce Consultant",
-    company: "Private Client",
-    highlights: [
-      "Optimized online sales platform",
-      "Integrated payment systems",
-      "Improved customer experience",
-    ],
-  },
-  {
-    title: "AI Instructor",
-    company: "Learn Good Things",
-    highlights: [
-      "Developed AI curriculum",
-      "Trained professionals in AI implementation",
-      "Created hands-on workshops",
-    ],
-  },
-  {
-    title: "Salesforce Architect",
-    company: "Harmon Solar",
-    highlights: [
-      "Designed custom Salesforce solutions",
-      "Integrated third-party systems",
-      "Optimized business processes",
-    ],
-  },
-  {
-    title: "Web Software Architect",
-    company: "Universal Liaison",
-    highlights: [
-      "Led web application development",
-      "Implemented microservices architecture",
-      "Improved system performance",
-    ],
-  },
-  {
-    title: "SOC and Security Auditor",
-    company: "Private Client",
-    highlights: [
-      "Conducted security assessments",
-      "Implemented security controls",
-      "Provided compliance guidance",
-    ],
-  },
-];
-
-function FlipCard({
-  front,
-  back,
-}: {
-  front: React.ReactNode;
-  back: React.ReactNode;
-}) {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  return (
-    <div
-      className="relative w-full h-[200px] cursor-pointer"
-      onClick={() => setIsFlipped(!isFlipped)}
-      style={{ perspective: "1000px" }}
-    >
-      <div
-        className={`absolute w-full h-full transition-all duration-500 ${
-          isFlipped ? "[transform:rotateY(180deg)]" : ""
-        }`}
-        style={{ transformStyle: "preserve-3d" }}
-      >
-        <div className="absolute w-full h-full backface-hidden">{front}</div>
-        <div className="absolute w-full h-full backface-hidden [transform:rotateY(180deg)]">
-          {back}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const existingProjects = [
-  {
-    title: "Insurance Self-Service Platform",
-    description:
-      "Created a Customer Self Service app that significantly reduced policy change processing time while cutting labor costs",
-    tech: [
-      "Salesforce",
-      "API Integration",
-      "Process Automation",
-      "Customer Portal",
-    ],
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/AAA_logo.svg/1200px-AAA_logo.svg.png",
-  },
-  {
-    title: "Automated Home Purchase System",
-    description:
-      "Automated the home purchase process across enterprise technologies, reducing asset acquisition time from weeks to hours",
-    tech: [
-      "Salesforce",
-      "API Integration",
-      "Workflow Automation",
-      "Real Estate Tech",
-    ],
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Progress_Residential_logo.svg/2560px-Progress_Residential_logo.svg.png",
-  },
-  {
-    title: "Data Warehouse Transformation",
-    description:
-      "Led an Agile Data Warehouse transformation resulting in a 90% reduction of database crashes",
-    tech: ["Data Warehouse", "Agile", "Business Intelligence", "Analytics"],
-    logo: "https://www.triwest.com/content/dam/triwest/images/logo/triwest-logo.png",
+    status: "in-development",
   },
 ];
 
 export default function Projects() {
+  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
     <section
-      id="projects"
-      className="py-32 px-4 bg-gradient-to-b from-muted/80 to-background relative overflow-hidden"
+      id="work"
+      ref={sectionRef as React.RefObject<HTMLElement>}
+      className="py-24 md:py-32 px-4 relative overflow-hidden"
     >
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute bottom-0 left-0 transform">
-          <div className="h-[40rem] w-[40rem] rounded-full bg-primary/5 blur-3xl" />
-        </div>
+      {/* Decorative background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] rounded-full bg-primary/5 blur-3xl" />
+        <div className="absolute top-1/4 right-0 w-[30rem] h-[30rem] rounded-full bg-cyan-400/5 blur-3xl" />
       </div>
 
-      <div className="container relative">
-        <h2 className="text-4xl font-bold tracking-tight mb-6 text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-          Featured Projects
-        </h2>
-        <p className="text-lg text-muted-foreground text-center max-w-3xl mx-auto mb-16">
-          Explore some of my recent work delivering innovative solutions across
-          various industries
-        </p>
+      <div className="container mx-auto max-w-6xl relative z-10">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-16 max-w-3xl"
+        >
+          <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
+            // engagements &amp; products
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-[1.1] tracking-tight">
+            What the firm has{" "}
+            <span className="text-muted-foreground font-normal">
+              shipped — for clients, and for itself.
+            </span>
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Nine client outcomes from project-mode engagements, plus four
+            products the firm builds and runs on its own. All of it is real
+            work with specific owners — no stock-photo case studies.
+          </p>
+        </motion.div>
 
-        {/* New Projects Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {newProjects.map((project) => (
-            <Card
-              key={project.title}
-              className="overflow-hidden bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 transform transition-all hover:scale-[1.02] hover:shadow-xl shadow-lg shadow-primary/5 flex flex-col cursor-pointer"
-              onClick={() => project.link && window.open(project.link, "_blank")}
-            >
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="object-cover w-full h-full transition-transform hover:scale-110"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-2xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="text-base">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <Badge
-                      key={tech}
-                      variant="outline"
-                      className="px-3 py-1 bg-primary/10 hover:bg-primary/20 border-primary/30"
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
+        {/* Row 1 — Client outcomes */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mb-20"
+        >
+          <div className="flex items-end justify-between gap-6 mb-8 flex-wrap">
+            <div>
+              <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-2">
+                // client outcomes
+              </p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
+                What project-mode engagements have delivered.
+              </h3>
+            </div>
+            <p className="font-mono text-xs text-muted-foreground">
+              {clientOutcomes.length} engagements
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {clientOutcomes.map((item, index) => (
+              <motion.div
+                key={`${item.client}-${item.role}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.2 + index * 0.05,
+                }}
+                className={cn(
+                  "group h-full flex flex-col p-6 rounded-xl",
+                  "bg-card/50 border border-border/50",
+                  "hover:border-primary/40 hover:bg-card transition-all duration-300"
+                )}
+              >
+                {item.logo && (
+                  <div className="h-8 mb-4 flex items-center">
+                    <img
+                      src={item.logo}
+                      alt={`${item.client} logo`}
+                      className="max-h-7 max-w-[140px] object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                    />
+                  </div>
+                )}
+                <h4 className="text-lg font-semibold text-foreground leading-snug mb-3">
+                  {item.outcome}
+                </h4>
+                <p className="font-mono text-xs text-muted-foreground mb-4 tracking-wide">
+                  {item.client} · {item.role}
+                </p>
+                {item.tech && item.tech.length > 0 && (
+                  <div className="mt-auto pt-4 border-t border-border/40">
+                    <div className="flex flex-wrap gap-1.5">
+                      {item.tech.map((t) => (
+                        <Badge
+                          key={t}
+                          variant="outline"
+                          className="text-[0.6875rem] font-normal border-border/60 text-muted-foreground"
+                        >
+                          {t}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Row 2 — Owned products */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <div className="flex items-end justify-between gap-6 mb-8 flex-wrap">
+            <div>
+              <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-2">
+                // owned products
+              </p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
+                The firm also ships products.
+              </h3>
+            </div>
+            <p className="font-mono text-xs text-muted-foreground">
+              {ownedProducts.length} in the lineup
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {ownedProducts.map((product, index) => (
+              <motion.div
+                key={product.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.35 + index * 0.08,
+                }}
+                className={cn(
+                  "group h-full flex flex-col rounded-xl overflow-hidden",
+                  "bg-card/60 backdrop-blur-sm",
+                  "border-2 border-primary/30",
+                  "shadow-lg shadow-primary/5",
+                  "hover:border-primary/60 hover:shadow-xl hover:shadow-primary/10",
+                  "transition-all duration-300"
+                )}
+              >
+                {/* Image hero */}
+                <div className="aspect-video relative overflow-hidden bg-secondary/40">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 right-3">
+                    {product.status === "live" ? (
+                      <span className="font-mono text-[0.6875rem] tracking-[0.15em] uppercase bg-primary text-primary-foreground px-2.5 py-1 rounded-md">
+                        Live
+                      </span>
+                    ) : (
+                      <span className="font-mono text-[0.6875rem] tracking-[0.15em] uppercase bg-background/90 backdrop-blur-sm text-muted-foreground border border-border px-2.5 py-1 rounded-md inline-flex items-center gap-1.5">
+                        <Clock className="w-3 h-3" />
+                        In development
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
 
-        {/* Existing Projects Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {existingProjects.map((project) => (
-            <Card
-              key={project.title}
-              className="overflow-hidden bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 transform transition-all hover:scale-[1.02] hover:shadow-xl shadow-lg shadow-primary/5 flex flex-col"
-            >
-              <CardHeader>
-                <CardTitle className="text-2xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="text-base">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="mt-auto">
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <Badge
-                      key={tech}
-                      variant="outline"
-                      className="px-3 py-1 bg-primary/10 hover:bg-primary/20 border-primary/30"
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Special Projects */}
-        <h3 className="text-3xl font-bold tracking-tight mt-16 mb-8 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-          Special Projects
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {specialProjects.map((project) => (
-            <FlipCard
-              key={project.title}
-              front={
-                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10 hover:shadow-lg transition-all">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                    {project.title}
-                  </h3>
-                  <p className="text-lg text-muted-foreground">
-                    {project.company}
+                {/* Body */}
+                <div className="flex flex-col flex-1 p-6">
+                  <h4 className="text-xl font-bold text-foreground mb-1">
+                    {product.title}
+                  </h4>
+                  <p className="font-mono text-xs text-primary mb-3 tracking-wide">
+                    {product.tagline}
                   </p>
-                </Card>
-              }
-              back={
-                <Card className="h-full p-6 bg-gradient-to-br from-card to-card/95 border-2 border-primary/10">
-                  <ul className="list-disc list-inside space-y-2 text-sm">
-                    {project.highlights.map((highlight, index) => (
-                      <li key={index} className="text-muted-foreground">
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              }
-            />
-          ))}
-        </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                    {product.description}
+                  </p>
+
+                  {product.tech.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-5">
+                      {product.tech.map((t) => (
+                        <Badge
+                          key={t}
+                          variant="outline"
+                          className="text-[0.6875rem] font-normal bg-primary/5 border-primary/30 text-muted-foreground"
+                        >
+                          {t}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="mt-auto">
+                    {product.link ? (
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="border-primary/40 hover:border-primary/80 hover:bg-primary/5 w-full sm:w-auto"
+                      >
+                        <a
+                          href={product.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Visit {product.title}
+                          <ExternalLink className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    ) : (
+                      <p className="font-mono text-xs text-muted-foreground">
+                        More details available on request.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
