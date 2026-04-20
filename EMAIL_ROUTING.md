@@ -1,6 +1,6 @@
 # Email Routing Guide
 
-## 📧 Email Destination: `morgan@ctoondemandinc.com`
+## 📧 Email Destination: `morgan.reed@ctoondemandinc.com`
 
 All contact form submissions route to the same destination regardless of the method used.
 
@@ -10,7 +10,7 @@ All contact form submissions route to the same destination regardless of the met
 ```
 User fills form → sendContactMessage() → sendEmailViaPHP() 
 → Detects DEV mode → sendEmailViaClient() → Opens email client
-→ User's default email app → Sends to morgan@ctoondemandinc.com
+→ User's default email app → Sends to morgan.reed@ctoondemandinc.com
 ```
 
 ### **Production Mode** (ctoondemandinc.com) - Current
@@ -18,14 +18,14 @@ User fills form → sendContactMessage() → sendEmailViaPHP()
 User fills form → sendContactMessage() → sendEmailViaPHP() 
 → Fetches /api/send-email.php → Server error (405/HTML response)
 → Falls back to sendEmailViaClient() → Opens email client
-→ User's default email app → Sends to morgan@ctoondemandinc.com
+→ User's default email app → Sends to morgan.reed@ctoondemandinc.com
 ```
 
 ### **Production Mode** (ctoondemandinc.com) - After Server Fix
 ```
 User fills form → sendContactMessage() → sendEmailViaPHP() 
 → Fetches /api/send-email.php → PHP mail() function
-→ Server sends email directly → morgan@ctoondemandinc.com
+→ Server sends email directly → morgan.reed@ctoondemandinc.com
 ```
 
 ## 📍 Specific Code Locations
@@ -33,13 +33,13 @@ User fills form → sendContactMessage() → sendEmailViaPHP()
 ### PHP Email Handler (`api/send-email.php`):
 ```php
 // Line 55
-$to = 'morgan@ctoondemandinc.com';
+$to = 'morgan.reed@ctoondemandinc.com';
 ```
 
 ### Client-Side Fallback (`src/lib/emailer.ts`):
 ```typescript
 // Line 64
-const mailtoLink = `mailto:morgan@ctoondemandinc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+const mailtoLink = `mailto:morgan.reed@ctoondemandinc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 ```
 
 ### From Email Address:
@@ -52,7 +52,7 @@ $from_email = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'ctoondemandinc.com');
 
 ### Via PHP (Production - After Fix):
 ```
-To: morgan@ctoondemandinc.com
+To: morgan.reed@ctoondemandinc.com
 From: noreply@ctoondemandinc.com
 Subject: [Portfolio Contact] User's Subject
 
@@ -73,7 +73,7 @@ Timestamp: 2024-01-15 14:30:25 PST
 
 ### Via Email Client (Development/Current Production):
 ```
-To: morgan@ctoondemandinc.com
+To: morgan.reed@ctoondemandinc.com
 From: User's actual email address
 Subject: User's Subject
 
@@ -103,20 +103,20 @@ $mail->Host = 'smtp.gmail.com';  // or your SMTP server
 $mail->Username = 'your-email@gmail.com';
 $mail->Password = 'your-app-password';
 $mail->setFrom('noreply@ctoondemandinc.com', 'Portfolio Contact');
-$mail->addAddress('morgan@ctoondemandinc.com');
+$mail->addAddress('morgan.reed@ctoondemandinc.com');
 ```
 
 ## 📊 Current Status
 
 | Environment | Method | Status | Email Destination |
 |-------------|--------|--------|-------------------|
-| Development | Email Client | ✅ Working | morgan@ctoondemandinc.com |
-| Production (Current) | Email Client | ✅ Working | morgan@ctoondemandinc.com |
-| Production (After Fix) | PHP Direct | ⏳ Pending | morgan@ctoondemandinc.com |
+| Development | Email Client | ✅ Working | morgan.reed@ctoondemandinc.com |
+| Production (Current) | Email Client | ✅ Working | morgan.reed@ctoondemandinc.com |
+| Production (After Fix) | PHP Direct | ⏳ Pending | morgan.reed@ctoondemandinc.com |
 
 ## 🎯 Summary
 
-**All emails route to: `morgan@ctoondemandinc.com`**
+**All emails route to: `morgan.reed@ctoondemandinc.com`**
 
 - **Currently**: Users' email clients send to you
 - **After server fix**: Server sends directly to you

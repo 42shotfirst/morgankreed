@@ -97,7 +97,7 @@ sudo ufw enable
 ### 7. Test the Contact Form
 1. Visit your website
 2. Fill out the contact form
-3. Check if you receive the email at morgan@ctoondemandinc.com
+3. Check if you receive the email at morgan.reed@ctoondemandinc.com
 4. Check Apache logs: `sudo tail -f /var/log/apache2/ctoondemandinc_error.log`
 
 ## Troubleshooting
