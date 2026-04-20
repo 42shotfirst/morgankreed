@@ -1,0 +1,160 @@
+% Code Listings Style Package
+% Professional code formatting and syntax highlighting
+% Version: 1.0
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-code}[2025/11/01 Code Listings]
+
+% ============================================================================
+% REQUIRED PACKAGES
+% ============================================================================
+
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+
+% ============================================================================
+% COLORS (if not already defined by doc-premium)
+% ============================================================================
+
+\@ifundefined{DocBlue}{
+    % Dark Academic color palette - fallback if doc-premium not loaded
+    \definecolor{DocNavy}{HTML}{0F172A}
+    \definecolor{DocEmerald}{HTML}{047857}
+    \definecolor{DocDark}{HTML}{020617}
+    \definecolor{DocMuted}{HTML}{475569}
+    \definecolor{DocLight}{HTML}{F8FAFC}
+    \colorlet{DocBlue}{DocNavy}
+    \colorlet{DocSuccess}{DocEmerald}
+}{}
+
+% ============================================================================
+% BASE CODE STYLE
+% ============================================================================
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{DocBlue}\bfseries,
+    commentstyle=\color{DocMuted}\itshape,
+    stringstyle=\color{DocSuccess},
+    backgroundcolor=\color{DocLight},
+    frame=single,
+    frameround=tttt,
+    framesep=8pt,
+    rulecolor=\color{DocMuted!30},
+    breaklines=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{DocMuted},
+    xleftmargin=15pt,
+    xrightmargin=5pt,
+    captionpos=b,
+    tabsize=4,
+    keepspaces=true,
+    columns=flexible,
+}
+
+% ============================================================================
+% INLINE CODE
+% ============================================================================
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codeline}[1]{\colorbox{DocLight}{\texttt{#1}}}
+
+% ============================================================================
+% LANGUAGE-SPECIFIC STYLES
+% ============================================================================
+
+% Python
+\lstdefinestyle{python}{
+    language=Python,
+    morekeywords={async,await,self,cls},
+}
+
+% JavaScript/TypeScript
+\lstdefinestyle{javascript}{
+    language=JavaScript,
+    morekeywords={const,let,async,await,export,import,from},
+}
+
+% Java
+\lstdefinestyle{java}{
+    language=Java,
+    morekeywords={var,record,sealed},
+}
+
+% SQL
+\lstdefinestyle{sql}{
+    language=SQL,
+    morekeywords={SERIAL,JSONB,UUID,TIMESTAMP,BIGSERIAL},
+    keywordstyle=\color{DocBlue}\bfseries\MakeUppercase,
+}
+
+% Bash/Shell
+\lstdefinestyle{bash}{
+    language=bash,
+    morekeywords={sudo,apt,brew,docker,make},
+}
+
+% JSON
+\lstdefinestyle{json}{
+    string=[s]{"}{"},
+    stringstyle=\color{DocSuccess},
+    comment=[l]{:},
+    commentstyle=\color{DocDark},
+}
+
+% YAML
+\lstdefinestyle{yaml}{
+    keywords={true,false,null,y,n},
+    keywordstyle=\color{DocBlue}\bfseries,
+    sensitive=false,
+    comment=[l]{\#},
+    commentstyle=\color{DocMuted}\itshape,
+    stringstyle=\color{DocSuccess},
+    moredelim=[l][\color{DocDark}]{:},
+}
+
+% ============================================================================
+% CUSTOM ENVIRONMENTS
+% ============================================================================
+
+% Code block with automatic language detection
+\lstnewenvironment{doccode}[2][]{
+    \lstset{
+        language=#2,
+        caption=#1,
+    }
+}{}
+
+% Inline code file with caption
+% Usage: \doccodefile[caption]{language}{filename}
+\newcommand{\doccodefile}[3][]{
+    \lstinputlisting[
+        language=#2,
+        caption=#1,
+        label=lst:#3
+    ]{#3}
+}
+
+% Backward compatibility
+\lstnewenvironment{wyrdcode}[2][]{
+    \lstset{
+        language=#2,
+        caption=#1,
+    }
+}{}
+
+\newcommand{\wyrdcodefile}[3][]{
+    \doccodefile[#1]{#2}{#3}
+}
+
+% ============================================================================
+% ALGORITHM STYLING
+% ============================================================================
+
+\RequirePackage[linesnumbered,ruled,vlined]{algorithm2e}
+
+% Algorithm command shortcuts
+\newcommand{\algo}[1]{\textsc{#1}}
+
+\endinput

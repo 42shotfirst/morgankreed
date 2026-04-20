@@ -1,0 +1,69 @@
+% Bug Report Template
+% Use with: lualatex
+% Packages: doc-premium, doc-tables, doc-code
+%
+% Format: One report per QA request.
+% For multiple bugs in a single request, duplicate the subsection blocks
+% within each section (marked with "% --- Repeat per bug ---" comments).
+
+\documentclass[12pt,a4paper]{article}
+
+% Style packages (doc-premium handles geometry, fonts, colors, hyperref)
+\usepackage{doc-premium}
+\usepackage{doc-tables}
+\usepackage{doc-code}
+
+% Additional packages for bug reports
+\usepackage{needspace}
+\usepackage{longtable}
+
+% ============================================================================
+% BUG REPORT METADATA — Edit these fields for each report
+% ============================================================================
+
+\newcommand{\ReportTitle}{{{TITLE}}}
+\newcommand{\ReportAuthor}{{{AUTHOR}}}
+\newcommand{\BugID}{BUG-0000}
+\newcommand{\BugSeverity}{Critical / High / Medium / Low}
+\newcommand{\BugStatus}{Open / Investigating / Fix in Progress / Resolved / Closed}
+\newcommand{\BugAssignee}{Unassigned}
+\newcommand{\BugReporter}{{{AUTHOR}}}
+\newcommand{\BugDateFound}{\today}
+\newcommand{\BugComponent}{Component Name}
+
+\title{\ReportTitle}
+\author{\ReportAuthor}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================================
+% Bug Metadata Summary (always on first page)
+% ============================================================================
+
+\begin{center}
+\begin{wyrdtab}{l l l l}
+\textbf{Bug ID} & \BugID & \textbf{Severity} & \BugSeverity \\
+\textbf{Status} & \BugStatus & \textbf{Assignee} & \BugAssignee \\
+\textbf{Reporter} & \BugReporter & \textbf{Date Found} & \BugDateFound \\
+\textbf{Component} & \BugComponent & & \\
+\end{wyrdtab}
+\end{center}
+
+\vspace{0.5em}
+\tableofcontents
+\newpage
+
+% Document sections
+\input{sections/summary}
+\input{sections/environment}
+\input{sections/reproduction}
+\input{sections/expected_vs_actual}
+\input{sections/root_cause}
+\input{sections/resolution}
+\input{sections/ai_context}
+\input{sections/verification}
+
+\end{document}

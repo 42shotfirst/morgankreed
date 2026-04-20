@@ -1,0 +1,694 @@
+% Pinpoint Digital Premium Style
+% Dark-theme, screen-optimized styling mirroring getpinpoint.dev
+% Circuit-board decorations, glass-morphism boxes, electric blue accent
+% Version: 1.0
+% Requires: LuaLaTeX or XeLaTeX for font support
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-digital}[2026/03/01 Pinpoint Digital Premium]
+
+% ============================================================================
+% FONT CONFIGURATION
+% ============================================================================
+
+\RequirePackage{fontspec}
+
+% Primary: Plus Jakarta Sans (matches getpinpoint.dev)
+% Fallback chain: Inter > Source Sans Pro
+\IfFontExistsTF{Plus Jakarta Sans}{%
+    \setsansfont{Plus Jakarta Sans}[
+        Numbers=Proportional,
+        Ligatures=TeX,
+    ]
+}{%
+    \IfFontExistsTF{Inter}{%
+        \setsansfont{Inter}[Numbers=Proportional, Scale=0.95]
+    }{%
+        \setsansfont{Source Sans Pro}[Numbers=Proportional, Scale=0.95]
+    }%
+}
+
+% Sans-serif as document default (digital-first)
+\renewcommand{\familydefault}{\sfdefault}
+
+% Monospace: JetBrains Mono (matches website code blocks)
+\setmonofont{JetBrains Mono}[
+    Scale=0.85,
+    Contextuals=Alternate,
+]
+
+% Serif: reserved for special emphasis or pull quotes
+\setmainfont{Source Serif 4}[
+    Numbers=Proportional,
+    Ligatures=TeX,
+]
+
+% Math support
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+\setmathfont{TeX Gyre Termes Math}
+
+% Microtypography
+\RequirePackage{microtype}
+\microtypesetup{
+    protrusion=true,
+    expansion=true,
+    final=true,
+}
+
+% ============================================================================
+% COLOR SCHEME — Pinpoint Digital Palette
+% ============================================================================
+%
+% Derived from the getpinpoint.dev website CSS custom properties and
+% Tailwind configuration. Optimized for dark backgrounds with high
+% color saturation since this targets screens only.
+%
+% WCAG notes: All text colors meet AA contrast against PinBlack.
+%   PinText on PinBlack:       ~13.2:1 (AAA)
+%   PinTextMuted on PinBlack:  ~6.8:1  (AA)
+%   PinBlue on PinBlack:       ~5.1:1  (AA)
+%
+% ============================================================================
+
+\RequirePackage[dvipsnames]{xcolor}
+
+% --- Core brand (from tailwind.config.ts) ---
+\definecolor{PinBlack}{HTML}{0A0A0F}        % Page background
+\definecolor{PinCard}{HTML}{111827}          % Card / elevated surface
+\definecolor{PinSurface}{HTML}{1A1F2E}      % Raised surface / glass fill
+\definecolor{PinNavy}{HTML}{1E3A5F}         % Secondary deep blue
+\definecolor{PinBlue}{HTML}{3482EF}         % Primary accent (electric blue)
+\definecolor{PinBlueDeep}{HTML}{2563EB}     % Interactive / button blue
+
+% --- Text hierarchy ---
+\definecolor{PinText}{HTML}{E2E8F0}         % Body text
+\definecolor{PinTextBright}{HTML}{F0F4F8}   % Headings, emphasis
+\definecolor{PinTextMuted}{HTML}{94A3B8}    % Captions, metadata
+\definecolor{PinTextDim}{HTML}{64748B}      % Disabled, timestamps
+
+% --- Status / semantic ---
+\definecolor{PinSuccess}{HTML}{22C55E}      % Positive, complete (green-500)
+\definecolor{PinWarning}{HTML}{EAB308}      % Caution, pending (yellow-500)
+\definecolor{PinDanger}{HTML}{EF4444}       % Error, destructive
+
+% --- Borders / structure ---
+\definecolor{PinBorder}{HTML}{1F2937}       % Default border
+\definecolor{PinBorderLight}{HTML}{374151}  % Emphasized border
+
+% --- Semantic aliases (backward-compatible with doc-premium naming) ---
+\colorlet{DocBlue}{PinBlue}
+\colorlet{DocNavy}{PinNavy}
+\colorlet{DocEmerald}{PinSuccess}
+\colorlet{DocBrass}{PinWarning}
+\colorlet{DocBurgundy}{PinDanger}
+\colorlet{DocDark}{PinBlack}
+\colorlet{DocMuted}{PinTextMuted}
+\colorlet{DocLight}{PinCard}
+\colorlet{DocBg}{PinBlack}
+\colorlet{DocSuccess}{PinSuccess}
+\colorlet{DocWarning}{PinWarning}
+\colorlet{DocDanger}{PinDanger}
+
+% ============================================================================
+% PAGE LAYOUT AND DARK BACKGROUND
+% ============================================================================
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=28mm,
+    bottom=28mm,
+    left=25mm,
+    right=25mm,
+    headheight=22pt,
+}
+
+% Dark page background with light default text
+\pagecolor{PinBlack}
+\color{PinText}
+
+% ============================================================================
+% SPACING AND TYPOGRAPHY (Butterick, tuned for screen)
+% ============================================================================
+
+\RequirePackage{setspace}
+\setstretch{1.35}  % Generous line height for screen legibility
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt plus 2pt minus 1pt}
+
+% Widow/orphan control
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+
+% Hyphenation
+\RequirePackage[english]{babel}
+\tolerance=1000
+\emergencystretch=1em
+\hyphenpenalty=50
+
+% Prevent orphaned headers
+\RequirePackage{needspace}
+
+% ============================================================================
+% SECTION HEADINGS
+% ============================================================================
+
+\RequirePackage{titlesec}
+
+% Section: electric blue with subtle rule underneath
+\titleformat{\section}
+    {\Large\bfseries\sffamily\color{PinBlue}}
+    {\thesection}{1em}{}
+    [\vspace{2pt}{\color{PinBorder}\titlerule[0.6pt]}]
+
+% Subsection: bright white
+\titleformat{\subsection}
+    {\large\bfseries\sffamily\color{PinTextBright}}
+    {\thesubsection}{1em}{}
+
+% Subsubsection: muted
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\sffamily\color{PinTextMuted}}
+    {\thesubsubsection}{1em}{}
+
+\titlespacing*{\section}{0pt}{24pt plus 4pt minus 2pt}{12pt plus 2pt minus 1pt}
+\titlespacing*{\subsection}{0pt}{18pt plus 3pt minus 2pt}{8pt plus 2pt minus 1pt}
+\titlespacing*{\subsubsection}{0pt}{12pt plus 2pt minus 1pt}{6pt plus 1pt}
+
+% ============================================================================
+% GLASS MORPHISM CALLOUT BOXES
+% ============================================================================
+%
+% Simulates the website's glass-section component:
+%   backdrop-blur, white/[0.08] border, translucent gradient fill,
+%   subtle outer shadow, inset highlight along top edge.
+%
+% In LaTeX/tcolorbox we approximate this with:
+%   - Dark translucent fill (PinSurface)
+%   - Thin luminous border (PinBorderLight)
+%   - Rounded corners (arc=6pt)
+%   - Soft drop shadow
+%   - Colored west-side accent stripe per semantic type
+%
+% ============================================================================
+
+\RequirePackage[most]{tcolorbox}
+
+% Base glass preset
+\tcbset{
+    glass/.style={
+        enhanced,
+        rounded corners,
+        arc=6pt,
+        boxrule=0.5pt,
+        colframe=PinBorderLight,
+        colback=PinSurface,
+        coltext=PinText,
+        top=10pt,
+        bottom=10pt,
+        left=14pt,
+        right=14pt,
+        fonttitle=\sffamily\bfseries,
+        before skip=15pt,
+        after skip=15pt,
+        unbreakable,
+        shadow={1pt}{-1pt}{0pt}{black!50},
+    },
+}
+
+% Key Insight (blue accent)
+\newtcolorbox{keyinsight}{
+    glass,
+    colframe=PinBlue!50,
+    colback=PinBlue!6!PinBlack,
+    title=Key Insight,
+    colbacktitle=PinBlue!15!PinBlack,
+    coltitle=PinBlue,
+    borderline west={3pt}{0pt}{PinBlue},
+}
+
+% Business Value (green accent)
+\newtcolorbox{businessvalue}{
+    glass,
+    colframe=PinSuccess!40,
+    colback=PinSuccess!5!PinBlack,
+    title=Business Value,
+    colbacktitle=PinSuccess!12!PinBlack,
+    coltitle=PinSuccess,
+    borderline west={3pt}{0pt}{PinSuccess},
+}
+
+% Technical Detail (neutral accent)
+\newtcolorbox{technicaldetail}{
+    glass,
+    colframe=PinBorderLight,
+    colback=PinCard,
+    title=Technical Detail,
+    colbacktitle=PinBorderLight!20!PinBlack,
+    coltitle=PinTextMuted,
+    borderline west={3pt}{0pt}{PinTextMuted},
+}
+
+% Critical Point (amber accent)
+\newtcolorbox{criticalpoint}{
+    glass,
+    colframe=PinWarning!40,
+    colback=PinWarning!5!PinBlack,
+    title=Critical Point,
+    colbacktitle=PinWarning!12!PinBlack,
+    coltitle=PinWarning,
+    borderline west={3pt}{0pt}{PinWarning},
+}
+
+% Warning (red accent)
+\newtcolorbox{warningbox}{
+    glass,
+    colframe=PinDanger!40,
+    colback=PinDanger!5!PinBlack,
+    title=Warning,
+    colbacktitle=PinDanger!12!PinBlack,
+    coltitle=PinDanger,
+    borderline west={3pt}{0pt}{PinDanger},
+}
+
+% Plain callout (neutral glass)
+\newtcolorbox{callout}{
+    glass,
+    colback=PinSurface,
+    colframe=PinBorder,
+}
+
+% Note box (subtle blue border)
+\newtcolorbox{notebox}{
+    glass,
+    colback=PinCard,
+    colframe=PinBlue!20,
+    boxrule=0.5pt,
+}
+
+% ============================================================================
+% HEADERS AND FOOTERS
+% ============================================================================
+
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{%
+    \hbox to\headwidth{%
+        \color{PinBlue!30}\leaders\hrule height \headrulewidth\hfill
+    }%
+}
+\fancyhead[L]{\sffamily\small\textcolor{PinTextMuted}{\@title}}
+\fancyhead[R]{\sffamily\small\textcolor{PinTextDim}{\leftmark}}
+\fancyfoot[C]{\sffamily\textcolor{PinTextMuted}{\thepage}}
+
+% ============================================================================
+% HYPERLINKS AND PDF SETUP
+% ============================================================================
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=PinBlue,
+    citecolor=PinBlue,
+    urlcolor=PinBlue,
+    filecolor=PinBlue,
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+    pdfpagemode=UseOutlines,  % UseOutlines for bookmarks; FullScreen for kiosk
+}
+\RequirePackage{bookmark}
+\RequirePackage[nameinlink,noabbrev]{cleveref}
+
+% ============================================================================
+% LISTS
+% ============================================================================
+
+\RequirePackage{enumitem}
+\setlist{topsep=6pt, itemsep=4pt, parsep=3pt}
+\setlist[itemize]{label=\textcolor{PinBlue}{\textbullet}}
+\setlist[enumerate]{label=\textcolor{PinBlue}{\arabic*.}}
+
+% ============================================================================
+% QUOTES
+% ============================================================================
+
+\RequirePackage{csquotes}
+
+% ============================================================================
+% CAPTIONS
+% ============================================================================
+
+\RequirePackage{caption}
+\captionsetup{
+    labelfont={bf,sf,small,color=PinBlue},
+    textfont={small,color=PinTextMuted},
+    format=hang,
+    margin=1cm,
+    aboveskip=12pt,
+    belowskip=6pt,
+}
+\captionsetup[table]{position=above}
+
+% ============================================================================
+% TABLES
+% ============================================================================
+
+\RequirePackage{colortbl}
+\RequirePackage{booktabs}
+\arrayrulecolor{PinBorder}
+\setlength{\heavyrulewidth}{0.8pt}
+\setlength{\lightrulewidth}{0.4pt}
+
+% ============================================================================
+% GRAPHICS AND TIKZ
+% ============================================================================
+
+\RequirePackage{graphicx}
+\RequirePackage{subcaption}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{
+    positioning, shapes.geometric, arrows.meta, calc,
+    shadows, patterns, fit, backgrounds, shapes.symbols,
+    decorations.pathmorphing, decorations.markings,
+}
+
+% --- Digital diagram node styles ---
+
+\tikzset{
+    component/.style={
+        rectangle,
+        rounded corners=4pt,
+        draw=PinBlue!60,
+        fill=PinBlue!8!PinBlack,
+        text=PinText,
+        text width=3cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\small,
+    },
+    dataflow/.style={
+        ->,
+        >=Stealth,
+        thick,
+        PinBlue!70,
+    },
+    server/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=PinBorderLight,
+        fill=PinCard,
+        text=PinText,
+        minimum width=2.5cm,
+        minimum height=1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    database/.style={
+        cylinder,
+        shape border rotate=90,
+        draw=PinSuccess!60,
+        fill=PinSuccess!8!PinBlack,
+        text=PinText,
+        minimum width=2cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    api/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=PinWarning!60,
+        fill=PinWarning!8!PinBlack,
+        text=PinText,
+        minimum width=2.5cm,
+        minimum height=1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    highlight/.style={
+        rectangle,
+        rounded corners=4pt,
+        draw=PinBlue!40,
+        fill=PinBlue!4!PinBlack,
+        text=PinTextBright,
+        inner sep=10pt,
+        font=\sffamily,
+    },
+}
+
+% ============================================================================
+% CIRCUIT BOARD BACKGROUND DECORATIONS
+% ============================================================================
+%
+% Mirrors the SVG grid-lines, pulse-nodes, and flow-dots from the website's
+% PageBackground component. Three density levels match the website:
+%   \circuitlight   — sparse grid, few nodes (content pages)
+%   \circuitmedium  — moderate density (section breaks)
+%   \circuitfull    — dense grid with flow traces (title page)
+%
+% Each command draws into a tikzpicture with [remember picture, overlay]
+% so it layers behind page content. Use at the start of a page or inside
+% \AtBeginShipout for automatic placement.
+%
+% Performance note: TikZ overlays on every page can slow compilation.
+% For long documents, apply circuit decorations only to select pages.
+% ============================================================================
+
+% --- Sparse circuit (content pages) ---
+\newcommand{\circuitlight}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Grid lines (6 each direction) — mix with PinBlack, not white
+        \foreach \f in {0.15, 0.30, 0.45, 0.60, 0.75, 0.90} {
+            \draw[PinBlue!15!PinBlack, line width=0.3pt]
+                ($(current page.south west)!\f!(current page.north west)$) --
+                ($(current page.south east)!\f!(current page.north east)$);
+            \draw[PinBlue!15!PinBlack, line width=0.3pt]
+                ($(current page.south west)!\f!(current page.south east)$) --
+                ($(current page.north west)!\f!(current page.north east)$);
+        }
+        % Pulse nodes (sparse)
+        \foreach \xf/\yf in {0.30/0.45, 0.60/0.75, 0.75/0.30} {
+            \fill[PinBlue!30!PinBlack]
+                ($(current page.south west) + (\xf\paperwidth, \yf\paperheight)$)
+                circle (1.5pt);
+        }
+    \end{tikzpicture}%
+}
+
+% --- Medium circuit (section breaks) ---
+\newcommand{\circuitmedium}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Grid lines (8 each direction)
+        \foreach \f in {0.10, 0.22, 0.34, 0.46, 0.58, 0.70, 0.82, 0.94} {
+            \draw[PinBlue!18!PinBlack, line width=0.3pt]
+                ($(current page.south west)!\f!(current page.north west)$) --
+                ($(current page.south east)!\f!(current page.north east)$);
+            \draw[PinBlue!18!PinBlack, line width=0.3pt]
+                ($(current page.south west)!\f!(current page.south east)$) --
+                ($(current page.north west)!\f!(current page.north east)$);
+        }
+        % Pulse nodes (medium)
+        \foreach \xf/\yf in {0.22/0.34, 0.46/0.70, 0.70/0.46, 0.34/0.82, 0.82/0.22, 0.58/0.58} {
+            \fill[PinBlue!35!PinBlack]
+                ($(current page.south west) + (\xf\paperwidth, \yf\paperheight)$)
+                circle (2pt);
+        }
+        % Single flow trace
+        \draw[PinBlue!25!PinBlack, line width=0.5pt]
+            ($(current page.south west) + (0.22\paperwidth, 0.34\paperheight)$)
+            -- ++(25mm, 0) -- ++(0, 18mm) -- ++(30mm, 0);
+    \end{tikzpicture}%
+}
+
+% --- Full circuit (title pages and dividers) ---
+\newcommand{\circuitfull}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        % Dense grid (12 each direction) — blue tinted against black
+        \foreach \f in {0.06, 0.14, 0.22, 0.30, 0.38, 0.46, 0.54, 0.62, 0.70, 0.78, 0.86, 0.94} {
+            \draw[PinBlue!20!PinBlack, line width=0.3pt]
+                ($(current page.south west)!\f!(current page.north west) + (20mm, 0)$) --
+                ($(current page.south east)!\f!(current page.north east) + (-20mm, 0)$);
+            \draw[PinBlue!20!PinBlack, line width=0.3pt]
+                ($(current page.south west)!\f!(current page.south east) + (0, 20mm)$) --
+                ($(current page.north west)!\f!(current page.north east) + (0, -20mm)$);
+        }
+        % Pulse nodes (dense)
+        \foreach \xf/\yf in {
+            0.22/0.30, 0.46/0.70, 0.78/0.46, 0.30/0.86, 0.62/0.22,
+            0.38/0.54, 0.86/0.62, 0.14/0.78, 0.54/0.38%
+        } {
+            \fill[PinBlue!40!PinBlack]
+                ($(current page.south west) + (\xf\paperwidth, \yf\paperheight)$)
+                circle (2.5pt);
+        }
+        % Flow traces (right-angle circuit paths)
+        \draw[PinBlue!30!PinBlack, line width=0.5pt]
+            ($(current page.south west) + (25mm, 40mm)$)
+            -- ++(30mm, 0) -- ++(0, 20mm) -- ++(40mm, 0);
+        \draw[PinBlue!30!PinBlack, line width=0.5pt]
+            ($(current page.north east) + (-25mm, -50mm)$)
+            -- ++(-25mm, 0) -- ++(0, -30mm) -- ++(-35mm, 0);
+        \draw[PinBlue!30!PinBlack, line width=0.5pt]
+            ($(current page.south east) + (-30mm, 60mm)$)
+            -- ++(0, 25mm) -- ++(-40mm, 0) -- ++(0, 15mm);
+        % Bottom mask — solid rectangle to fade out grid at page bottom
+        \fill[PinBlack]
+            (current page.south west) rectangle
+            ($(current page.south east) + (0, 20mm)$);
+    \end{tikzpicture}%
+}
+
+% ============================================================================
+% TITLE PAGE
+% ============================================================================
+%
+% Usage:
+%   \digitaltitle[Subtitle text]{Document Title}{Author Name}{March 2026}
+%
+% Renders a full-page dark title with circuit-board background, central
+% blue glow, and clean typographic hierarchy.
+% ============================================================================
+
+\newcommand{\digitaltitle}[4][]{%
+    % #1 = optional subtitle
+    % #2 = title
+    % #3 = author
+    % #4 = date
+    \begin{titlepage}
+        \circuitfull
+        % Central glow rings
+        \begin{tikzpicture}[remember picture, overlay]
+            \fill[PinBlue, opacity=0.03]
+                ($(current page.center) + (0, 1cm)$) circle (9cm);
+            \fill[PinBlue, opacity=0.015]
+                ($(current page.center) + (0, 1cm)$) circle (13cm);
+        \end{tikzpicture}
+        \vspace*{4cm}
+        \begin{center}
+            {\fontsize{36}{44}\selectfont\bfseries\sffamily%
+             \textcolor{PinBlue}{#2}\par}
+            \vspace{8mm}
+            \ifx\\#1\\%
+            \else
+                {\Large\sffamily\textcolor{PinTextMuted}{#1}\par}
+                \vspace{6mm}
+            \fi
+            {\color{PinBlue!35}\rule{8cm}{0.4pt}\par}
+            \vspace{8mm}
+            {\large\sffamily\textcolor{PinTextBright}{#3}\par}
+            \vspace{4mm}
+            {\sffamily\textcolor{PinTextDim}{#4}\par}
+        \end{center}
+    \end{titlepage}
+    \setcounter{page}{1}%
+}
+
+% ============================================================================
+% SECTION BREAK PAGE
+% ============================================================================
+%
+% Usage: \sectionpage{Section Title}
+%
+% Full-page divider between major document sections. Draws the medium
+% circuit background and centers the section title in electric blue.
+% ============================================================================
+
+\newcommand{\sectionpage}[1]{%
+    \clearpage
+    \thispagestyle{empty}
+    \circuitmedium
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[PinBlue, opacity=0.025]
+            (current page.center) circle (7cm);
+    \end{tikzpicture}
+    \vspace*{\fill}
+    \begin{center}
+        {\fontsize{28}{36}\selectfont\bfseries\sffamily%
+         \textcolor{PinBlue}{#1}\par}
+        \vspace{4mm}
+        {\color{PinBlue!30}\rule{5cm}{0.4pt}\par}
+    \end{center}
+    \vspace*{\fill}
+    \clearpage
+}
+
+% ============================================================================
+% CODE LISTINGS (Dark Theme)
+% ============================================================================
+%
+% Overrides default listings colors for dark backgrounds. If doc-code.sty
+% is loaded alongside this package, these settings take precedence because
+% doc-digital loads after doc-code in the preamble.
+% ============================================================================
+
+\RequirePackage{listings}
+
+\lstset{
+    basicstyle=\ttfamily\small\color{PinText},
+    keywordstyle=\color{PinBlue}\bfseries,
+    commentstyle=\color{PinTextDim}\itshape,
+    stringstyle=\color{PinSuccess},
+    backgroundcolor=\color{PinCard},
+    frame=single,
+    frameround=tttt,
+    framesep=8pt,
+    rulecolor=\color{PinBorder},
+    breaklines=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{PinTextDim},
+    xleftmargin=15pt,
+    xrightmargin=5pt,
+    captionpos=b,
+    tabsize=4,
+    keepspaces=true,
+    columns=flexible,
+}
+
+% Inline code (dark chip)
+\newcommand{\pincode}[1]{%
+    \colorbox{PinCard}{\texttt{\textcolor{PinBlue}{#1}}}%
+}
+
+% ============================================================================
+% UTILITY COMMANDS
+% ============================================================================
+
+% Glow text for high-emphasis inline callouts
+\newcommand{\glow}[1]{\textcolor{PinBlue}{\textbf{#1}}}
+
+% Brand wordmark
+\newcommand{\pinpoint}{\textcolor{PinBlue}{\textbf{Pinpoint}}}
+
+% Pull quote (serif accent on dark)
+\newenvironment{pullquote}{%
+    \begin{center}
+    \begin{minipage}{0.85\textwidth}
+    \rmfamily\large\itshape\color{PinTextBright}%
+    \textcolor{PinBlue!40}{\rule{\linewidth}{0.4pt}}\\[6pt]%
+}{%
+    \\[6pt]\textcolor{PinBlue!40}{\rule{\linewidth}{0.4pt}}
+    \end{minipage}
+    \end{center}
+}
+
+% ============================================================================
+% TEXT SHORTCUTS
+% ============================================================================
+
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\wrt}{w.r.t.}
+\newcommand{\st}{s.t.}
+
+\endinput

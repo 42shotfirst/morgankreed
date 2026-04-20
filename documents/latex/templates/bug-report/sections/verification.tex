@@ -1,0 +1,51 @@
+% Verification
+\needspace{10cm}
+\section{Verification}
+
+% Define how the fix will be validated. No fix is complete without
+% accompanying test coverage and regression confirmation.
+
+\subsection{Test Cases}
+
+% List the test cases that confirm the defect is resolved.
+
+\begin{wyrdtab}{l l l l}
+\textbf{Test ID} & \textbf{Description}           & \textbf{Type}       & \textbf{Result} \\
+TC-001            & Verify correct behavior          & Unit                & Pass / Fail \\
+TC-002            & Reproduce original defect        & Regression          & Pass / Fail \\
+TC-003            & Edge case coverage               & Integration         & Pass / Fail \\
+\end{wyrdtab}
+
+% Uncomment to include test code:
+%
+% \begin{wyrdcode}[Verification Test]{python}
+% def test_calculate_total_includes_all_items():
+%     items = [Item(price=10), Item(price=20), Item(price=30)]
+%     assert calculate_total(items) == 60
+% \end{wyrdcode}
+
+\subsection{Regression Check}
+
+% Confirm that the fix does not introduce new defects.
+
+\begin{itemize}
+    \item Existing test suite status: All passing / Failures noted below
+    \item Related feature areas manually verified: Yes / No
+    \item Performance impact assessed: None / Measured below
+\end{itemize}
+
+\subsection{Sign-Off}
+
+% Final approval before closing the defect.
+
+\begin{wyrdtab}{l l l}
+\textbf{Role}       & \textbf{Name}     & \textbf{Date} \\
+Developer           &                   & \\
+QA Engineer         &                   & \\
+Tech Lead           &                   & \\
+\end{wyrdtab}
+
+\begin{notebox}
+This defect may be closed once all test cases pass and sign-off
+is obtained from QA and the technical lead.
+\end{notebox}

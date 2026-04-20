@@ -1,0 +1,122 @@
+% Digital Report Template
+% Uses doc-digital for dark, screen-optimized premium output
+% Compile with: lualatex main.tex
+
+\documentclass[11pt]{article}
+
+% Core digital style (includes fonts, colors, dark bg, layout, TikZ)
+\usepackage{doc-digital}
+
+% Optional: math notation shortcuts
+% \usepackage{doc-math}
+
+% Optional: additional table environments
+% \usepackage{doc-tables}
+
+% Document metadata
+\title{Quarterly Platform Report}
+\author{Pinpoint Engineering}
+\date{Q1 2026}
+
+\begin{document}
+
+% ---- Title Page ----
+\digitaltitle[Platform Health and Roadmap Summary]{Quarterly Platform Report}{Pinpoint Engineering}{March 2026}
+
+% ---- Table of Contents ----
+{
+    \hypersetup{linkcolor=PinTextMuted}
+    \tableofcontents
+}
+\newpage
+
+% ---- Content ----
+\section{Executive Summary}
+
+This quarter saw significant progress across the platform. Test execution throughput increased by 34\% following the migration to parallel dispatchers, while the average bug report resolution time decreased from 48 hours to under 18.
+
+\begin{keyinsight}
+The combination of API token expansion and MCP server integration has reduced onboarding time for new enterprise clients by roughly half compared to the previous quarter.
+\end{keyinsight}
+
+\section{Platform Metrics}
+
+\subsection{Reliability}
+
+System uptime remained at 99.97\% across all production regions. The single incident on February 12 was traced to a certificate rotation failure in the staging proxy, which did not affect customer-facing services.
+
+\begin{table}[ht]
+    \centering
+    \caption{Availability by Region}
+    \begin{tabular}{lcc}
+        \toprule
+        \textcolor{PinTextBright}{\textbf{Region}} &
+        \textcolor{PinTextBright}{\textbf{Uptime}} &
+        \textcolor{PinTextBright}{\textbf{Incidents}} \\
+        \midrule
+        US East     & 99.99\% & 0 \\
+        EU West     & 99.97\% & 1 \\
+        APAC        & 99.98\% & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Performance}
+
+\begin{criticalpoint}
+Peak API response time exceeded the 200ms SLA target on three occasions during batch import windows. The dispatcher queue redesign in v2.4 addresses this with priority-based routing.
+\end{criticalpoint}
+
+\section{Architecture Updates}
+
+The platform architecture shifted toward a more modular dispatch layer this quarter. The key changes are summarized below.
+
+\begin{itemize}
+    \item Migrated from monolithic dispatcher to per-project worker pools
+    \item Introduced API token scoping for CLI and MCP integrations
+    \item Added tenant-aware caching at the service boundary
+\end{itemize}
+
+\begin{technicaldetail}
+Worker pools use a weighted fair-queuing algorithm that allocates capacity proportional to each tenant's contracted tier. Enterprise tenants receive dedicated pool reservations, while Professional and Core tenants share a common pool with burst capacity.
+\end{technicaldetail}
+
+\subsection{Diagram: Dispatch Flow}
+
+\begin{center}
+\begin{tikzpicture}[node distance=2cm and 2.5cm]
+    \node[component] (api) {API Gateway};
+    \node[component, right=of api] (dispatch) {Dispatcher};
+    \node[database, right=of dispatch] (db) {PostgreSQL};
+    \node[api, below=of dispatch] (worker) {Worker Pool};
+
+    \draw[dataflow] (api) -- (dispatch);
+    \draw[dataflow] (dispatch) -- (db);
+    \draw[dataflow] (dispatch) -- (worker);
+    \draw[dataflow, dashed, PinSuccess!50] (worker) -- (db) node[midway, right, font=\sffamily\tiny, text=PinTextMuted] {results};
+\end{tikzpicture}
+\end{center}
+
+\section{Looking Ahead}
+
+Q2 priorities focus on three areas:
+
+\begin{enumerate}
+    \item \glow{Onboarding automation} through project templates and guided setup flows
+    \item \glow{Reporting engine} for scheduled bug report digests per project
+    \item \glow{CLI feature parity} with the web dashboard for power users
+\end{enumerate}
+
+\begin{businessvalue}
+Automated onboarding is projected to reduce the average time-to-first-test from 3 days to under 4 hours, directly improving trial-to-paid conversion rates.
+\end{businessvalue}
+
+\begin{pullquote}
+The best testing platform is the one your team actually uses every day.
+\end{pullquote}
+
+\begin{warningbox}
+The legacy webhook format will be deprecated in v2.5. All integrations must migrate to the v2 event schema before June 30, 2026.
+\end{warningbox}
+
+\end{document}

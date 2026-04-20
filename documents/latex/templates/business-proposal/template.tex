@@ -1,0 +1,40 @@
+% Business Proposal Template
+% Use with: lualatex
+% Packages: doc-premium, doc-tables
+
+\documentclass[12pt,letterpaper]{article}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+% Style packages
+\usepackage{doc-premium}
+\usepackage{doc-tables}
+
+% Document metadata
+\title{{{TITLE}}}
+\author{{{AUTHOR}}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% Document sections
+\input{sections/executive_summary}
+\input{sections/problem_statement}
+\input{sections/proposed_solution}
+\input{sections/business_value}
+\input{sections/timeline}
+\input{sections/budget}
+\input{sections/risks}
+\input{sections/next_steps}
+
+\end{document}

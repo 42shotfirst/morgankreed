@@ -1,0 +1,604 @@
+% Arcane LaTeX Style Package
+% Wizard-inspired styling with mystical aesthetics
+% Inspired by terminal UIs and ancient manuscripts
+% Version: 1.0
+% Requires: LuaLaTeX or XeLaTeX for font support
+%
+% Design Philosophy:
+%   "As above, so below" - bridging ancient knowledge with modern precision
+%   Terminal-inspired luminous accents on deep backgrounds
+%   Sharp geometric forms meeting organic mystical elements
+%   ADA compliant (WCAG AA) and print-ready
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-arcane}[2026/01/02 Arcane Style - Wizard Aesthetic]
+
+% ============================================================================
+% PACKAGE OPTIONS
+% ============================================================================
+
+\newif\if@arcane@darkmode
+\@arcane@darkmodetrue  % Default to dark mode
+
+\DeclareOption{light}{\@arcane@darkmodefalse}
+\DeclareOption{dark}{\@arcane@darkmodetrue}
+\ProcessOptions\relax
+
+% ============================================================================
+% REQUIRED PACKAGES
+% ============================================================================
+
+\RequirePackage{fontspec}
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+\RequirePackage{pgfornament}  % For decorative elements (install texlive-pictures)
+\RequirePackage{fancyhdr}
+\RequirePackage{geometry}
+\RequirePackage{setspace}
+\RequirePackage{enumitem}
+\RequirePackage{caption}
+\RequirePackage{hyperref}
+\RequirePackage{bookmark}
+\RequirePackage{microtype}
+
+\usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc,shadows,patterns,fit,backgrounds,decorations.pathmorphing,decorations.markings}
+
+% ============================================================================
+% ARCANE COLOR PALETTE
+% ============================================================================
+% Designed for ADA compliance (WCAG AA 4.5:1 for normal text)
+% All colors tested against both dark and light backgrounds
+
+% === Primary Palette (The Elements) ===
+\definecolor{ArcaneObsidian}{HTML}{0D1117}    % Void black - primary background
+\definecolor{ArcaneVoid}{HTML}{010409}        % True void - deeper black
+\definecolor{ArcaneSilver}{HTML}{C9D1D9}      % Moonlight silver - primary text (13.5:1 on obsidian)
+
+% === Elemental Accents (Terminal-Inspired, ADA Compliant) ===
+\definecolor{ArcaneEther}{HTML}{00875A}       % Spirit green - success (5.1:1 on white)
+\definecolor{ArcaneFrost}{HTML}{0077B6}       % Ice blue/cyan - info (4.6:1 on white)
+\definecolor{ArcaneFlame}{HTML}{C45D00}       % Fire amber - warning (4.8:1 on white)
+\definecolor{ArcaneBlood}{HTML}{A51D2D}       % Blood crimson - danger (7.2:1 on white)
+\definecolor{ArcaneMystic}{HTML}{7B2CBF}      % Mystic purple - arcane/special (6.8:1 on white)
+
+% === Luminous Variants (For Glow Effects on Dark Backgrounds) ===
+\definecolor{ArcaneGlow}{HTML}{39FF14}        % Neon green - terminal glow
+\definecolor{ArcaneCyan}{HTML}{00D4FF}        % Electric cyan - highlights
+\definecolor{ArcaneAmber}{HTML}{FFB000}       % Warm amber - warnings
+\definecolor{ArcaneRuby}{HTML}{FF3366}        % Ruby red - errors
+
+% === Supporting Colors ===
+\definecolor{ArcaneMist}{HTML}{6E7681}        % Gray mist - muted text (4.7:1 on obsidian)
+\definecolor{ArcaneParchment}{HTML}{F0E6D3}   % Aged parchment - light mode bg
+\definecolor{ArcaneInk}{HTML}{1C2128}         % Dark ink - borders on dark
+\definecolor{ArcaneDust}{HTML}{21262D}        % Star dust - subtle backgrounds
+
+% === Semantic Aliases ===
+\colorlet{ArcaneSuccess}{ArcaneEther}
+\colorlet{ArcaneInfo}{ArcaneFrost}
+\colorlet{ArcaneWarning}{ArcaneFlame}
+\colorlet{ArcaneDanger}{ArcaneBlood}
+\colorlet{ArcaneAccent}{ArcaneMystic}
+
+% === Mode-Dependent Colors ===
+\if@arcane@darkmode
+    \colorlet{ArcanePageBg}{ArcaneObsidian}
+    \colorlet{ArcaneText}{ArcaneSilver}
+    \colorlet{ArcaneBorder}{ArcaneInk}
+    \colorlet{ArcaneBoxBg}{ArcaneDust}
+    \colorlet{ArcaneHighlight}{ArcaneGlow}
+\else
+    \colorlet{ArcanePageBg}{ArcaneParchment}
+    \colorlet{ArcaneText}{ArcaneObsidian}
+    \colorlet{ArcaneBorder}{ArcaneMist}
+    \colorlet{ArcaneBoxBg}{white}
+    \colorlet{ArcaneHighlight}{ArcaneMystic}
+\fi
+
+% ============================================================================
+% FONT CONFIGURATION - Mystical Yet Readable
+% ============================================================================
+
+% Primary serif - elegant with mystical undertones
+\setmainfont{Source Serif 4}[
+    Numbers=OldStyle,
+    Ligatures=TeX,
+]
+
+% Sans serif - clean geometric (for headings)
+\setsansfont{IBM Plex Sans}[
+    Numbers=Lining,
+    Scale=0.95,
+]
+
+% Monospace - terminal aesthetic (for code/runes)
+\setmonofont{JetBrains Mono}[
+    Scale=0.88,
+    Contextuals=Alternate,
+]
+
+% Math font
+\setmathfont{TeX Gyre Termes Math}
+
+% Enhanced typography
+\microtypesetup{
+    protrusion=true,
+    expansion=true,
+    final=true,
+    tracking=true,
+}
+
+% ============================================================================
+% PAGE GEOMETRY
+% ============================================================================
+
+\geometry{
+    a4paper,
+    top=28mm,
+    bottom=28mm,
+    left=24mm,
+    right=24mm,
+    headheight=24pt,
+}
+
+% ============================================================================
+% SPACING AND TYPOGRAPHY (Butterick Principles)
+% ============================================================================
+
+\setstretch{1.25}  % Butterick: 120-145% line spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt plus 2pt minus 2pt}
+
+% Butterick: Widow/orphan control - "typographic errors"
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+
+% Butterick: Proper hyphenation for justified text
+\RequirePackage[english]{babel}
+\tolerance=1000
+\emergencystretch=1em
+\hyphenpenalty=50
+
+% Butterick: Small caps need letterspacing
+\SetTracking{encoding=*, shape=sc}{50}
+
+% Layout control for preventing orphaned headers
+\RequirePackage{needspace}
+
+% ============================================================================
+% MYSTICAL DECORATIVE ELEMENTS (TikZ)
+% ============================================================================
+
+% === Rune-like Glyph Commands ===
+\newcommand{\runestar}{%
+    \tikz[baseline=-0.5ex]{
+        \draw[ArcaneHighlight, line width=0.6pt]
+            (0,0) -- (0,0.4em)
+            (0,0) -- (0.35em,-0.2em)
+            (0,0) -- (-0.35em,-0.2em);
+        \fill[ArcaneHighlight] (0,0) circle (0.5pt);
+    }%
+}
+
+\newcommand{\runecircle}{%
+    \tikz[baseline=-0.5ex]{
+        \draw[ArcaneHighlight, line width=0.5pt] (0,0) circle (0.35em);
+        \fill[ArcaneHighlight] (0,0) circle (1pt);
+    }%
+}
+
+\newcommand{\runediamond}{%
+    \tikz[baseline=-0.5ex]{
+        \draw[ArcaneHighlight, line width=0.5pt, rotate=45]
+            (0,0) rectangle (0.5em,0.5em);
+    }%
+}
+
+\newcommand{\runetriforce}{%
+    \tikz[baseline=-0.5ex]{
+        \draw[ArcaneHighlight, line width=0.5pt]
+            (0,0.45em) -- (0.4em,-0.15em) -- (-0.4em,-0.15em) -- cycle;
+        \draw[ArcaneHighlight, line width=0.3pt]
+            (0,0.1em) -- (0.15em,-0.1em) -- (-0.15em,-0.1em) -- cycle;
+    }%
+}
+
+% === Decorative Line/Border Commands ===
+\newcommand{\arcanerule}{%
+    \par\noindent
+    \begin{tikzpicture}
+        \draw[ArcaneHighlight!60, line width=0.5pt] (0,0) -- (\linewidth,0);
+        \fill[ArcaneHighlight] (0.5\linewidth,0) circle (2pt);
+        \fill[ArcaneHighlight!60] (0.5\linewidth-8pt,0) circle (1pt);
+        \fill[ArcaneHighlight!60] (0.5\linewidth+8pt,0) circle (1pt);
+    \end{tikzpicture}
+    \par
+}
+
+\newcommand{\arcaneruledouble}{%
+    \par\noindent
+    \begin{tikzpicture}
+        \draw[ArcaneHighlight!40, line width=0.3pt] (0,1.5pt) -- (\linewidth,1.5pt);
+        \draw[ArcaneHighlight!40, line width=0.3pt] (0,-1.5pt) -- (\linewidth,-1.5pt);
+        \node[ArcaneHighlight] at (0.5\linewidth,0) {\runestar};
+    \end{tikzpicture}
+    \par
+}
+
+% === Corner Ornaments for Boxes ===
+\newcommand{\arcanecorner}[1][ArcaneHighlight]{%
+    \begin{tikzpicture}[overlay, remember picture]
+        \draw[#1, line width=0.8pt]
+            (0,0) -- (0,8pt)
+            (0,0) -- (8pt,0);
+        \fill[#1] (0,0) circle (1.5pt);
+    \end{tikzpicture}%
+}
+
+% ============================================================================
+% MYSTICAL CALLOUT BOXES
+% ============================================================================
+
+% Base settings for all arcane callouts
+\tcbset{
+    arcane base/.style={
+        enhanced,
+        sharp corners,
+        boxrule=1pt,
+        leftrule=3pt,
+        top=10pt,
+        bottom=10pt,
+        left=14pt,
+        right=14pt,
+        fonttitle=\sffamily\bfseries,
+        before skip=16pt,
+        after skip=16pt,
+        breakable,
+        shadow={1.5pt}{-1.5pt}{0pt}{black!30},
+        overlay={
+            \begin{scope}[shift={(frame.north west)}]
+                \fill[tcbcolframe] (3pt,-3pt) circle (1.5pt);
+            \end{scope}
+            \begin{scope}[shift={(frame.north east)}]
+                \fill[tcbcolframe] (-3pt,-3pt) circle (1.5pt);
+            \end{scope}
+        },
+    }
+}
+
+% === Grimoire Box (Key Knowledge) ===
+\newtcolorbox{grimoire}[1][]{
+    arcane base,
+    colback=ArcaneMystic!8,
+    colframe=ArcaneMystic,
+    coltitle=white,
+    colbacktitle=ArcaneMystic,
+    title={\runestar\quad Arcane Knowledge},
+    #1
+}
+
+% === Oracle Box (Insights/Prophecy) ===
+\newtcolorbox{oracle}[1][]{
+    arcane base,
+    colback=ArcaneFrost!8,
+    colframe=ArcaneFrost,
+    coltitle=white,
+    colbacktitle=ArcaneFrost,
+    title={\runecircle\quad Oracle Insight},
+    #1
+}
+
+% === Alchemist Box (Technical/Process) ===
+\newtcolorbox{alchemist}[1][]{
+    arcane base,
+    colback=ArcaneEther!8,
+    colframe=ArcaneEther,
+    coltitle=white,
+    colbacktitle=ArcaneEther,
+    title={\runediamond\quad Alchemical Process},
+    #1
+}
+
+% === Flame Box (Warnings) ===
+\newtcolorbox{flamebox}[1][]{
+    arcane base,
+    colback=ArcaneFlame!10,
+    colframe=ArcaneFlame,
+    coltitle=white,
+    colbacktitle=ArcaneFlame,
+    title={\runetriforce\quad Caution},
+    #1
+}
+
+% === Blood Box (Critical/Danger) ===
+\newtcolorbox{bloodbox}[1][]{
+    arcane base,
+    colback=ArcaneBlood!8,
+    colframe=ArcaneBlood,
+    coltitle=white,
+    colbacktitle=ArcaneBlood,
+    title={$\bigtriangledown$\quad Peril},
+    leftrule=4pt,
+    #1
+}
+
+% === Scroll Box (Simple Note) ===
+\newtcolorbox{scroll}[1][]{
+    enhanced,
+    sharp corners,
+    colback=ArcaneParchment!50,
+    colframe=ArcaneMist!50,
+    boxrule=0.5pt,
+    top=8pt,
+    bottom=8pt,
+    left=12pt,
+    right=12pt,
+    before skip=12pt,
+    after skip=12pt,
+    #1
+}
+
+% === Void Box (Dark Terminal Style) ===
+\newtcolorbox{voidbox}[1][]{
+    enhanced,
+    sharp corners,
+    colback=ArcaneVoid,
+    colframe=ArcaneGlow!60,
+    coltext=ArcaneSilver,
+    boxrule=1pt,
+    top=10pt,
+    bottom=10pt,
+    left=14pt,
+    right=14pt,
+    fontupper=\ttfamily\small,
+    before skip=14pt,
+    after skip=14pt,
+    #1
+}
+
+% ============================================================================
+% SECTION STYLING
+% ============================================================================
+
+\RequirePackage{titlesec}
+
+% Section with rune decoration
+\titleformat{\section}
+    {\sffamily\Large\bfseries\color{ArcaneMystic}}
+    {\runestar\quad\thesection}
+    {1em}
+    {}
+    [\vspace{-4pt}\textcolor{ArcaneMystic!30}{\rule{\linewidth}{0.5pt}}]
+
+\titleformat{\subsection}
+    {\sffamily\large\bfseries\color{ArcaneFrost}}
+    {\runecircle\quad\thesubsection}
+    {0.8em}
+    {}
+
+\titleformat{\subsubsection}
+    {\sffamily\normalsize\bfseries\color{ArcaneEther}}
+    {\runediamond\quad\thesubsubsection}
+    {0.6em}
+    {}
+
+% ============================================================================
+% HEADERS AND FOOTERS
+% ============================================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{%
+    \hbox to\headwidth{%
+        \color{ArcaneMystic!40}\leaders\hrule height \headrulewidth\hfill
+    }%
+}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancyhead[L]{\sffamily\small\textcolor{ArcaneMist}{\@title}}
+\fancyhead[R]{\sffamily\small\textcolor{ArcaneMist}{\leftmark}}
+\fancyfoot[C]{%
+    \textcolor{ArcaneMystic!60}{\runestar}%
+    \quad\sffamily\textcolor{ArcaneMist}{\thepage}\quad%
+    \textcolor{ArcaneMystic!60}{\runestar}%
+}
+
+% ============================================================================
+% LISTS WITH MYSTICAL BULLETS
+% ============================================================================
+
+\setlist{topsep=8pt,itemsep=4pt,parsep=4pt}
+\setlist[itemize,1]{label=\textcolor{ArcaneMystic}{\runestar}}
+\setlist[itemize,2]{label=\textcolor{ArcaneFrost}{\runecircle}}
+\setlist[itemize,3]{label=\textcolor{ArcaneEther}{\runediamond}}
+
+% ============================================================================
+% HYPERLINKS
+% ============================================================================
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ArcaneMystic,
+    citecolor=ArcaneFrost,
+    urlcolor=ArcaneEther,
+    filecolor=ArcaneFlame,
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+}
+
+% ============================================================================
+% CAPTIONS
+% ============================================================================
+
+\captionsetup{
+    labelfont={bf,sf,small,color=ArcaneMystic},
+    textfont={small},
+    format=hang,
+    margin=1cm,
+    aboveskip=12pt,
+    belowskip=8pt,
+}
+
+% ============================================================================
+% TIKZ DIAGRAM STYLES
+% ============================================================================
+
+\tikzset{
+    % Component node (standard)
+    arcane component/.style={
+        rectangle,
+        draw=ArcaneFrost!70,
+        fill=ArcaneFrost!10,
+        line width=0.8pt,
+        text width=3.2cm,
+        minimum height=1.3cm,
+        align=center,
+        font=\sffamily\small,
+    },
+    % Server/process node
+    arcane server/.style={
+        rectangle,
+        draw=ArcaneMystic!70,
+        fill=ArcaneMystic!10,
+        line width=0.8pt,
+        minimum width=2.8cm,
+        minimum height=1.1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    % Database cylinder
+    arcane database/.style={
+        cylinder,
+        shape border rotate=90,
+        draw=ArcaneEther!70,
+        fill=ArcaneEther!10,
+        line width=0.8pt,
+        minimum width=2.2cm,
+        minimum height=1.4cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    % Data flow arrow
+    arcane flow/.style={
+        ->,
+        >=Stealth,
+        line width=1pt,
+        ArcaneFrost!80,
+    },
+    % Glowing flow (for emphasis)
+    arcane glow flow/.style={
+        ->,
+        >=Stealth,
+        line width=1.5pt,
+        ArcaneGlow,
+        postaction={draw, ArcaneGlow!30, line width=4pt, shorten >=2pt, shorten <=2pt},
+    },
+}
+
+% ============================================================================
+% SPECIAL COMMANDS
+% ============================================================================
+
+% Highlighted inline text
+\newcommand{\arcanehl}[1]{\textcolor{ArcaneMystic}{\textbf{#1}}}
+
+% Terminal-style inline code
+\newcommand{\arcanecode}[1]{%
+    \tikz[baseline=-0.5ex]{
+        \node[fill=ArcaneVoid, text=ArcaneGlow, inner sep=2pt, font=\ttfamily\small] {#1};
+    }%
+}
+
+% Mystical quote
+\newenvironment{arcanequote}{%
+    \begin{quote}
+    \itshape\color{ArcaneMist}%
+    \textcolor{ArcaneMystic!60}{\runestar}\quad%
+}{%
+    \quad\textcolor{ArcaneMystic!60}{\runestar}%
+    \end{quote}
+}
+
+% Chapter opener decoration
+\newcommand{\chapteropener}{%
+    \begin{center}
+    \begin{tikzpicture}
+        \draw[ArcaneMystic!50, line width=0.5pt] (-2,0) -- (-0.5,0);
+        \draw[ArcaneMystic!50, line width=0.5pt] (0.5,0) -- (2,0);
+        \node[ArcaneMystic] at (0,0) {\Large\runetriforce};
+        \fill[ArcaneMystic!50] (-2,0) circle (1.5pt);
+        \fill[ArcaneMystic!50] (2,0) circle (1.5pt);
+    \end{tikzpicture}
+    \end{center}
+}
+
+% ============================================================================
+% TEXT SHORTCUTS
+% ============================================================================
+
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\wrt}{w.r.t.}
+\newcommand{\st}{s.t.}
+
+% ============================================================================
+% TITLE PAGE ENHANCEMENT
+% ============================================================================
+
+\newcommand{\arcanetitlepage}[3]{%
+    % #1 = title, #2 = author, #3 = date
+    \begin{titlepage}
+    \begin{center}
+        \vspace*{2cm}
+
+        % Top decoration
+        \begin{tikzpicture}
+            \draw[ArcaneMystic!60, line width=0.8pt] (-3,0) -- (3,0);
+            \node[ArcaneMystic] at (0,0) {\Large\runetriforce};
+            \foreach \x in {-2.5,-2,...,2.5} {
+                \fill[ArcaneMystic!40] (\x,0) circle (1pt);
+            }
+        \end{tikzpicture}
+
+        \vspace{2cm}
+
+        {\Huge\sffamily\bfseries\textcolor{ArcaneMystic}{#1}}
+
+        \vspace{1cm}
+
+        \arcanerule
+
+        \vspace{1cm}
+
+        {\Large\sffamily #2}
+
+        \vspace{0.5cm}
+
+        {\large\sffamily\textcolor{ArcaneMist}{#3}}
+
+        \vfill
+
+        % Bottom decoration
+        \begin{tikzpicture}
+            \foreach \i in {0,72,144,216,288} {
+                \fill[ArcaneMystic!50, rotate=\i] (0,1) circle (2pt);
+                \draw[ArcaneMystic!30, rotate=\i, line width=0.5pt] (0,0.3) -- (0,0.8);
+            }
+            \draw[ArcaneMystic!40, line width=0.5pt] (0,0) circle (1);
+            \fill[ArcaneMystic] (0,0) circle (3pt);
+        \end{tikzpicture}
+
+        \vspace{1cm}
+    \end{center}
+    \end{titlepage}
+}
+
+\endinput

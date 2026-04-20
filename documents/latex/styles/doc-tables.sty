@@ -1,0 +1,136 @@
+% Professional Tables Style Package
+% Beautiful table formatting and custom table environments
+% Version: 1.0
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-tables}[2025/11/01 Professional Tables]
+
+% ============================================================================
+% TABLE PACKAGES
+% ============================================================================
+
+\RequirePackage{booktabs}
+\RequirePackage{colortbl}
+\RequirePackage{xltabular}
+\RequirePackage{longtable}
+\RequirePackage{float}
+\RequirePackage{array}
+
+% ============================================================================
+% NUMERIC FORMATTING
+% ============================================================================
+
+\RequirePackage{siunitx}
+\sisetup{
+    detect-all,
+    group-separator={,},
+    table-format=3.2,
+}
+
+% ============================================================================
+% COLUMN TYPES
+% ============================================================================
+
+% Left-aligned with fixed width
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+% Center-aligned with fixed width
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+% Right-aligned with fixed width
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% ============================================================================
+% CUSTOM TABLE ENVIRONMENTS
+% ============================================================================
+
+% Standard table with professional formatting
+% Usage: \begin{doctab}[caption]{column spec} ... \end{doctab}
+\newenvironment{doctab}[2][]{%
+    \def\tempcaption{#1}%
+    \begin{table}[H]%
+    \centering%
+    \renewcommand{\arraystretch}{1.6}%
+    \begin{tabular}{@{}#2@{}}%
+    \toprule%
+}{%
+    \bottomrule%
+    \end{tabular}%
+    \ifx\tempcaption\empty%
+    \else%
+        \caption{\tempcaption}%
+    \fi%
+    \end{table}%
+}
+
+% Three-column standard format (most common)
+% Usage: \begin{doctab3}[caption] ... \end{doctab3}
+\newenvironment{doctab3}[1][]{%
+    \begin{doctab}[#1]{p{3.5cm}p{5.5cm}p{5cm}}%
+}{%
+    \end{doctab}%
+}
+
+% Two-column standard format
+% Usage: \begin{doctab2}[caption] ... \end{doctab2}
+\newenvironment{doctab2}[1][]{%
+    \begin{doctab}[#1]{p{4cm}p{8cm}}%
+}{%
+    \end{doctab}%
+}
+
+% Wide table (full text width)
+% Usage: \begin{doctabwide}[caption]{column spec} ... \end{doctabwide}
+\newenvironment{doctabwide}[2][]{%
+    \def\tempcaption{#1}%
+    \begin{table}[H]%
+    \centering%
+    \renewcommand{\arraystretch}{1.5}%
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}#2@{}}%
+    \toprule%
+}{%
+    \bottomrule%
+    \end{tabular*}%
+    \ifx\tempcaption\empty%
+    \else%
+        \caption{\tempcaption}%
+    \fi%
+    \end{table}%
+}
+
+% Backward compatibility aliases
+\newenvironment{wyrdtab}[2][]{%
+    \begin{doctab}[#1]{#2}%
+}{%
+    \end{doctab}%
+}
+
+\newenvironment{wyrdtab3}[1][]{%
+    \begin{doctab3}[#1]%
+}{%
+    \end{doctab3}%
+}
+
+\newenvironment{wyrdtab2}[1][]{%
+    \begin{doctab2}[#1]%
+}{%
+    \end{doctab2}%
+}
+
+\newenvironment{adratatab}[2][]{%
+    \begin{doctab}[#1]{#2}%
+}{%
+    \end{doctab}%
+}
+
+\newenvironment{adratatab3}[1][]{%
+    \begin{doctab3}[#1]%
+}{%
+    \end{doctab3}%
+}
+
+\newenvironment{adratatab2}[1][]{%
+    \begin{doctab2}[#1]%
+}{%
+    \end{doctab2}%
+}
+
+\endinput
