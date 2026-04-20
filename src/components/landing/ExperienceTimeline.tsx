@@ -4,6 +4,12 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
 import { ExternalLink, Building2 } from "lucide-react";
 
+// TODO: "See the receipts" per-role context panels are not implemented yet.
+// When built, each experience item should expose an expand/modal control that
+// reveals the deeper per-role context (situation, actions, outcome, lesson,
+// tech/methods) sourced from /context/*.txt files. The chat assistant
+// (system_prompt_chat.txt) should link into these panels when prospects ask
+// for evidence on a specific engagement.
 interface Experience {
   company: string;
   logo?: string;

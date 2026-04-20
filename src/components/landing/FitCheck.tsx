@@ -152,7 +152,7 @@ export default function FitCheck() {
                 className="text-muted-foreground"
               >
                 <RotateCcw className="w-4 h-4 mr-1.5" />
-                New check
+                Run another
               </Button>
             )}
             <Button
@@ -166,12 +166,12 @@ export default function FitCheck() {
               {status === "running" ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Assessing…
+                  Reading it…
                 </>
               ) : (
                 <>
                   <Sparkles className="w-4 h-4 mr-2" />
-                  Run fit check
+                  Get the read
                 </>
               )}
             </Button>
@@ -194,7 +194,7 @@ export default function FitCheck() {
             <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
             <div className="text-sm">
               <p className="text-foreground font-medium mb-1">
-                Fit checker couldn't complete that request
+                The assessment couldn't complete
               </p>
               <p className="text-muted-foreground">{error}</p>
             </div>

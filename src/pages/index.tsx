@@ -6,7 +6,7 @@ import About from "@/components/landing/about";
 import ExperienceTimeline from "@/components/landing/ExperienceTimeline";
 import ResultsSection from "@/components/landing/ResultsSection";
 import ExpertiseSection from "@/components/landing/ExpertiseSection";
-import ProjectShowcase from "@/components/landing/ProjectShowcase";
+import Projects from "@/components/landing/projects";
 import FitCheck from "@/components/landing/FitCheck";
 import Testimonials from "@/components/landing/testimonials";
 import ContactSection from "@/components/landing/ContactSection";
@@ -49,6 +49,9 @@ const IndexPage = () => {
         {/* Engagement Modes — detailed three-tier service section */}
         <EngagementModes />
 
+        {/* Work — client outcomes + owned products (proof-of-work) */}
+        <Projects />
+
         {/* The Operator — Morgan as the principal behind the firm */}
         <div id="operator" className="scroll-mt-20">
           <div className="container mx-auto px-4 pt-12">
@@ -79,10 +82,7 @@ const IndexPage = () => {
           <ExpertiseSection />
         </div>
 
-        {/* Product Showcase — owned products / productized capabilities */}
-        <ProjectShowcase />
-
-        {/* Fit Check — anchor target for the AI assessment tool (swap in FitCheck component when built) */}
+        {/* Is this a fit? — pre-sales fit assessment tool */}
         <section
           id="fit-check"
           className="scroll-mt-20 py-20 px-4 bg-secondary/20 border-y border-border/40"
@@ -92,15 +92,13 @@ const IndexPage = () => {
               // is this a fit?
             </p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
-              Paste a job description or problem statement.{" "}
-              <span className="text-muted-foreground font-normal">
-                Get a candid read in seconds.
-              </span>
+              Is this a <span className="text-primary">fit?</span>
             </h2>
-            <p className="text-muted-foreground mb-6 max-w-2xl">
-              The fit checker tells you whether this is something CTO on Demand
-              should take on, what the engagement would probably look like, and
-              what's out of scope. No sales pitch — just judgment.
+            <p className="text-lg text-muted-foreground mb-6 max-w-2xl">
+              Paste a job description or problem statement. The firm's
+              pre-sales assistant will give a direct read — strong fit, weak
+              fit, or partial — and point you to a better option when the
+              answer is no. Judgment over pitch.
             </p>
             <FitCheck />
           </div>
