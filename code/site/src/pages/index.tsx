@@ -59,18 +59,6 @@ const IndexPage = () => {
         {/* PROOF — who's behind it + track record + results         */}
         {/* ======================================================= */}
         <div id="operator" className="scroll-mt-20">
-          <div className="container mx-auto px-4 pt-12">
-            <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-2">
-              // the operator
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2 leading-tight">
-              Who you're actually hiring.
-            </h2>
-            <p className="text-muted-foreground max-w-2xl">
-              A CTO on Demand engagement is a founder-led engagement. Here's the
-              principal — and the track record that stands behind the work.
-            </p>
-          </div>
           <About />
         </div>
 
@@ -102,7 +90,7 @@ const IndexPage = () => {
         {/* ======================================================= */}
         <section
           id="fit-check"
-          className="scroll-mt-20 py-20 px-4 bg-secondary/20 border-y border-border/40"
+          className="scroll-mt-20 py-24 md:py-32 px-4 bg-secondary/20 border-y border-border/40"
         >
           <div className="container mx-auto max-w-4xl">
             <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-3">

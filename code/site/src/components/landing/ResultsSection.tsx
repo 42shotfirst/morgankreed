@@ -80,7 +80,7 @@ const ResultsSection = () => {
     <section
       id="results"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="py-24 px-4 bg-secondary/30 relative overflow-hidden"
+      className="py-24 md:py-32 px-4 bg-secondary/30 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -92,16 +92,15 @@ const ResultsSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 max-w-3xl"
         >
           <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
             // outcomes
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            What Engagements Have <span className="text-primary">Delivered</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5 leading-[1.1] tracking-tight">
+            What engagements have delivered.
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg leading-relaxed">
             Numbers from real engagements — not a resume summary. Each is
             tied to a specific client outcome in technology leadership, digital
             transformation, or enterprise delivery.

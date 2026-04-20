@@ -64,23 +64,28 @@ const ExperienceTimeline = () => {
     <section
       id="experience"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="py-24 px-4 relative overflow-hidden"
+      className="py-24 md:py-32 px-4 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-1/3 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
 
-      <div className="container mx-auto max-w-5xl relative z-10">
+      <div className="container mx-auto max-w-6xl relative z-10">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 max-w-3xl"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Professional <span className="text-primary">Experience</span>
+          <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
+            // track record
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5 leading-[1.1] tracking-tight">
+            Two decades of building.{" "}
+            <span className="text-muted-foreground font-normal">
+              From enterprise engineering to fractional leadership.
+            </span>
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
         </motion.div>
 
         {/* Timeline */}

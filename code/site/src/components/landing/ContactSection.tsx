@@ -51,7 +51,6 @@ const ContactSection = ({
       setIsSubmitted(true);
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (err) {
-      console.error("Failed to send message:", err);
       setError(
         err instanceof Error ? err.message : "Failed to send message. Please try again."
       );
@@ -96,7 +95,7 @@ const ContactSection = ({
     <section
       id="contact"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="py-24 px-4 relative overflow-hidden"
+      className="py-24 md:py-32 px-4 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -108,16 +107,15 @@ const ContactSection = ({
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 max-w-3xl"
         >
           <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
             // start an engagement
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Start an <span className="text-primary">Engagement</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5 leading-[1.1] tracking-tight">
+            Let's talk about the work.
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg leading-relaxed">
             Every engagement begins with a short fit conversation. Share the
             situation — roadmap, initiative, incident, or transition — and the
             firm will come back with a candid read on shape, scope, and

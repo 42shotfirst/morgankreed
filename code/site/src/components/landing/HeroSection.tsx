@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Terminal, ChevronDown } from "lucide-react";
@@ -93,7 +93,7 @@ const HeroSection = ({
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center relative overflow-hidden pt-28 pb-16"
+      className="min-h-screen flex items-center relative overflow-hidden pt-28 pb-16 px-4"
     >
       {/* Parallax background */}
       <div
@@ -109,7 +109,7 @@ const HeroSection = ({
         <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto max-w-6xl relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -148,7 +148,7 @@ const HeroSection = ({
             className="text-4xl md:text-5xl lg:text-7xl font-bold text-foreground mb-6 leading-[1.05] tracking-tight max-w-4xl"
           >
             The CTO your roadmap's been{" "}
-            <span className="bg-gradient-to-r from-primary via-[#0080ff] to-[#0047ff] bg-clip-text text-transparent">
+            <span className="text-primary">
               waiting for.
             </span>
           </motion.h1>

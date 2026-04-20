@@ -49,7 +49,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="py-24 px-4 bg-secondary/30 relative overflow-hidden"
+      className="py-24 md:py-32 px-4 bg-secondary/30 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
@@ -61,12 +61,18 @@ export default function About() {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 max-w-3xl"
         >
-          <h3 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            The <span className="text-primary">Principal</span>
+          <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
+            // the principal
+          </p>
+          <h3 className="text-4xl md:text-5xl font-bold text-foreground mb-5 leading-[1.1] tracking-tight">
+            Who you're actually hiring.
           </h3>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            A CTO on Demand engagement is founder-led. Here's the operator —
+            and the track record behind the work.
+          </p>
         </motion.div>
 
         {/* Bio section */}

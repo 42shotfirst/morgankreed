@@ -55,7 +55,7 @@ export default function Testimonials() {
     <section
       id="testimonials"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="py-24 px-4 bg-secondary/30 relative overflow-hidden"
+      className="py-24 md:py-32 px-4 bg-secondary/30 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -67,19 +67,16 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 max-w-3xl"
         >
           <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
             // voices
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Client <span className="text-primary">Voices</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5 leading-[1.1] tracking-tight">
+            What clients and leaders have said.
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            What clients, boards, and engineering leaders have said about
-            working with the firm — on shipped engagements, not theoretical
-            capability.
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            From shipped engagements, not theoretical capability.
           </p>
         </motion.div>
 
@@ -112,7 +109,7 @@ export default function Testimonials() {
                 {/* Author info */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary to-cyan-400 flex items-center justify-center text-primary-foreground font-bold text-lg">
+                    <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center text-primary font-bold text-lg font-mono">
                       {testimonial.author
                         .split(" ")
                         .map((n) => n[0])

@@ -1,5 +1,14 @@
 {
   "name": "morgankreed",
   "private": true,
-  "workspaces": ["code/site"]
+  "workspaces": ["code/site"],
+  "scripts": {
+    "dev": "npm run dev --prefix code/site",
+    "build": "npm run build --prefix code/site",
+    "lint": "npm run lint --prefix code/site",
+    "typecheck": "npx tsc --noEmit --project code/site/tsconfig.json",
+    "test": "echo \"No tests configured\" && exit 0",
+    "docker:up": "docker compose -f infrastructure/docker/docker-compose.yml up --build -d",
+    "docker:down": "docker compose -f infrastructure/docker/docker-compose.yml down -v"
+  }
 }

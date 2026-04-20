@@ -44,7 +44,9 @@ const PageLoader = ({ minDisplayTime = 500 }: PageLoaderProps) => {
     >
       <div className="flex flex-col items-center gap-4">
         <div className="loader-spinner" />
-        <p className="text-muted-foreground text-sm font-medium">Loading...</p>
+        <p className="text-primary font-mono text-sm tracking-[0.15em]">
+          ▮ cto-on-demand<span className="text-muted-foreground">.inc</span>
+        </p>
       </div>
     </div>
   );

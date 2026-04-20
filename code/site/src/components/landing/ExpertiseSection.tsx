@@ -93,7 +93,7 @@ const ExpertiseSection = () => {
     <section
       id="expertise"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="py-24 px-4 relative overflow-hidden"
+      className="py-24 md:py-32 px-4 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
@@ -105,19 +105,20 @@ const ExpertiseSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 max-w-3xl"
         >
           <p className="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-primary mb-4">
             // capabilities
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Firm <span className="text-primary">Capabilities</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5 leading-[1.1] tracking-tight">
+            What the firm ships.{" "}
+            <span className="text-muted-foreground font-normal">
+              Development, architecture, security, and leadership.
+            </span>
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            What the firm can be hired to do — spanning development, architecture,
-            security, and leadership across modern technology stacks. Every
-            engagement is scoped against these capabilities, not sold by the hour.
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Every engagement is scoped against these capabilities — not sold
+            by the hour.
           </p>
         </motion.div>
 
