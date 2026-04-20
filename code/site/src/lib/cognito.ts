@@ -4,32 +4,32 @@ import {
   AuthenticationDetails,
   CognitoUserSession,
   CognitoUserAttribute,
-  ICognitoUserPoolData,
 } from "amazon-cognito-identity-js";
 
 // -----------------------------------------------------------------------------
-// Cognito client setup
-// -----------------------------------------------------------------------------
-// Env vars (set these in .env.local or via CDK output):
-//   VITE_COGNITO_USER_POOL_ID   — from `CtoOnDemandContentEngine.UserPoolId`
-//   VITE_COGNITO_CLIENT_ID      — from `CtoOnDemandContentEngine.UserPoolClientId`
-//   VITE_COGNITO_REGION         — from `CtoOnDemandContentEngine.Region`
+// Cognito client setup — lazily initialised so the public site doesn't crash
+// when VITE_COGNITO_* env vars are absent.
 // -----------------------------------------------------------------------------
 
-const config: ICognitoUserPoolData = {
-  UserPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID ?? "",
-  ClientId: import.meta.env.VITE_COGNITO_CLIENT_ID ?? "",
-};
+let _userPool: CognitoUserPool | null = null;
 
-export const userPool = new CognitoUserPool(config);
+function getUserPool(): CognitoUserPool {
+  if (!_userPool) {
+    _userPool = new CognitoUserPool({
+      UserPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID ?? "",
+      ClientId: import.meta.env.VITE_COGNITO_CLIENT_ID ?? "",
+    });
+  }
+  return _userPool;
+}
 
 export function getCurrentUser(): CognitoUser | null {
-  return userPool.getCurrentUser();
+  return getUserPool().getCurrentUser();
 }
 
 export function getCurrentSession(): Promise<CognitoUserSession | null> {
   return new Promise((resolve) => {
-    const user = userPool.getCurrentUser();
+    const user = getUserPool().getCurrentUser();
     if (!user) return resolve(null);
     user.getSession(
       (err: Error | null, session: CognitoUserSession | null) => {
@@ -46,7 +46,7 @@ export async function getIdToken(): Promise<string | null> {
 }
 
 export async function getUserEmail(): Promise<string | null> {
-  const user = userPool.getCurrentUser();
+  const user = getUserPool().getCurrentUser();
   const session = await getCurrentSession();
   if (!user || !session) return null;
   return new Promise((resolve) => {
@@ -71,7 +71,7 @@ export function signIn(
   password: string
 ): Promise<AuthStep> {
   return new Promise((resolve, reject) => {
-    const user = new CognitoUser({ Username: email, Pool: userPool });
+    const user = new CognitoUser({ Username: email, Pool: getUserPool() });
     const details = new AuthenticationDetails({
       Username: email,
       Password: password,
@@ -162,6 +162,6 @@ export function submitMfaCode(
 }
 
 export function signOut(): void {
-  const user = userPool.getCurrentUser();
+  const user = getUserPool().getCurrentUser();
   if (user) user.signOut();
 }

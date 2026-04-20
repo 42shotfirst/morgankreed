@@ -1,0 +1,11 @@
+node_modules
+.git
+*.md
+dist
+out
+.env
+.env.*
+!.env.example
+infrastructure/terraform
+documents
+spoq

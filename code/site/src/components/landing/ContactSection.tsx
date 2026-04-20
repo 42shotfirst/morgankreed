@@ -27,7 +27,7 @@ interface ContactSectionProps {
 const ContactSection = ({
   email = "morgan.reed@ctoondemandinc.com",
   linkedin = "https://linkedin.com/in/morgankreed",
-  github = "https://github.com/morgankreed",
+  github = "https://github.com/42shotfirst",
   location = "Phoenix, Arizona",
 }: ContactSectionProps) => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });

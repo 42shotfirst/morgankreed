@@ -177,7 +177,7 @@ const IndexPage = () => {
                   LinkedIn
                 </a>
                 <a
-                  href="https://github.com/morgankreed"
+                  href="https://github.com/42shotfirst"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
