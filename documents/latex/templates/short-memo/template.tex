@@ -1,0 +1,46 @@
+% Short Memo Template
+% Use with: pdflatex
+% Packages: none (minimal)
+
+\documentclass[11pt,letterpaper]{article}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+% Compact memo formatting
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% Remove section numbering
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+
+% Memo header
+\begin{center}
+\textbf{\Large MEMORANDUM}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent\textbf{To:} [Recipient(s)] \\
+\textbf{From:} [Sender] \\
+\textbf{Date:} \today \\
+\textbf{Re:} [Subject]
+
+\noindent\rule{\textwidth}{0.4pt}
+
+\vspace{0.5cm}
+
+% Document sections
+\input{sections/header}
+\input{sections/body}
+\input{sections/action_items}
+
+\end{document}

@@ -1,0 +1,41 @@
+% Reproduction Steps
+\needspace{10cm}
+\section{Reproduction Steps}
+
+% Provide a deterministic sequence to trigger the defect.
+% Each step should be concrete, observable, and independently verifiable.
+
+\subsection{Preconditions}
+
+% State what must be true before starting the reproduction sequence.
+
+\begin{itemize}
+    \item Precondition 1 (e.g., user is authenticated with role X)
+    \item Precondition 2 (e.g., database seeded with test fixtures)
+    \item Precondition 3 (e.g., feature flag Y is enabled)
+\end{itemize}
+
+\subsection{Steps to Reproduce}
+
+\begin{enumerate}
+    \item First action — describe exactly what to do
+    \item Second action — include specific inputs or data values
+    \item Third action — note any timing or ordering constraints
+    \item Observe the defect at this step
+\end{enumerate}
+
+\subsection{Reproduction Rate}
+
+\begin{wyrdtab}{l l}
+\textbf{Frequency}       & Always / Intermittent / Rare \\
+\textbf{Attempts}        & X out of Y attempts \\
+\textbf{Conditions}      & Any special timing, load, or data conditions \\
+\end{wyrdtab}
+
+% --- Repeat per bug ---
+% When batching, duplicate the Steps to Reproduce subsection per defect:
+%
+% \subsection{Bug 2: Steps to Reproduce}
+% \begin{enumerate}
+%     \item ...
+% \end{enumerate}

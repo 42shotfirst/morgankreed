@@ -1,0 +1,37 @@
+% Internal Report Template
+% Use with: pdflatex
+% Packages: doc-tables
+
+\documentclass[11pt,letterpaper]{article}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+% Style packages
+\usepackage{doc-tables}
+
+% Compact formatting for internal docs
+\usepackage{enumitem}
+\setlist{nosep}
+
+% Document metadata
+\title{{{TITLE}}}
+\author{{{AUTHOR}}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Document sections
+\input{sections/summary}
+\input{sections/status}
+\input{sections/accomplishments}
+\input{sections/issues}
+\input{sections/next_steps}
+
+\end{document}

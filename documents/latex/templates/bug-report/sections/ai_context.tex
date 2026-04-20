@@ -1,0 +1,71 @@
+% AI Context (for automated fix generation)
+\needspace{8cm}
+\section{AI Context}
+
+% This section provides structured technical details that AI coding
+% assistants can consume directly to produce working fixes.
+% Only sections with populated data should be included in the final report.
+
+\subsection{Context Summary}
+
+% High-level summary of the technical context surrounding this defect.
+
+\begin{keyinsight}
+Provide a concise summary of the technical context: what subsystem is
+affected, what the failure mode is, and what approach is recommended
+for resolution.
+\end{keyinsight}
+
+\subsection{Affected Files}
+
+% List the source files relevant to this defect.
+
+\begin{itemize}
+    \item \texttt{path/to/affected/file.ext}
+    \item \texttt{path/to/another/file.ext}
+\end{itemize}
+
+\subsection{Code Snippets}
+
+% Include the relevant code that exhibits or contributes to the defect.
+
+\begin{wyrdcode}[Relevant Code]{text}
+// Paste the relevant code snippet here
+\end{wyrdcode}
+
+\subsection{Stack Trace}
+
+% Include the stack trace captured when the defect occurred.
+
+\begin{wyrdcode}[Stack Trace]{text}
+// Paste the stack trace here
+\end{wyrdcode}
+
+\subsection{Suggested Fix}
+
+% Describe or show the recommended code change to resolve the defect.
+
+\begin{technicaldetail}
+Describe the suggested fix in precise technical terms, referencing
+the specific code changes needed.
+\end{technicaldetail}
+
+\subsection{Related Commits}
+
+% Reference any commits that introduced or are related to this defect.
+
+\begin{wyrdtab}{l l}
+\textbf{Commit SHA} & \textbf{Description} \\
+abc1234             & Brief commit description \\
+\end{wyrdtab}
+
+\subsection{Fix Confidence}
+
+% Indicate the confidence level of the suggested fix.
+% Score: 0--100 where higher values indicate greater confidence.
+
+\begin{callout}
+Fix confidence score: \textbf{N/100}. A higher score indicates
+the suggested fix is more likely to resolve the defect without
+introducing regressions.
+\end{callout}

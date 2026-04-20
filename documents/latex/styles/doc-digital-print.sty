@@ -1,0 +1,697 @@
+% Pinpoint Digital Print Style
+% Light-theme, print-optimized variant of doc-digital.sty
+% Professional colors on white background, same brand typography
+% Designed for ISO 27001 governance documents and auditor review
+% Version: 1.0
+% Requires: LuaLaTeX or XeLaTeX for font support
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-digital-print}[2026/04/01 Pinpoint Digital Print]
+
+% ============================================================================
+% FONT CONFIGURATION
+% ============================================================================
+% Identical to doc-digital: Plus Jakarta Sans body, Source Serif 4 serif,
+% JetBrains Mono for code. Sans-serif as document default.
+
+\RequirePackage{fontspec}
+
+% Primary: Plus Jakarta Sans (matches getpinpoint.dev)
+% Fallback chain: Inter > Source Sans Pro
+\IfFontExistsTF{Plus Jakarta Sans}{%
+    \setsansfont{Plus Jakarta Sans}[
+        Numbers=Proportional,
+        Ligatures=TeX,
+    ]
+}{%
+    \IfFontExistsTF{Inter}{%
+        \setsansfont{Inter}[Numbers=Proportional, Scale=0.95]
+    }{%
+        \setsansfont{Source Sans Pro}[Numbers=Proportional, Scale=0.95]
+    }%
+}
+
+% Sans-serif as document default
+\renewcommand{\familydefault}{\sfdefault}
+
+% Monospace: JetBrains Mono
+\setmonofont{JetBrains Mono}[
+    Scale=0.85,
+    Contextuals=Alternate,
+]
+
+% Serif: reserved for pull quotes and special emphasis
+\setmainfont{Source Serif 4}[
+    Numbers=Proportional,
+    Ligatures=TeX,
+]
+
+% Math support
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+\setmathfont{TeX Gyre Termes Math}
+
+% Microtypography
+\RequirePackage{microtype}
+\microtypesetup{
+    protrusion=true,
+    expansion=true,
+    final=true,
+}
+
+% ============================================================================
+% COLOR SCHEME — Pinpoint Print Palette
+% ============================================================================
+%
+% Adapted from the digital palette for white/light backgrounds. All colors
+% selected for WCAG AA contrast on white (#FFFFFF):
+%
+%   PrintText on white:       ~14.5:1 (AAA)   #1A1F2E
+%   PrintMuted on white:      ~5.4:1  (AA)    #475569
+%   PrintNavy on white:       ~8.6:1  (AA)    #1E3A5F
+%   PrintAccent on white:     ~3.1:1  (AA-lg) #0C7FD4 (large text/icons only)
+%   PrintAccentDark on white: ~4.6:1  (AA)    #0B6AB5 (body text links)
+%
+% Grayscale note: Navy, Slate, and AccentDark remain distinguishable
+% when printed in grayscale because they map to distinct luminance bands.
+%
+% ============================================================================
+
+\RequirePackage[dvipsnames]{xcolor}
+
+% --- Core brand (print-adapted from tailwind.config.ts) ---
+\definecolor{PrintWhite}{HTML}{FFFFFF}         % Page background
+\definecolor{PrintOffWhite}{HTML}{F8FAFC}      % Subtle surface tint (slate-50)
+\definecolor{PrintSurface}{HTML}{F1F5F9}       % Raised surface, box fill (slate-100)
+\definecolor{PrintNavy}{HTML}{1E3A5F}          % Headings, structural emphasis
+\definecolor{PrintAccent}{HTML}{0C7FD4}        % Primary accent (print-safe blue)
+\definecolor{PrintAccentDark}{HTML}{0B6AB5}    % Links, inline accent text
+
+% --- Text hierarchy ---
+\definecolor{PrintText}{HTML}{1A1F2E}          % Body text (near-black navy)
+\definecolor{PrintHeading}{HTML}{0F172A}       % Heading text (slate-900)
+\definecolor{PrintMuted}{HTML}{475569}         % Captions, metadata (slate-600)
+\definecolor{PrintDim}{HTML}{64748B}           % Disabled, timestamps (slate-500)
+
+% --- Status / semantic ---
+\definecolor{PrintSuccess}{HTML}{15803D}       % Positive (green-700, print-safe)
+\definecolor{PrintWarning}{HTML}{A16207}       % Caution (yellow-700, print-safe)
+\definecolor{PrintDanger}{HTML}{B91C1C}        % Error (red-700, print-safe)
+
+% --- Borders / structure ---
+\definecolor{PrintBorder}{HTML}{CBD5E1}        % Default border (slate-300)
+\definecolor{PrintBorderStrong}{HTML}{94A3B8}  % Emphasized border (slate-400)
+
+% --- Semantic aliases (backward-compatible with doc-digital naming) ---
+\colorlet{DocBlue}{PrintAccent}
+\colorlet{DocNavy}{PrintNavy}
+\colorlet{DocEmerald}{PrintSuccess}
+\colorlet{DocBrass}{PrintWarning}
+\colorlet{DocBurgundy}{PrintDanger}
+\colorlet{DocDark}{PrintHeading}
+\colorlet{DocMuted}{PrintMuted}
+\colorlet{DocLight}{PrintSurface}
+\colorlet{DocBg}{PrintWhite}
+\colorlet{DocSuccess}{PrintSuccess}
+\colorlet{DocWarning}{PrintWarning}
+\colorlet{DocDanger}{PrintDanger}
+
+% ============================================================================
+% PAGE LAYOUT
+% ============================================================================
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=28mm,
+    bottom=28mm,
+    left=25mm,
+    right=25mm,
+    headheight=24pt,
+}
+
+% White page background with dark text
+\pagecolor{PrintWhite}
+\color{PrintText}
+
+% ============================================================================
+% SPACING AND TYPOGRAPHY
+% ============================================================================
+
+\RequirePackage{setspace}
+\setstretch{1.30}  % Slightly tighter than screen for print economy
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt plus 2pt minus 1pt}
+
+% Widow/orphan control
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+
+% Hyphenation
+\RequirePackage[english]{babel}
+\tolerance=1000
+\emergencystretch=1em
+\hyphenpenalty=50
+
+% Prevent orphaned headers
+\RequirePackage{needspace}
+
+% ============================================================================
+% ISO DOCUMENT METADATA MACROS
+% ============================================================================
+%
+% Usage in preamble:
+%   \isoDocTitle{Information Security Management System Scope}
+%   \isoDocId{PIN-ISMS-001}
+%   \isoVersion{1.0}
+%   \isoClassification{CONFIDENTIAL}
+%   \isoOwner{Chief Technology Officer}
+%   \isoReviewDate{2026-04-01}
+%
+% These values populate the title page, headers, and footers automatically.
+
+\newcommand{\@isoDocTitle}{Untitled Document}
+\newcommand{\@isoDocId}{PIN-XXX-000}
+\newcommand{\@isoVersion}{0.1}
+\newcommand{\@isoClassification}{CONFIDENTIAL}
+\newcommand{\@isoOwner}{Document Owner}
+\newcommand{\@isoReviewDate}{\today}
+
+\newcommand{\isoDocTitle}[1]{\renewcommand{\@isoDocTitle}{#1}}
+\newcommand{\isoDocId}[1]{\renewcommand{\@isoDocId}{#1}}
+\newcommand{\isoVersion}[1]{\renewcommand{\@isoVersion}{#1}}
+\newcommand{\isoClassification}[1]{\renewcommand{\@isoClassification}{#1}}
+\newcommand{\isoOwner}[1]{\renewcommand{\@isoOwner}{#1}}
+\newcommand{\isoReviewDate}[1]{\renewcommand{\@isoReviewDate}{#1}}
+
+% ============================================================================
+% SECTION HEADINGS
+% ============================================================================
+
+\RequirePackage{titlesec}
+
+% Section: navy heading with subtle rule underneath
+\titleformat{\section}
+    {\Large\bfseries\sffamily\color{PrintNavy}}
+    {\thesection}{1em}{}
+    [\vspace{2pt}{\color{PrintBorder}\titlerule[0.6pt]}]
+
+% Subsection: dark heading text
+\titleformat{\subsection}
+    {\large\bfseries\sffamily\color{PrintHeading}}
+    {\thesubsection}{1em}{}
+
+% Subsubsection: muted slate
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\sffamily\color{PrintMuted}}
+    {\thesubsubsection}{1em}{}
+
+\titlespacing*{\section}{0pt}{24pt plus 4pt minus 2pt}{12pt plus 2pt minus 1pt}
+\titlespacing*{\subsection}{0pt}{18pt plus 3pt minus 2pt}{8pt plus 2pt minus 1pt}
+\titlespacing*{\subsubsection}{0pt}{12pt plus 2pt minus 1pt}{6pt plus 1pt}
+
+% ============================================================================
+% CALLOUT BOXES (Print-Adapted)
+% ============================================================================
+%
+% Print variants use light background tints with colored left borders
+% instead of dark glass-morphism fills. All boxes remain legible in
+% grayscale because the border weight and fill luminance differ enough
+% to distinguish each semantic type.
+
+\RequirePackage[most]{tcolorbox}
+
+% Base print preset
+\tcbset{
+    printbox/.style={
+        enhanced,
+        rounded corners,
+        arc=4pt,
+        boxrule=0.5pt,
+        colframe=PrintBorder,
+        colback=PrintWhite,
+        coltext=PrintText,
+        top=10pt,
+        bottom=10pt,
+        left=14pt,
+        right=14pt,
+        fonttitle=\sffamily\bfseries,
+        before skip=15pt,
+        after skip=15pt,
+        unbreakable,
+        sharp corners=south,
+    },
+}
+
+% Key Insight (blue accent)
+\newtcolorbox{keyinsight}{
+    printbox,
+    colframe=PrintAccent!40!PrintBorder,
+    colback=PrintAccent!4!PrintWhite,
+    title=Key Insight,
+    colbacktitle=PrintAccent!10!PrintWhite,
+    coltitle=PrintNavy,
+    borderline west={3pt}{0pt}{PrintAccent},
+}
+
+% Business Value (green accent)
+\newtcolorbox{businessvalue}{
+    printbox,
+    colframe=PrintSuccess!40!PrintBorder,
+    colback=PrintSuccess!4!PrintWhite,
+    title=Business Value,
+    colbacktitle=PrintSuccess!10!PrintWhite,
+    coltitle=PrintSuccess,
+    borderline west={3pt}{0pt}{PrintSuccess},
+}
+
+% Technical Detail (neutral accent)
+\newtcolorbox{technicaldetail}{
+    printbox,
+    colframe=PrintBorder,
+    colback=PrintSurface,
+    title=Technical Detail,
+    colbacktitle=PrintBorder!30!PrintWhite,
+    coltitle=PrintMuted,
+    borderline west={3pt}{0pt}{PrintBorderStrong},
+}
+
+% Critical Point (amber accent)
+\newtcolorbox{criticalpoint}{
+    printbox,
+    colframe=PrintWarning!40!PrintBorder,
+    colback=PrintWarning!4!PrintWhite,
+    title=Critical Point,
+    colbacktitle=PrintWarning!10!PrintWhite,
+    coltitle=PrintWarning,
+    borderline west={3pt}{0pt}{PrintWarning},
+}
+
+% Warning (red accent)
+\newtcolorbox{warningbox}{
+    printbox,
+    colframe=PrintDanger!40!PrintBorder,
+    colback=PrintDanger!4!PrintWhite,
+    title=Warning,
+    colbacktitle=PrintDanger!10!PrintWhite,
+    coltitle=PrintDanger,
+    borderline west={3pt}{0pt}{PrintDanger},
+}
+
+% Plain callout (neutral)
+\newtcolorbox{callout}{
+    printbox,
+    colback=PrintSurface,
+    colframe=PrintBorder,
+}
+
+% Note box (subtle blue border)
+\newtcolorbox{notebox}{
+    printbox,
+    colback=PrintOffWhite,
+    colframe=PrintAccent!25!PrintBorder,
+    boxrule=0.5pt,
+}
+
+% ============================================================================
+% HEADERS AND FOOTERS
+% ============================================================================
+%
+% Professional layout for ISO governance documents:
+%   Header: document title (left), classification badge (right)
+%   Footer: legal entity (left), "CONFIDENTIAL" (center), page N of M (right)
+
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header rule in navy
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{%
+    \hbox to\headwidth{%
+        \color{PrintNavy!40}\leaders\hrule height \headrulewidth\hfill
+    }%
+}
+
+% Footer rule
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\footrule}{%
+    \hbox to\headwidth{%
+        \color{PrintBorder}\leaders\hrule height \footrulewidth\hfill
+    }%
+    \vspace{4pt}%
+}
+
+\fancyhead[L]{\sffamily\small\textcolor{PrintMuted}{\@isoDocTitle}}
+\fancyhead[R]{\sffamily\small\textcolor{PrintDanger}{\@isoClassification}}
+\fancyfoot[L]{\sffamily\footnotesize\textcolor{PrintMuted}{Pinpoint Technologies LLC}}
+\fancyfoot[C]{\sffamily\footnotesize\textcolor{PrintDanger}{CONFIDENTIAL}}
+\fancyfoot[R]{\sffamily\footnotesize\textcolor{PrintMuted}{\thepage\ of \pageref*{LastPage}}}
+
+% Plain page style (title page, section breaks)
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0.4pt}%
+    \renewcommand{\footrule}{%
+        \hbox to\headwidth{%
+            \color{PrintBorder}\leaders\hrule height 0.4pt\hfill
+        }%
+        \vspace{4pt}%
+    }%
+    \fancyfoot[L]{\sffamily\footnotesize\textcolor{PrintMuted}{Pinpoint Technologies LLC}}%
+    \fancyfoot[C]{\sffamily\footnotesize\textcolor{PrintDanger}{CONFIDENTIAL}}%
+    \fancyfoot[R]{\sffamily\footnotesize\textcolor{PrintMuted}{\thepage\ of \pageref*{LastPage}}}%
+}
+
+% ============================================================================
+% HYPERLINKS AND PDF SETUP
+% ============================================================================
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=PrintAccentDark,
+    citecolor=PrintAccentDark,
+    urlcolor=PrintAccentDark,
+    filecolor=PrintAccentDark,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+    pdfpagemode=UseOutlines,
+}
+\RequirePackage{bookmark}
+\RequirePackage[nameinlink,noabbrev]{cleveref}
+
+% ============================================================================
+% LISTS
+% ============================================================================
+
+\RequirePackage{enumitem}
+\setlist{topsep=6pt, itemsep=4pt, parsep=3pt}
+\setlist[itemize]{label=\textcolor{PrintAccent}{\textbullet}}
+\setlist[enumerate]{label=\textcolor{PrintAccent}{\arabic*.}}
+
+% ============================================================================
+% QUOTES
+% ============================================================================
+
+\RequirePackage{csquotes}
+
+% ============================================================================
+% CAPTIONS
+% ============================================================================
+
+\RequirePackage{caption}
+\captionsetup{
+    labelfont={bf,sf,small,color=PrintNavy},
+    textfont={small,color=PrintMuted},
+    format=hang,
+    margin=1cm,
+    aboveskip=12pt,
+    belowskip=6pt,
+}
+\captionsetup[table]{position=above}
+
+% ============================================================================
+% TABLES
+% ============================================================================
+%
+% Print tables use slate borders and alternating row shading via
+% PrintSurface. The color choices translate to distinct gray bands
+% in grayscale output, keeping rows distinguishable without color.
+
+\RequirePackage{colortbl}
+\RequirePackage{booktabs}
+\arrayrulecolor{PrintBorderStrong}
+\setlength{\heavyrulewidth}{0.8pt}
+\setlength{\lightrulewidth}{0.4pt}
+
+% Convenience: alternate row shading for long tables
+\newcommand{\rowshade}{\rowcolor{PrintSurface}}
+
+% ============================================================================
+% GRAPHICS AND TIKZ
+% ============================================================================
+
+\RequirePackage{graphicx}
+\RequirePackage{subcaption}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{
+    positioning, shapes.geometric, arrows.meta, calc,
+    shadows, patterns, fit, backgrounds, shapes.symbols,
+    decorations.pathmorphing, decorations.markings,
+}
+
+% --- Print diagram node styles ---
+
+\tikzset{
+    component/.style={
+        rectangle,
+        rounded corners=4pt,
+        draw=PrintAccent!60,
+        fill=PrintAccent!6!PrintWhite,
+        text=PrintText,
+        text width=3cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\small,
+    },
+    dataflow/.style={
+        ->,
+        >=Stealth,
+        thick,
+        draw=PrintAccent!70,
+    },
+    server/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=PrintBorderStrong,
+        fill=PrintSurface,
+        text=PrintText,
+        minimum width=2.5cm,
+        minimum height=1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    database/.style={
+        cylinder,
+        shape border rotate=90,
+        draw=PrintSuccess!60,
+        fill=PrintSuccess!6!PrintWhite,
+        text=PrintText,
+        minimum width=2cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    api/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=PrintWarning!60,
+        fill=PrintWarning!6!PrintWhite,
+        text=PrintText,
+        minimum width=2.5cm,
+        minimum height=1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    highlight/.style={
+        rectangle,
+        rounded corners=4pt,
+        draw=PrintAccent!40,
+        fill=PrintAccent!4!PrintWhite,
+        text=PrintHeading,
+        inner sep=10pt,
+        font=\sffamily,
+    },
+}
+
+% ============================================================================
+% TITLE PAGE
+% ============================================================================
+%
+% Usage:
+%   \isoprinttitle
+%
+% Renders a professional, clean title page using the ISO metadata macros.
+% Includes a document metadata table suitable for auditor review.
+
+\newcommand{\isoprinttitle}{%
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \vspace*{2cm}
+        \begin{center}
+            % Company name
+            {\Large\sffamily\textcolor{PrintMuted}{Pinpoint Technologies LLC}\par}
+            \vspace{12mm}
+            % Accent rule
+            {\color{PrintAccent}\rule{8cm}{1pt}\par}
+            \vspace{12mm}
+            % Document title
+            {\fontsize{28}{36}\selectfont\bfseries\sffamily%
+             \textcolor{PrintNavy}{\@isoDocTitle}\par}
+            \vspace{10mm}
+            % Document ID and version
+            {\large\sffamily\textcolor{PrintMuted}{%
+                \@isoDocId\quad\textbullet\quad Version~\@isoVersion}\par}
+            \vspace{6mm}
+            % Classification
+            {\sffamily\bfseries\textcolor{PrintDanger}{\@isoClassification}\par}
+            \vspace{20mm}
+            % Accent rule
+            {\color{PrintBorder}\rule{12cm}{0.4pt}\par}
+            \vspace{8mm}
+            % Metadata table
+            \begin{tabular}{@{} >{\sffamily\color{PrintMuted}}l
+                                 >{\sffamily}l @{}}
+                Document Owner: & \@isoOwner \\[4pt]
+                Review Date:    & \@isoReviewDate \\[4pt]
+                Classification: & \@isoClassification \\[4pt]
+                Document ID:    & \@isoDocId \\
+            \end{tabular}
+        \end{center}
+        \vfill
+        \begin{center}
+            {\footnotesize\sffamily\textcolor{PrintDim}{%
+                This document is the property of Pinpoint Technologies LLC.}%
+                \par\textcolor{PrintDim}{Unauthorized distribution is prohibited.}\par}
+        \end{center}
+    \end{titlepage}
+    \setcounter{page}{1}%
+}
+
+% Legacy-compatible title command (mirrors doc-digital's \digitaltitle)
+\newcommand{\printtitle}[4][]{%
+    % #1 = optional subtitle
+    % #2 = title
+    % #3 = author
+    % #4 = date
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \vspace*{3cm}
+        \begin{center}
+            {\fontsize{32}{40}\selectfont\bfseries\sffamily%
+             \textcolor{PrintNavy}{#2}\par}
+            \vspace{8mm}
+            \ifx\\#1\\%
+            \else
+                {\Large\sffamily\textcolor{PrintMuted}{#1}\par}
+                \vspace{6mm}
+            \fi
+            {\color{PrintAccent}\rule{8cm}{0.6pt}\par}
+            \vspace{8mm}
+            {\large\sffamily\textcolor{PrintHeading}{#3}\par}
+            \vspace{4mm}
+            {\sffamily\textcolor{PrintDim}{#4}\par}
+        \end{center}
+    \end{titlepage}
+    \setcounter{page}{1}%
+}
+
+% ============================================================================
+% SECTION BREAK PAGE
+% ============================================================================
+%
+% Usage: \sectionpage{Section Title}
+%
+% Clean divider page for major document sections.
+
+\newcommand{\sectionpage}[1]{%
+    \clearpage
+    \thispagestyle{empty}
+    \vspace*{\fill}
+    \begin{center}
+        {\fontsize{28}{36}\selectfont\bfseries\sffamily%
+         \textcolor{PrintNavy}{#1}\par}
+        \vspace{4mm}
+        {\color{PrintAccent}\rule{5cm}{0.6pt}\par}
+    \end{center}
+    \vspace*{\fill}
+    \clearpage
+}
+
+% ============================================================================
+% CODE LISTINGS (Light Theme)
+% ============================================================================
+
+\RequirePackage{listings}
+
+\lstset{
+    basicstyle=\ttfamily\small\color{PrintText},
+    keywordstyle=\color{PrintAccentDark}\bfseries,
+    commentstyle=\color{PrintDim}\itshape,
+    stringstyle=\color{PrintSuccess},
+    backgroundcolor=\color{PrintSurface},
+    frame=single,
+    frameround=tttt,
+    framesep=8pt,
+    rulecolor=\color{PrintBorder},
+    breaklines=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{PrintDim},
+    xleftmargin=15pt,
+    xrightmargin=5pt,
+    captionpos=b,
+    tabsize=4,
+    keepspaces=true,
+    columns=flexible,
+}
+
+% Inline code (light chip)
+\newcommand{\pincode}[1]{%
+    \colorbox{PrintSurface}{\texttt{\textcolor{PrintAccentDark}{#1}}}%
+}
+
+% ============================================================================
+% UTILITY COMMANDS
+% ============================================================================
+
+% Emphasis text in accent color
+\newcommand{\glow}[1]{\textcolor{PrintAccent}{\textbf{#1}}}
+
+% Brand wordmark
+\newcommand{\pinpoint}{\textcolor{PrintNavy}{\textbf{Pinpoint}}}
+
+% Pull quote (serif accent on white)
+\newenvironment{pullquote}{%
+    \begin{center}
+    \begin{minipage}{0.85\textwidth}
+    \rmfamily\large\itshape\color{PrintHeading}%
+    \textcolor{PrintAccent!50}{\rule{\linewidth}{0.4pt}}\\[6pt]%
+}{%
+    \\[6pt]\textcolor{PrintAccent!50}{\rule{\linewidth}{0.4pt}}
+    \end{minipage}
+    \end{center}
+}
+
+% ============================================================================
+% TEXT SHORTCUTS
+% ============================================================================
+
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\wrt}{w.r.t.}
+\newcommand{\st}{s.t.}
+
+% ============================================================================
+% PRINT WARNING IF NOT USING LUALATEX
+% ============================================================================
+
+\RequirePackage{iftex}
+\ifluatex\else
+    \PackageWarning{doc-digital-print}{%
+        This package requires LuaLaTeX for proper font rendering.
+        Please compile with lualatex instead of pdflatex.
+    }
+\fi
+
+\endinput

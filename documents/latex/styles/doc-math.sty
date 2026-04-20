@@ -1,0 +1,139 @@
+% Mathematical Notation Package
+% Shortcuts for mathematical typesetting
+% Version: 1.0
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-math}[2025/11/01 Mathematical Notation]
+
+% ============================================================================
+% REQUIRED PACKAGES
+% ============================================================================
+
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{bm}
+
+% ============================================================================
+% NUMBER SETS
+% ============================================================================
+
+\newcommand{\R}{\mathbb{R}}  % Real numbers
+\newcommand{\N}{\mathbb{N}}  % Natural numbers
+\newcommand{\Z}{\mathbb{Z}}  % Integers
+\newcommand{\Q}{\mathbb{Q}}  % Rational numbers
+\newcommand{\C}{\mathbb{C}}  % Complex numbers
+
+% ============================================================================
+% PROBABILITY AND STATISTICS
+% ============================================================================
+
+\newcommand{\E}{\mathbb{E}}  % Expectation
+\newcommand{\Prob}{\mathbb{P}}  % Probability
+\newcommand{\given}{\mid}  % Conditional probability
+\newcommand{\indep}{\perp\!\!\!\perp}  % Independence
+\newcommand{\var}{\mathrm{Var}}  % Variance
+\newcommand{\cov}{\mathrm{Cov}}  % Covariance
+\newcommand{\corr}{\mathrm{Corr}}  % Correlation
+
+% ============================================================================
+% VECTORS AND MATRICES
+% ============================================================================
+
+\newcommand{\vect}[1]{\boldsymbol{#1}}  % Vector notation
+\newcommand{\mat}[1]{\boldsymbol{#1}}  % Matrix notation
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}  % Norm
+\newcommand{\abs}[1]{\left|#1\right|}  % Absolute value
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}  % Inner product
+
+% ============================================================================
+% OPERATORS
+% ============================================================================
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\vecop}{vec}
+\DeclareMathOperator{\bias}{Bias}
+\DeclareMathOperator{\mse}{MSE}
+
+% ============================================================================
+% CALCULUS
+% ============================================================================
+
+\newcommand{\deriv}[2]{\frac{\partial #1}{\partial #2}}  % Partial derivative
+\newcommand{\grad}{\nabla}  % Gradient
+\newcommand{\hess}{\nabla^2}  % Hessian
+
+% ============================================================================
+% MACHINE LEARNING
+% ============================================================================
+
+\newcommand{\loss}{\mathcal{L}}  % Loss function
+\newcommand{\risk}{\mathcal{R}}  % Risk
+\newcommand{\hypothesis}{\mathcal{H}}  % Hypothesis space
+\newcommand{\dataset}{\mathcal{D}}  % Dataset
+
+% ============================================================================
+% DELIMITERS
+% ============================================================================
+
+\newcommand{\set}[1]{\left\{#1\right\}}  % Set notation
+\newcommand{\paren}[1]{\left(#1\right)}  % Parentheses
+\newcommand{\bracket}[1]{\left[#1\right]}  % Brackets
+
+% ============================================================================
+% GRAPH THEORY
+% ============================================================================
+
+\newcommand{\node}{v}  % Node
+\newcommand{\edge}{e}  % Edge
+\newcommand{\graph}{\mathcal{G}}  % Graph
+\newcommand{\nodes}{\mathcal{V}}  % Node set
+\newcommand{\edges}{\mathcal{E}}  % Edge set
+\newcommand{\neighbors}{\mathcal{N}}  % Neighbors
+
+% ============================================================================
+% NEURAL NETWORKS
+% ============================================================================
+
+\newcommand{\features}{x}  % Features
+\newcommand{\hidden}{h}  % Hidden state
+\newcommand{\attention}{a}  % Attention
+\newcommand{\layer}{\ell}  % Layer
+\newcommand{\sigmoid}{\sigma}  % Sigmoid
+\newcommand{\softmax}{\text{softmax}}  % Softmax
+\newcommand{\layernorm}{\text{LN}}  % Layer normalization
+
+% ============================================================================
+% REINFORCEMENT LEARNING
+% ============================================================================
+
+\newcommand{\policy}{\pi}  % Policy
+\newcommand{\state}{s}  % State
+\newcommand{\action}{a}  % Action
+\newcommand{\reward}{r}  % Reward
+\newcommand{\horizon}{H}  % Time horizon
+\newcommand{\discount}{\gamma}  % Discount factor
+\newcommand{\valuefn}{V}  % Value function
+\newcommand{\qfn}{Q}  % Q-function
+
+% ============================================================================
+% ESTIMATION
+% ============================================================================
+
+\newcommand{\estimate}{\hat}  % Estimator
+\newcommand{\optimal}{^*}  % Optimal
+\newcommand{\empirical}{\hat}  % Empirical
+\newcommand{\muhat}{\hat{\mu}}  % Estimated mean
+\newcommand{\sigmahat}{\hat{\sigma}}  % Estimated std dev
+
+% ============================================================================
+% COMPLEXITY
+% ============================================================================
+
+\newcommand{\complexity}{\mathcal{O}}  % Big-O notation
+
+\endinput

@@ -1,0 +1,45 @@
+% Root Cause Analysis
+\needspace{8cm}
+\section{Root Cause Analysis}
+
+% Document the investigation process and findings.
+% This section may be filled incrementally as analysis progresses.
+
+\subsection{Investigation}
+
+% Describe the diagnostic steps taken to isolate the defect.
+
+\begin{enumerate}
+    \item Investigation step and what it revealed
+    \item Narrowing the scope — which components were ruled out
+    \item Identification — how the root cause was pinpointed
+\end{enumerate}
+
+\subsection{Root Cause}
+
+% State the root cause clearly. Reference specific code, configuration,
+% or infrastructure responsible for the defect.
+
+\begin{technicaldetail}
+Describe the root cause in precise technical terms. Reference the
+specific module, function, or configuration at fault.
+\end{technicaldetail}
+
+% Uncomment to reference the problematic code:
+%
+% \begin{wyrdcode}[Defective Code]{python}
+% def calculate_total(items):
+%     # Off-by-one: range excludes final item
+%     total = sum(item.price for item in items[:-1])
+%     return total
+% \end{wyrdcode}
+
+\subsection{Contributing Factors}
+
+% List any secondary factors that enabled or masked the defect.
+
+\begin{itemize}
+    \item Factor 1 (e.g., missing input validation)
+    \item Factor 2 (e.g., insufficient test coverage for edge case)
+    \item Factor 3 (e.g., undocumented API behavior change)
+\end{itemize}

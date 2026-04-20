@@ -1,0 +1,42 @@
+% API Reference
+\section{API Reference}
+
+% Key points to cover:
+% - Endpoint documentation
+% - Request/response formats
+% - Authentication
+% - Error handling
+
+\subsection{Overview}
+
+% Describe the API design and conventions.
+
+\subsection{Authentication}
+
+% Describe authentication mechanisms.
+
+\subsection{Endpoints}
+
+\subsubsection{GET /api/resource}
+
+\textbf{Description:} Retrieve a list of resources.
+
+\textbf{Parameters:}
+\begin{wyrdtab}{l l l l}
+\textbf{Name} & \textbf{Type} & \textbf{Required} & \textbf{Description} \\
+page & Integer & No & Page number \\
+limit & Integer & No & Items per page \\
+\end{wyrdtab}
+
+\textbf{Response:}
+\begin{lstlisting}[language=json]
+{
+  "data": [...],
+  "total": 100,
+  "page": 1
+}
+\end{lstlisting}
+
+\subsection{Error Handling}
+
+% Describe error response formats and codes.
