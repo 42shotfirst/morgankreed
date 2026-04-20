@@ -13,6 +13,11 @@ if (process.env.TEMPO === "true") {
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.NODE_ENV === "development" ? "/" : process.env.VITE_BASE_PATH || "/",
+  // amazon-cognito-identity-js transitively pulls `buffer` which expects
+  // Node's `global`. Polyfill it to the browser equivalent.
+  define: {
+    global: "globalThis",
+  },
   optimizeDeps: {
     entries: ["src/main.tsx", "src/tempobook/**/*"],
   },

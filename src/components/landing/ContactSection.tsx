@@ -69,11 +69,6 @@ const ContactSection = ({
 
   const contactLinks = [
     {
-      icon: <Mail className="w-5 h-5" />,
-      label: email,
-      href: `mailto:${email}`,
-    },
-    {
       icon: <Linkedin className="w-5 h-5" />,
       label: "LinkedIn Profile",
       href: linkedin,

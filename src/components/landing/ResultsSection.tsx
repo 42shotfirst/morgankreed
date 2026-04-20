@@ -13,7 +13,7 @@ interface Stat {
 
 const stats: Stat[] = [
   {
-    value: 30,
+    value: 50,
     suffix: "+",
     label: "Organizations Served",
     description:
@@ -34,7 +34,7 @@ const stats: Stat[] = [
       "Average operational savings delivered on engagements with a cost-optimization mandate.",
   },
   {
-    value: 15,
+    value: 95,
     suffix: "M+",
     prefix: "$",
     label: "Projects Delivered",
