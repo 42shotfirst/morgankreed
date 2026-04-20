@@ -9,13 +9,13 @@ import ExpertiseSection from "@/components/landing/ExpertiseSection";
 import Projects from "@/components/landing/projects";
 import MediaAppearances from "@/components/landing/MediaAppearances";
 import Writing from "@/components/landing/Writing";
-import Blog from "@/components/landing/Blog";
 import FitCheck from "@/components/landing/FitCheck";
 import Testimonials from "@/components/landing/testimonials";
 import ContactSection from "@/components/landing/ContactSection";
 import PageLoader from "@/components/landing/PageLoader";
 import { smoothScrollTo } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/Logo";
 
 const IndexPage = () => {
   useEffect(() => {
@@ -78,12 +78,11 @@ const IndexPage = () => {
         {/*
           Order matters here. Media first because third-party media
           appearances are the strongest external trust signal.
-          Writing next — external publications on Medium etc.
-          Blog last — own-surface posts, syndicated out.
+          Writing second — unified feed of external (Medium, LinkedIn)
+          and own-surface (blog) posts, with filter chips.
         */}
         <MediaAppearances />
         <Writing />
-        <Blog />
 
         {/* ======================================================= */}
         {/* FIT CHECK — interactive pre-qual                         */}
@@ -125,15 +124,12 @@ const IndexPage = () => {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
                 <div className="flex items-center gap-2">
-                  <span
-                    className="text-primary font-mono text-base"
-                    aria-hidden="true"
-                  >
-                    ▮
-                  </span>
-                  <span className="font-mono text-sm font-medium">
-                    cto-on-demand
-                    <span className="text-muted-foreground">.inc</span>
+                  <Logo variant="mark" className="w-4 h-4 text-primary" />
+                  <span className="font-bold text-sm tracking-tight">
+                    CTO{" "}
+                    <span className="text-muted-foreground font-normal text-[0.6875rem] tracking-[0.2em] uppercase">
+                      on demand
+                    </span>
                   </span>
                 </div>
                 <div className="h-4 w-px bg-border hidden md:block" />

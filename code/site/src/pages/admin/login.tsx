@@ -12,6 +12,7 @@ import {
   submitMfaCode,
   type AuthStep,
 } from "@/lib/cognito";
+import { Logo } from "@/components/Logo";
 
 type Screen =
   | "credentials"
@@ -125,12 +126,13 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="mb-8 flex items-center gap-3">
-          <span className="text-primary font-mono text-lg" aria-hidden="true">
-            ▮
-          </span>
-          <span className="font-mono text-lg font-medium">
-            cto-on-demand<span className="text-muted-foreground">.inc</span>{" "}
-            / <span className="text-primary">engine</span>
+          <Logo variant="mark" className="w-6 h-6 text-primary" />
+          <span className="font-bold text-lg tracking-tight">
+            CTO{" "}
+            <span className="text-muted-foreground font-normal text-xs tracking-[0.2em] uppercase">
+              on demand
+            </span>{" "}
+            <span className="text-primary font-mono text-sm">/ engine</span>
           </span>
         </div>
 

@@ -8,6 +8,7 @@ import {
   smoothScrollTo,
 } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/Logo";
 
 interface HeaderProps {
   links?: Array<{ href: string; label: string }>;
@@ -21,7 +22,6 @@ const Header = ({
     { href: "#track-record", label: "Track Record" },
     { href: "#media", label: "Media" },
     { href: "#writing", label: "Writing" },
-    { href: "#blog", label: "Blog" },
     { href: "#contact", label: "Contact" },
   ],
   firmName = "cto-on-demand",
@@ -65,20 +65,17 @@ const Header = ({
           href="#home"
           onClick={(e) => handleNavClick(e, "#home")}
           className={cn(
-            "flex items-center gap-2 transition-colors duration-300",
+            "flex items-center gap-2.5 transition-colors duration-300",
             "text-foreground hover:text-primary group"
           )}
           aria-label="CTO on Demand, Inc. — home"
         >
-          <span
-            className="text-primary font-mono text-base leading-none group-hover:animate-pulse"
-            aria-hidden="true"
-          >
-            ▮
-          </span>
-          <span className="font-mono text-base font-medium tracking-tight">
-            {firmName}
-            <span className="text-muted-foreground">.inc</span>
+          <Logo
+            variant="mark"
+            className="w-5 h-5 text-primary group-hover:animate-pulse"
+          />
+          <span className="font-bold text-base tracking-tight">
+            CTO <span className="text-muted-foreground font-normal text-xs tracking-[0.2em] uppercase">on demand</span>
           </span>
         </a>
 
@@ -130,8 +127,11 @@ const Header = ({
             className="w-[300px] sm:w-[400px] bg-background/98 backdrop-blur-lg border-border"
           >
             <div className="flex flex-col space-y-6 mt-8">
-              <div className="font-mono text-xs tracking-[0.2em] uppercase text-muted-foreground pb-2 border-b border-border/50">
-                ▮ {firmName}.inc
+              <div className="flex items-center gap-2 pb-2 border-b border-border/50">
+                <Logo variant="mark" className="w-4 h-4 text-primary" />
+                <span className="font-mono text-xs tracking-[0.2em] uppercase text-muted-foreground">
+                  cto on demand
+                </span>
               </div>
               {links.map((link, index) => {
                 const isActive =

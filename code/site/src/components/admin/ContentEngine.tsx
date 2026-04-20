@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAdminSession } from "@/hooks/useAdminSession";
+import { Logo } from "@/components/Logo";
 
 const API_BASE =
   import.meta.env.VITE_CONTENT_API_URL ??
@@ -271,13 +272,14 @@ export default function ContentEngine() {
       {/* Admin bar */}
       <div className="border-b border-border/50 bg-card/30 backdrop-blur-sm sticky top-0 z-40">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-primary font-mono text-sm" aria-hidden="true">
-              ▮
-            </span>
-            <span className="font-mono text-sm">
-              cto-on-demand<span className="text-muted-foreground">.inc</span>{" "}
-              / <span className="text-primary">engine</span>
+          <div className="flex items-center gap-2.5">
+            <Logo variant="mark" className="w-5 h-5 text-primary" />
+            <span className="font-bold text-sm tracking-tight">
+              CTO{" "}
+              <span className="text-muted-foreground font-normal text-[0.6875rem] tracking-[0.2em] uppercase">
+                on demand
+              </span>{" "}
+              <span className="text-primary font-mono">/ engine</span>
             </span>
           </div>
           <div className="flex items-center gap-3 text-sm text-muted-foreground">

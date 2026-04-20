@@ -79,11 +79,6 @@ const ContactSection = ({
       href: github,
       external: true,
     },
-    {
-      icon: <MapPin className="w-5 h-5" />,
-      label: location,
-      href: null,
-    },
   ];
 
   return (

@@ -7,6 +7,7 @@ import {
   usePrefersReducedMotion,
 } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/Logo";
 
 interface HeroSectionProps {
   firmName?: string;
@@ -135,12 +136,13 @@ const HeroSection = ({
           </motion.div>
 
           {/* Eyebrow wordmark */}
-          <motion.p
+          <motion.div
             variants={itemVariants}
-            className="text-primary font-mono text-xs tracking-[0.2em] uppercase mb-5"
+            className="inline-flex items-center gap-2 text-primary font-mono text-xs tracking-[0.2em] uppercase mb-5"
           >
-            ▮ {firmName}
-          </motion.p>
+            <Logo variant="mark" className="w-3.5 h-3.5" />
+            <span>{firmName}</span>
+          </motion.div>
 
           {/* Main headline */}
           <motion.h1
