@@ -1,0 +1,23 @@
+% ── 02 / The Build ──
+
+\section{The Build}
+
+\subsection{One Architecture. Three Networks.}
+
+A unified ISO~20022 messaging layer across FedWire, ACH, and RTP, integrated directly into bunq's core banking system. One architecture, three networks, intelligent routing, automated failover.
+
+Payments route automatically based on receiving bank network capability and bunq's internally configured priority. The default sequence is RTP~$\to$~FedWire~$\to$~ACH, optimised for speed. bunq can reconfigure this order at any time. On failure, a webhook fires immediately and the next network initiates without manual intervention. Every routing decision is logged and auditable.
+
+\begin{table}[ht]
+\centering
+\caption{Payment Network Coverage}
+\begin{tabularx}{\textwidth}{@{}l X l@{}}
+\toprule
+\textbf{Network} & \textbf{Message Types} & \textbf{Role} \\
+\midrule
+RTP (The Clearing House) & pacs.008, pacs.002, camt.035, remt.001 & Primary instant rail \\[4pt]
+FedWire (Federal Reserve) & pacs.008, pacs.009, camt series & Interbank \& liquidity \\[4pt]
+ACH (NACHA) & pain.001, pacs.008 mapping & Settlement backstop \\
+\bottomrule
+\end{tabularx}
+\end{table}

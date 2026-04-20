@@ -1,0 +1,57 @@
+id: 07-github-actions-ci
+title: "Task: Create GitHub Actions CI workflow for PR validation"
+epic: repo-restructure-and-infra
+status: completed
+priority: high
+phase: 2
+
+estimate:
+  optimistic: 20m
+  realistic: 40m
+  pessimistic: 1h
+
+dependencies:
+  - 03-fix-build-paths
+
+skills_required:
+  - github-actions
+  - node
+  - typescript
+
+files_to_touch:
+  - .github/workflows/ci.yml
+
+outputs:
+  - CI workflow that validates PRs (install, lint, typecheck, build)
+
+acceptance_criteria:
+  - "[ ] .github/workflows/ci.yml exists with valid workflow syntax"
+  - "[ ] Triggers on pull_request to main branch"
+  - "[ ] Runs npm ci in code/site/"
+  - "[ ] Runs lint step"
+  - "[ ] Runs TypeScript typecheck (tsc --noEmit)"
+  - "[ ] Runs build step (vite build)"
+  - "[ ] Uses node 20 and caches node_modules"
+  - "[ ] Workflow name is descriptive (e.g., 'CI')"
+
+description: |
+  ## Objective
+  Create a GitHub Actions workflow that validates pull requests by running install, lint, typecheck, and build.
+
+  ## Steps
+  1. Create `.github/workflows/ci.yml`
+  2. Configure triggers: `pull_request` targeting `main`
+  3. Job: `validate`
+     - runs-on: ubuntu-latest
+     - steps:
+       1. Checkout code
+       2. Setup Node.js 20 with npm cache
+       3. Install dependencies: `cd code/site && npm ci`
+       4. Lint: `cd code/site && npm run lint`
+       5. Typecheck: `cd code/site && npx tsc --noEmit`
+       6. Build: `cd code/site && npm run build`
+  4. Keep it simple. No matrix builds, no artifacts, no notifications.
+
+  ## Verification
+  - YAML is valid (no syntax errors)
+  - Workflow structure matches GitHub Actions schema

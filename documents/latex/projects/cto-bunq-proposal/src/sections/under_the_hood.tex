@@ -1,0 +1,32 @@
+% ── 03 / Under the Hood ──
+
+\needspace{6cm}
+\section{Under the Hood}
+
+\subsection{ISO 20022 Messaging Core}
+
+\begin{description}[style=nextline, leftmargin=0pt, itemsep=6pt]
+\item[\textsf{Message Schema Registry}] XML schemas across pacs, camt, pain, and remt families. Version-controlled as networks update.
+\item[\textsf{Message Builder API}] Field-level validation, data type enforcement, and cardinality checks per specification.
+\item[\textsf{Message Parser}] Bidirectional parsing of inbound ISO~20022 XML validated against network-specific business rules.
+\item[\textsf{Validation Engine}] Seven-layer validation from syntax through full business process validation.
+\end{description}
+
+\subsection{Network Adapters}
+
+\begin{description}[style=nextline, leftmargin=0pt, itemsep=6pt]
+\item[\textsf{RTP\enspace:\enspace The Clearing House}] Message identification per TCH specification. Duplicate checking. Local Instrument codes (CONSUMER, BUSINESS, INTERMEDIARY). Full lifecycle: pacs.008~$\to$~pacs.002~$\to$~camt.035 including Accept Without Posting flows. Full reason code handling.
+\item[\textsf{FedWire\enspace:\enspace Federal Reserve}] pacs.008 for customer transfers. pacs.009 for FI-to-FI. ABA routing validation. FRB business rules per technical documentation. FedLine connectivity. Cutoff time management, queueing, and next-day settlement logic.
+\needspace{4cm}
+\item[\textsf{ACH\enspace:\enspace NACHA}] Bidirectional ISO~20022 to NACHA file mapping per NACHA's official Mapping Guide. SEC codes: PPD, CCD, CTX, WEB, TEL. Same-day vs.\ standard window management. Return and NOC handling mapped to ISO~20022 status messages.
+\end{description}
+
+\subsection{Payment Orchestration Layer}
+
+\begin{description}[style=nextline, leftmargin=0pt, itemsep=6pt]
+\item[\textsf{Routing Engine}] Network selection per transaction based on receiving bank capability, live availability, and bunq's configurable cost vs.\ speed priority. Default: RTP~$\to$~FedWire~$\to$~ACH.
+\item[\textsf{Automated Failover}] On failure: immediate webhook, next network initiated, full decision chain logged. Priority order fully customisable.
+\item[\textsf{Routing Database}] Receiving bank capabilities by routing number, maintained throughout.
+\item[\textsf{Webhook \& Event System}] Real-time streaming across all payment lifecycle events.
+\item[\textsf{Monitoring \& Observability}] Dashboards, alerting, performance metrics, reconciliation reporting.
+\end{description}

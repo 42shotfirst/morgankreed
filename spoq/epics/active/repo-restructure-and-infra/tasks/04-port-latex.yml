@@ -1,0 +1,76 @@
+id: 04-port-latex
+title: "Task: Port LaTeX documentation system from pinpoint"
+epic: repo-restructure-and-infra
+status: completed
+priority: high
+phase: 0
+
+estimate:
+  optimistic: 45m
+  realistic: 1.5h
+  pessimistic: 2.5h
+
+dependencies: []
+
+skills_required:
+  - latex
+  - make
+  - python
+
+files_to_touch:
+  - documents/latex/Makefile.template
+  - documents/latex/README.md
+  - documents/latex/scripts/version_manager.py
+  - documents/latex/styles/doc-premium.sty
+  - documents/latex/styles/doc-tables.sty
+  - documents/latex/styles/doc-math.sty
+  - documents/latex/styles/doc-code.sty
+  - documents/latex/styles/STYLES.md
+  - documents/latex/styles/COLOR_PALETTE.md
+  - documents/latex/styles/FONTS.md
+  - documents/latex/templates/registry.yml
+
+outputs:
+  - Complete LaTeX build system in documents/latex/
+  - All 4 style packages ported
+  - Version manager script functional
+  - Template registry adapted for morgankreed
+  - Sample document compiles successfully
+
+acceptance_criteria:
+  - "[ ] documents/latex/Makefile.template exists and is valid make syntax"
+  - "[ ] documents/latex/scripts/version_manager.py runs: python3 version_manager.py show"
+  - "[ ] All 4 .sty files present in documents/latex/styles/"
+  - "[ ] documents/latex/templates/registry.yml defines available templates"
+  - "[ ] documents/latex/README.md documents the build system"
+  - "[ ] STYLES.md, COLOR_PALETTE.md, FONTS.md reference docs present"
+
+description: |
+  ## Objective
+  Port the unified LaTeX documentation system from the pinpoint repository so morgankreed has professional document generation capabilities.
+
+  ## Steps
+  1. Create directory structure:
+     ```
+     documents/latex/
+     ├── styles/
+     ├── templates/
+     └── scripts/
+     ```
+  2. Copy from /Users/admin/Documents/code/pinpoint/documents/latex/:
+     - `Makefile.template`
+     - `README.md`
+     - `scripts/version_manager.py`
+     - `styles/doc-premium.sty`, `doc-tables.sty`, `doc-math.sty`, `doc-code.sty`
+     - `styles/STYLES.md`, `COLOR_PALETTE.md`, `FONTS.md`
+     - `templates/` directory with `registry.yml`
+  3. Review doc-premium.sty for any pinpoint-specific branding (colors, logos) and note what would need adapting later (do not change brand colors in this task, just port as-is)
+  4. Verify the version manager script works standalone:
+     ```bash
+     cd documents/latex && python3 scripts/version_manager.py --help
+     ```
+  5. Write documents/latex/README.md if the ported version references pinpoint-specific paths
+
+  ## Verification
+  - `ls documents/latex/styles/*.sty` shows 4 files
+  - `python3 documents/latex/scripts/version_manager.py show` (from a test dir with .version file)

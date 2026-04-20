@@ -1,0 +1,334 @@
+% Premium LaTeX Style Package
+% Professional styling with premium fonts and custom components
+% Version: 1.0
+% Requires: LuaLaTeX or XeLaTeX for font support
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-premium}[2025/11/01 Premium Style]
+
+% ============================================================================
+% FONT CONFIGURATION
+% ============================================================================
+
+\RequirePackage{fontspec}
+
+% Premium fonts (install via documents/latex/styles/FONTS.md)
+\setmainfont{Source Serif 4}[
+    Numbers=Proportional,
+    Ligatures=TeX,
+]
+\setsansfont{IBM Plex Sans}[
+    Numbers=Proportional,
+    Scale=0.95,
+]
+\setmonofont{JetBrains Mono}[
+    Scale=0.90,
+    Contextuals=Alternate,
+]
+
+% Mathematics with unicode-math
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+\setmathfont{TeX Gyre Termes Math}
+
+% Enhanced typography
+\RequirePackage{microtype}
+\microtypesetup{
+    protrusion=true,
+    expansion=true,
+    final=true,
+    tracking=true,
+}
+
+% ============================================================================
+% COLOR SCHEME
+% ============================================================================
+
+\RequirePackage[dvipsnames]{xcolor}
+
+% Brand colors - Dark Academic aesthetic
+% Navy blue, emerald green, brass/gold, moody burgundy
+\definecolor{DocNavy}{HTML}{0F172A}      % Deep midnight navy (primary)
+\definecolor{DocEmerald}{HTML}{047857}   % Rich emerald green
+\definecolor{DocBrass}{HTML}{CA8A04}     % Warm brass/gold
+\definecolor{DocBurgundy}{HTML}{881337}  % Deep wine/burgundy
+\definecolor{DocDark}{HTML}{020617}      % Almost black
+\definecolor{DocMuted}{HTML}{475569}     % Cool slate gray
+\definecolor{DocLight}{HTML}{F8FAFC}     % Very light background
+\definecolor{DocBg}{HTML}{E0E7ED}        % Cool blue-gray background
+
+% Semantic aliases
+\colorlet{DocBlue}{DocNavy}             % Primary color
+\colorlet{DocSuccess}{DocEmerald}       % Success/positive
+\colorlet{DocWarning}{DocBrass}         % Warning/attention
+\colorlet{DocDanger}{DocBurgundy}       % Error/critical
+
+% Backward compatibility aliases
+\colorlet{WyrdNavy}{DocNavy}
+\colorlet{WyrdEmerald}{DocEmerald}
+\colorlet{WyrdBrass}{DocBrass}
+\colorlet{WyrdBurgundy}{DocBurgundy}
+\colorlet{WyrdDark}{DocDark}
+\colorlet{WyrdMuted}{DocMuted}
+\colorlet{WyrdLight}{DocLight}
+\colorlet{WyrdBg}{DocBg}
+\colorlet{WyrdBlue}{DocBlue}
+\colorlet{WyrdSuccess}{DocSuccess}
+\colorlet{WyrdWarning}{DocWarning}
+\colorlet{WyrdDanger}{DocDanger}
+\colorlet{AdrataBlue}{DocBlue}
+\colorlet{AdrataDark}{DocDark}
+\colorlet{AdrataMuted}{DocMuted}
+\colorlet{AdrataLight}{DocLight}
+\colorlet{AdrataSuccess}{DocSuccess}
+\colorlet{AdrataWarning}{DocWarning}
+\colorlet{AdrataBg}{DocBg}
+
+% ============================================================================
+% SPACING AND TYPOGRAPHY (Butterick Principles)
+% ============================================================================
+
+\RequirePackage{setspace}
+\setstretch{1.25}  % Butterick: 120-145% line spacing
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+% Butterick: Widow/orphan control - "typographic errors"
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+
+% Butterick: Proper hyphenation for justified text
+\RequirePackage[english]{babel}
+\tolerance=1000
+\emergencystretch=1em
+\hyphenpenalty=50
+
+% Butterick: Small caps need letterspacing
+\SetTracking{encoding=*, shape=sc}{50}
+
+% Layout control for preventing orphaned headers
+\RequirePackage{needspace}
+
+% ============================================================================
+% CALLOUT BOXES
+% ============================================================================
+
+\RequirePackage[most]{tcolorbox}
+
+% Base settings for all callouts
+\tcbset{
+    enhanced,
+    sharp corners,
+    boxrule=0pt,
+    leftrule=3pt,
+    top=8pt,
+    bottom=8pt,
+    left=12pt,
+    right=12pt,
+    arc=2pt,
+    fonttitle=\sffamily\bfseries,
+    coltitle=white,
+    before skip=15pt,
+    after skip=15pt,
+    breakable,
+}
+
+% Key Insight box (blue)
+\newtcolorbox{keyinsight}{
+    colback=DocBlue!5,
+    colframe=DocBlue,
+    title=Key Insight,
+    colbacktitle=DocBlue,
+}
+
+% Business Value box (green)
+\newtcolorbox{businessvalue}{
+    colback=DocSuccess!8,
+    colframe=DocSuccess,
+    title=Business Value,
+    colbacktitle=DocSuccess,
+}
+
+% Technical Detail box (muted)
+\newtcolorbox{technicaldetail}{
+    colback=DocMuted!5,
+    colframe=DocMuted,
+    title=Technical Detail,
+    colbacktitle=DocMuted,
+}
+
+% Critical Point box (warning)
+\newtcolorbox{criticalpoint}{
+    colback=DocWarning!8,
+    colframe=DocWarning,
+    title=Critical Point,
+    colbacktitle=DocWarning,
+}
+
+% Warning box (danger)
+\newtcolorbox{warningbox}{
+    colback=DocDanger!8,
+    colframe=DocDanger,
+    title=Warning,
+    colbacktitle=DocDanger,
+}
+
+% Simple callout (light gray)
+\newtcolorbox{callout}{
+    colback=DocLight,
+    colframe=DocMuted!40,
+    fonttitle=\sffamily\bfseries,
+    coltitle=DocDark,
+}
+
+% Note box (no title)
+\newtcolorbox{notebox}{
+    colback=DocBg,
+    colframe=DocBlue!30,
+    boxrule=0.5pt,
+    leftrule=0.5pt,
+}
+
+% ============================================================================
+% HEADERS AND FOOTERS
+% ============================================================================
+
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{DocBlue!30}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\sffamily\small\textcolor{DocMuted}{\@title}}
+\fancyhead[R]{\sffamily\small\textcolor{DocMuted}{\leftmark}}
+\fancyfoot[C]{\sffamily\textcolor{DocMuted}{\thepage}}
+
+% ============================================================================
+% HYPERLINKS AND PDF SETUP
+% ============================================================================
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=DocBlue,
+    citecolor=DocBlue,
+    urlcolor=DocBlue,
+    filecolor=DocBlue,
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+}
+\RequirePackage{bookmark}
+
+% Cross-referencing
+\RequirePackage[nameinlink,noabbrev]{cleveref}
+
+% ============================================================================
+% LISTS
+% ============================================================================
+
+\RequirePackage{enumitem}
+\setlist{topsep=6pt,itemsep=3pt,parsep=3pt}
+\setlist[itemize]{label=\textcolor{DocBlue}{\textbullet}}
+
+% ============================================================================
+% QUOTES
+% ============================================================================
+
+\RequirePackage{csquotes}
+
+% ============================================================================
+% CAPTIONS
+% ============================================================================
+
+\RequirePackage{caption}
+\captionsetup{
+    labelfont={bf,sf,small},
+    textfont={small},
+    format=hang,
+    margin=1cm,
+    aboveskip=12pt,
+    belowskip=6pt,
+}
+\captionsetup[table]{
+    position=above,
+}
+
+% ============================================================================
+% GRAPHICS AND FIGURES
+% ============================================================================
+
+\RequirePackage{graphicx}
+\RequirePackage{subcaption}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc,shadows,patterns,fit,backgrounds,shapes.symbols}
+
+% TikZ component styles
+\tikzset{
+    component/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=DocBlue!50,
+        fill=DocBlue!10,
+        text width=3cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\small,
+    },
+    dataflow/.style={
+        ->,
+        >=Stealth,
+        thick,
+        DocBlue!70,
+    },
+    server/.style={
+        rectangle,
+        rounded corners=2pt,
+        draw=DocDark!50,
+        fill=DocDark!5,
+        minimum width=2.5cm,
+        minimum height=1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    database/.style={
+        cylinder,
+        shape border rotate=90,
+        draw=DocSuccess!50,
+        fill=DocSuccess!10,
+        minimum width=2cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+}
+
+% ============================================================================
+% PAGE LAYOUT
+% ============================================================================
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=30mm,
+    bottom=30mm,
+    left=25mm,
+    right=25mm,
+    headheight=22pt,
+}
+
+% ============================================================================
+% TEXT SHORTCUTS
+% ============================================================================
+
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\wrt}{w.r.t.}
+\newcommand{\st}{s.t.}
+
+\endinput

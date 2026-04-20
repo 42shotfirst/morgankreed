@@ -1,30 +1,57 @@
-# React + TypeScript + Vite
+# Morgan K. Reed
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Technology portfolio and consulting website built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui
+- **Infrastructure**: AWS S3 + CloudFront (Terraform)
+- **CI/CD**: GitHub Actions
+- **Documentation**: LaTeX build system
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites
+- Node.js 20+
+- npm
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Development
+```bash
+cd code/site
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Production Build
+```bash
+cd code/site
+npm run build
+```
+
+## Project Structure
+
+```
+morgankreed/
+├── code/site/           # React/Vite portfolio app
+├── context/             # AI system prompts
+├── documents/
+│   ├── latex/           # LaTeX documentation system
+│   └── operational/     # Deployment and ops guides
+├── infrastructure/
+│   ├── docker/          # Local production preview
+│   └── terraform/       # AWS S3 + CloudFront IaC
+└── spoq/                # Epic/task management
+```
+
+## Deployment
+
+Automated via GitHub Actions on merge to `main`. The pipeline builds the site and syncs to S3 with CloudFront cache invalidation.
+
+See `documents/operational/DEPLOYMENT.md` for details.
+
+## Documentation
+
+- **Operational guides**: `documents/operational/`
+- **LaTeX templates**: `documents/latex/` (styles, templates, build system)
+- **Infrastructure**: `infrastructure/terraform/README.md`

@@ -1,0 +1,72 @@
+id: 01-restructure-dirs
+title: "Task: Restructure repository directory layout"
+epic: repo-restructure-and-infra
+status: completed
+priority: critical
+phase: 0
+
+estimate:
+  optimistic: 30m
+  realistic: 1h
+  pessimistic: 2h
+
+dependencies: []
+
+skills_required:
+  - shell
+  - git
+  - vite
+  - npm-workspaces
+
+files_to_touch:
+  - code/site/src/
+  - code/site/public/
+  - code/site/api/
+  - code/site/index.html
+  - code/site/package.json
+  - code/site/vite.config.ts
+  - code/site/tailwind.config.js
+  - code/site/postcss.config.js
+  - code/site/tsconfig.json
+  - code/site/tsconfig.node.json
+  - code/site/components.json
+  - code/site/tempo.config.json
+  - package.json
+
+outputs:
+  - Site source code moved to code/site/
+  - Root package.json converted to npm workspace root
+  - Original root-level configs relocated
+
+acceptance_criteria:
+  - "[ ] code/site/ contains src/, public/, api/, index.html"
+  - "[ ] code/site/ contains vite.config.ts, tailwind.config.js, postcss.config.js"
+  - "[ ] code/site/ contains tsconfig.json, tsconfig.node.json, components.json, tempo.config.json"
+  - "[ ] code/site/package.json retains all original dependencies and scripts"
+  - "[ ] Root package.json is a workspace root with workspaces: ['code/site']"
+  - "[ ] .gitignore updated for new structure (node_modules in code/site/)"
+  - "[ ] No source files remain at repository root level"
+
+description: |
+  ## Objective
+  Move the React/Vite portfolio site from the repository root into `code/site/` to match the pinpoint monorepo layout pattern.
+
+  ## Steps
+  1. Create `code/site/` directory
+  2. Move these directories: `src/`, `public/`, `api/`
+  3. Move these files: `index.html`, `package.json`, `vite.config.ts`, `tailwind.config.js`, `postcss.config.js`, `tsconfig.json`, `tsconfig.node.json`, `components.json`, `tempo.config.json`, `package-lock.json`, `.htaccess`
+  4. Create a new root `package.json` as workspace root:
+     ```json
+     {
+       "name": "morgankreed",
+       "private": true,
+       "workspaces": ["code/site"]
+     }
+     ```
+  5. Update `.gitignore` to account for new paths
+  6. Do NOT move: `.claude/`, `.github/`, `spoq/`, `context/`, `documents/`, `infrastructure/`, `.gitignore`, `.mcp.json`
+
+  ## Verification
+  - `ls code/site/src/` shows component directories
+  - Root directory is clean of site-specific configs
+  - `cat package.json` shows workspace configuration

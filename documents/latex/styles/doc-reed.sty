@@ -1,0 +1,620 @@
+% Morgan K. Reed — Butterick-Compatible Brand Style
+% Professional, print-friendly typography following Butterick's Practical
+% Typography, branded with the morgankreed.com identity.
+%
+% Version: 1.0
+% Requires: LuaLaTeX for font support
+%
+% Brand identity source: morgankreed.com (Inter, electric cyan #0ea5e9,
+% dark navy #16162a). This package adapts those digital-first colors for
+% high-contrast, WCAG-compliant print and PDF output on a light background.
+%
+% Key Butterick principles implemented:
+%   - 11pt body text, 1.3 line height
+%   - ~66-character line length via generous margins
+%   - First-line indent (default) or block paragraphs
+%   - Justified text with proper hyphenation
+%   - Widow/orphan prevention
+%   - Minimal, restrained headings
+%   - Optical margin alignment (microtype)
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-reed}[2026/04/19 Morgan K. Reed Butterick Brand Style]
+
+% ============================================================================
+% PACKAGE OPTIONS
+% ============================================================================
+
+\newif\if@reed@indent
+\newif\if@reed@ragged
+\newif\if@reed@serif
+\@reed@indenttrue        % Default: first-line indents
+\@reed@raggedfalse       % Default: justified text
+\@reed@seriftrue         % Default: serif body font
+
+\DeclareOption{block}{\@reed@indentfalse}     % Block paragraphs
+\DeclareOption{indent}{\@reed@indenttrue}     % Indented paragraphs (default)
+\DeclareOption{ragged}{\@reed@raggedtrue}     % Ragged right
+\DeclareOption{justified}{\@reed@raggedfalse} % Justified (default)
+\DeclareOption{sans}{\@reed@seriffalse}       % Sans-serif body (Inter)
+\DeclareOption{serif}{\@reed@seriftrue}       % Serif body (default)
+
+\ProcessOptions\relax
+
+% ============================================================================
+% FONT CONFIGURATION
+% ============================================================================
+
+\RequirePackage{fontspec}
+
+\if@reed@serif
+    \setmainfont{Source Serif 4}[
+        Numbers=OldStyle,
+        Ligatures=TeX,
+        Scale=1.0,
+    ]
+\else
+    % Sans body — matches the morgankreed.com website (Inter)
+    \setmainfont{Inter}[
+        Numbers=OldStyle,
+        Ligatures=TeX,
+        Scale=0.95,
+    ]
+\fi
+
+% Sans-serif: Inter (website font)
+\IfFontExistsTF{Inter}{%
+    \setsansfont{Inter}[
+        Numbers=Lining,
+        Scale=0.92,
+    ]
+}{%
+    \setsansfont{IBM Plex Sans}[
+        Numbers=Lining,
+        Scale=0.92,
+    ]
+}
+
+\setmonofont{JetBrains Mono}[
+    Scale=0.85,
+    Contextuals=Alternate,
+]
+
+% Mathematics
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+\setmathfont{TeX Gyre Termes Math}
+
+% ============================================================================
+% MICROTYPOGRAPHY
+% ============================================================================
+
+\RequirePackage{microtype}
+\microtypesetup{
+    protrusion=true,
+    expansion=true,
+    tracking=true,
+    final=true,
+}
+
+% Small caps letterspacing (Butterick requirement)
+\SetTracking{encoding=*, shape=sc}{50}
+
+% ============================================================================
+% COLOR SCHEME — Morgan K. Reed Brand
+% ============================================================================
+%
+% Adapted from morgankreed.com CSS custom properties for print/PDF:
+%   Website primary:    #0ea5e9 (electric cyan)
+%   Website background: #16162a (dark navy)
+%   Website foreground: #fafafa (near-white)
+%
+% For light-background print, the navy becomes the text color and cyan
+% becomes the accent. All text colors exceed WCAG AA on white.
+%
+%   ReedNavy on white:   ~16.3:1 (AAA)
+%   ReedCyan on white:   ~3.5:1 (AA Large; used for headings only)
+%   ReedDark on white:   ~19.1:1 (AAA)
+%   ReedMuted on white:  ~5.0:1  (AA)
+%
+% ============================================================================
+
+\RequirePackage[dvipsnames]{xcolor}
+
+% --- Core brand ---
+\definecolor{ReedNavy}{HTML}{16162A}       % Primary text / dark navy
+\definecolor{ReedCyan}{HTML}{0EA5E9}       % Primary accent (electric cyan)
+\definecolor{ReedCyanDeep}{HTML}{0284C7}   % Deeper cyan for small text links
+\definecolor{ReedDark}{HTML}{0F0F1E}       % Near-black emphasis
+\definecolor{ReedMuted}{HTML}{64748B}      % Slate gray (secondary text)
+\definecolor{ReedLight}{HTML}{F8FAFC}      % Very light background (code, boxes)
+\definecolor{ReedBg}{HTML}{E2E8F0}         % Cool gray (callout backgrounds)
+
+% --- Status / semantic ---
+\definecolor{ReedSuccess}{HTML}{059669}    % Emerald green (positive)
+\definecolor{ReedWarning}{HTML}{D97706}    % Warm amber (caution)
+\definecolor{ReedDanger}{HTML}{DC2626}     % Red (error/critical)
+
+% --- Semantic aliases (backward-compatible with Doc* naming) ---
+\colorlet{DocBlue}{ReedCyan}
+\colorlet{DocNavy}{ReedNavy}
+\colorlet{DocEmerald}{ReedSuccess}
+\colorlet{DocBrass}{ReedWarning}
+\colorlet{DocBurgundy}{ReedDanger}
+\colorlet{DocDark}{ReedDark}
+\colorlet{DocMuted}{ReedMuted}
+\colorlet{DocLight}{ReedLight}
+\colorlet{DocBg}{ReedBg}
+\colorlet{DocSuccess}{ReedSuccess}
+\colorlet{DocWarning}{ReedWarning}
+\colorlet{DocDanger}{ReedDanger}
+
+% ============================================================================
+% TYPOGRAPHY SETTINGS (Butterick)
+% ============================================================================
+
+\RequirePackage{setspace}
+\setstretch{1.3}  % 120-145% sweet spot for 11pt
+
+% Paragraph formatting
+\if@reed@indent
+    \setlength{\parindent}{1.5em}
+    \setlength{\parskip}{0pt}
+\else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{0.8\baselineskip plus 2pt minus 1pt}
+\fi
+
+% Justification and hyphenation
+\if@reed@ragged
+    \raggedright
+    \RequirePackage[none]{hyphenat}
+\else
+    \RequirePackage[english]{babel}
+    \tolerance=1000
+    \emergencystretch=1em
+    \hyphenpenalty=50
+    \exhyphenpenalty=50
+\fi
+
+% Widow/orphan control
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+\predisplaypenalty=10000
+\postdisplaypenalty=0
+
+\RequirePackage{needspace}
+
+% ============================================================================
+% PAGE LAYOUT
+% ============================================================================
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=1.5in,
+    bottom=1.5in,
+    left=1.5in,
+    right=1.5in,
+    headheight=14pt,
+    headsep=0.5in,
+    footskip=0.5in,
+    marginparwidth=0.75in,
+    marginparsep=0.125in,
+}
+
+% ============================================================================
+% SECTION HEADINGS
+% ============================================================================
+
+\RequirePackage{titlesec}
+
+% Section: cyan accent, subtle rule
+\titleformat{\section}
+    {\normalfont\large\bfseries\sffamily\color{ReedCyan}}
+    {\thesection}
+    {1em}
+    {}
+    [\vspace{2pt}{\color{ReedBg}\titlerule[0.5pt]}]
+
+% Subsection: dark navy, bold
+\titleformat{\subsection}
+    {\normalfont\normalsize\bfseries\sffamily\color{ReedNavy}}
+    {\thesubsection}
+    {1em}
+    {}
+
+% Subsubsection: muted italic
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\itshape\color{ReedMuted}}
+    {\thesubsubsection}
+    {1em}
+    {}
+
+\titlespacing*{\section}{0pt}{2\baselineskip}{1\baselineskip}
+\titlespacing*{\subsection}{0pt}{1.5\baselineskip}{0.75\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{1\baselineskip}{0.5\baselineskip}
+
+% ============================================================================
+% HEADERS AND FOOTERS
+% ============================================================================
+
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{%
+    \hbox to\headwidth{%
+        \color{ReedCyan!30}\leaders\hrule height \headrulewidth\hfill
+    }%
+}
+\fancyhead[L]{\sffamily\small\textcolor{ReedMuted}{\@title}}
+\fancyhead[R]{\sffamily\small\textcolor{ReedMuted}{\leftmark}}
+\fancyfoot[C]{\sffamily\textcolor{ReedMuted}{\thepage}}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\sffamily\textcolor{ReedMuted}{\thepage}}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% ============================================================================
+% CALLOUT BOXES
+% ============================================================================
+
+\RequirePackage[most]{tcolorbox}
+
+\tcbset{
+    enhanced,
+    sharp corners,
+    boxrule=0pt,
+    leftrule=3pt,
+    top=8pt,
+    bottom=8pt,
+    left=12pt,
+    right=12pt,
+    arc=2pt,
+    fonttitle=\sffamily\bfseries,
+    coltitle=white,
+    before skip=15pt,
+    after skip=15pt,
+    breakable,
+}
+
+% Key Insight (cyan accent)
+\newtcolorbox{keyinsight}{
+    colback=ReedCyan!5,
+    colframe=ReedCyan,
+    title=Key Insight,
+    colbacktitle=ReedCyan,
+}
+
+% Business Value (green accent)
+\newtcolorbox{businessvalue}{
+    colback=ReedSuccess!8,
+    colframe=ReedSuccess,
+    title=Business Value,
+    colbacktitle=ReedSuccess,
+}
+
+% Technical Detail (muted accent)
+\newtcolorbox{technicaldetail}{
+    colback=ReedMuted!5,
+    colframe=ReedMuted,
+    title=Technical Detail,
+    colbacktitle=ReedMuted,
+}
+
+% Critical Point (amber accent)
+\newtcolorbox{criticalpoint}{
+    colback=ReedWarning!8,
+    colframe=ReedWarning,
+    title=Critical Point,
+    colbacktitle=ReedWarning,
+}
+
+% Warning (red accent)
+\newtcolorbox{warningbox}{
+    colback=ReedDanger!8,
+    colframe=ReedDanger,
+    title=Warning,
+    colbacktitle=ReedDanger,
+}
+
+% Plain callout (light gray)
+\newtcolorbox{callout}{
+    colback=ReedLight,
+    colframe=ReedMuted!40,
+    fonttitle=\sffamily\bfseries,
+    coltitle=ReedDark,
+}
+
+% Note box (subtle cyan border)
+\newtcolorbox{notebox}{
+    colback=ReedBg,
+    colframe=ReedCyan!30,
+    boxrule=0.5pt,
+    leftrule=0.5pt,
+}
+
+% ============================================================================
+% EMPHASIS AND TEXT STYLING
+% ============================================================================
+
+\DeclareTextFontCommand{\emph}{\itshape}
+\providecommand{\strong}[1]{\textbf{#1}}
+\newcommand{\allcaps}[1]{\textls[80]{\MakeUppercase{#1}}}
+\newcommand{\caps}[1]{\textsc{\MakeLowercase{#1}}}
+
+% ============================================================================
+% HYPERLINKS
+% ============================================================================
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ReedCyanDeep,
+    citecolor=ReedCyanDeep,
+    urlcolor=ReedCyanDeep,
+    filecolor=ReedCyanDeep,
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+}
+\RequirePackage{bookmark}
+\RequirePackage[nameinlink,noabbrev]{cleveref}
+
+% ============================================================================
+% LISTS
+% ============================================================================
+
+\RequirePackage{enumitem}
+
+\setlist{
+    topsep=0.5\baselineskip,
+    itemsep=0.25\baselineskip,
+    parsep=0pt,
+    leftmargin=1.5em,
+}
+\setlist[itemize]{
+    label=\textcolor{ReedCyan}{\textbullet},
+    leftmargin=1.5em,
+}
+\setlist[enumerate]{
+    label=\textcolor{ReedCyan}{\arabic*.},
+    leftmargin=2em,
+}
+
+% ============================================================================
+% BLOCK QUOTES
+% ============================================================================
+
+\RequirePackage{csquotes}
+
+\renewenvironment{quote}{%
+    \list{}{%
+        \leftmargin=1.5em
+        \rightmargin=1.5em
+        \topsep=0.5\baselineskip
+        \parsep=0pt
+        \listparindent=0pt
+    }%
+    \item\relax\small
+}{%
+    \endlist
+}
+
+% ============================================================================
+% TABLES
+% ============================================================================
+
+\RequirePackage{booktabs}
+\RequirePackage{array}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\AtBeginEnvironment{tabular}{\small}
+
+% ============================================================================
+% CAPTIONS
+% ============================================================================
+
+\RequirePackage{caption}
+\captionsetup{
+    font=small,
+    labelfont={bf,sf},
+    format=hang,
+    margin=1em,
+    aboveskip=1\baselineskip,
+    belowskip=0.5\baselineskip,
+}
+\captionsetup[table]{position=above}
+
+% ============================================================================
+% GRAPHICS AND TIKZ
+% ============================================================================
+
+\RequirePackage{graphicx}
+\RequirePackage{subcaption}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc,shadows,patterns,fit,backgrounds,shapes.symbols}
+
+% TikZ diagram styles (brand-colored)
+\tikzset{
+    component/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=ReedCyan!50,
+        fill=ReedCyan!8,
+        text width=3cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\small,
+    },
+    dataflow/.style={
+        ->,
+        >=Stealth,
+        thick,
+        ReedCyan!70,
+    },
+    server/.style={
+        rectangle,
+        rounded corners=2pt,
+        draw=ReedNavy!50,
+        fill=ReedNavy!5,
+        minimum width=2.5cm,
+        minimum height=1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    database/.style={
+        cylinder,
+        shape border rotate=90,
+        draw=ReedSuccess!50,
+        fill=ReedSuccess!8,
+        minimum width=2cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+    api/.style={
+        rectangle,
+        rounded corners=3pt,
+        draw=ReedWarning!60,
+        fill=ReedWarning!8,
+        minimum width=2.5cm,
+        minimum height=1cm,
+        align=center,
+        font=\sffamily\footnotesize,
+    },
+}
+
+% ============================================================================
+% FOOTNOTES
+% ============================================================================
+
+\RequirePackage[bottom]{footmisc}
+\setlength{\footnotemargin}{0.5em}
+\setlength{\footnotesep}{0.8\baselineskip}
+
+% ============================================================================
+% CODE LISTINGS
+% ============================================================================
+
+\RequirePackage{listings}
+
+\lstset{
+    basicstyle=\ttfamily\small\color{ReedDark},
+    keywordstyle=\color{ReedCyanDeep}\bfseries,
+    commentstyle=\color{ReedMuted}\itshape,
+    stringstyle=\color{ReedSuccess},
+    backgroundcolor=\color{ReedLight},
+    frame=single,
+    frameround=tttt,
+    framesep=6pt,
+    rulecolor=\color{ReedBg},
+    breaklines=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{ReedMuted},
+    xleftmargin=15pt,
+    xrightmargin=5pt,
+    captionpos=b,
+    tabsize=4,
+    keepspaces=true,
+    columns=flexible,
+}
+
+% Inline code
+\newcommand{\reedcode}[1]{%
+    \colorbox{ReedLight}{\texttt{\textcolor{ReedCyanDeep}{#1}}}%
+}
+
+% ============================================================================
+% TITLE PAGE
+% ============================================================================
+%
+% Usage:
+%   \reedtitle[Subtitle text]{Document Title}{Author Name}{April 2026}
+%
+% Clean, professional title page following Butterick minimalism with a
+% single cyan accent rule.
+% ============================================================================
+
+\newcommand{\reedtitle}[4][]{%
+    % #1 = optional subtitle
+    % #2 = title
+    % #3 = author
+    % #4 = date
+    \begin{titlepage}
+        \centering
+        \vspace*{2in}
+        {\fontsize{28}{36}\selectfont\bfseries\sffamily%
+         \textcolor{ReedNavy}{#2}\par}
+        \vspace{8mm}
+        \ifx\\#1\\%
+        \else
+            {\Large\sffamily\textcolor{ReedMuted}{#1}\par}
+            \vspace{6mm}
+        \fi
+        {\color{ReedCyan}\rule{6cm}{0.6pt}\par}
+        \vspace{8mm}
+        {\large\sffamily\textcolor{ReedNavy}{#3}\par}
+        \vspace{4mm}
+        {\sffamily\textcolor{ReedMuted}{#4}\par}
+        \vfill
+    \end{titlepage}
+    \setcounter{page}{1}%
+}
+
+% ============================================================================
+% UTILITY COMMANDS
+% ============================================================================
+
+% Accent emphasis
+\newcommand{\glow}[1]{\textcolor{ReedCyan}{\textbf{#1}}}
+
+% Brand wordmark
+\newcommand{\mkreed}{\textcolor{ReedCyan}{\textbf{Morgan K. Reed}}}
+
+% Pull quote (serif accent)
+\newenvironment{pullquote}{%
+    \begin{center}
+    \begin{minipage}{0.85\textwidth}
+    \rmfamily\large\itshape\color{ReedNavy}%
+    \textcolor{ReedCyan!50}{\rule{\linewidth}{0.4pt}}\\[6pt]%
+}{%
+    \\[6pt]\textcolor{ReedCyan!50}{\rule{\linewidth}{0.4pt}}
+    \end{minipage}
+    \end{center}
+}
+
+% Butterick conveniences
+\newcommand{\dash}{\thinspace---\thinspace}
+\newcommand{\eg}{\caps{e.g.}}
+\newcommand{\ie}{\caps{i.e.}}
+\newcommand{\cf}{\caps{cf.}}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\vs}{\caps{vs.}}
+\newcommand{\amtime}{\caps{a.m.}}
+\newcommand{\pmtime}{\caps{p.m.}}
+
+% ============================================================================
+% LUALATEX CHECK
+% ============================================================================
+
+\RequirePackage{iftex}
+\ifluatex\else
+    \PackageWarning{doc-reed}{%
+        This package requires LuaLaTeX for proper font rendering.
+        Please compile with lualatex instead of pdflatex.
+    }
+\fi
+
+\endinput

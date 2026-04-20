@@ -1,0 +1,67 @@
+id: 08-github-actions-deploy
+title: "Task: Create GitHub Actions deploy workflow for S3 + CloudFront"
+epic: repo-restructure-and-infra
+status: completed
+priority: high
+phase: 2
+
+estimate:
+  optimistic: 30m
+  realistic: 1h
+  pessimistic: 1.5h
+
+dependencies:
+  - 03-fix-build-paths
+  - 05-terraform
+
+skills_required:
+  - github-actions
+  - aws
+  - s3
+  - cloudfront
+
+files_to_touch:
+  - .github/workflows/deploy.yml
+
+outputs:
+  - Deploy workflow that builds and pushes to S3 + invalidates CloudFront
+  - Supports staging and production environments
+
+acceptance_criteria:
+  - "[ ] .github/workflows/deploy.yml exists with valid workflow syntax"
+  - "[ ] Triggers on push to main branch"
+  - "[ ] Builds the site from code/site/"
+  - "[ ] Syncs dist/ to S3 bucket using aws s3 sync"
+  - "[ ] Invalidates CloudFront distribution cache"
+  - "[ ] Uses AWS credentials from GitHub secrets (OIDC or access keys)"
+  - "[ ] Environment variables reference: AWS_S3_BUCKET, AWS_CLOUDFRONT_DISTRIBUTION_ID, AWS_REGION"
+  - "[ ] Includes concurrency group to prevent overlapping deploys"
+
+description: |
+  ## Objective
+  Create a GitHub Actions workflow that deploys the built site to S3 and invalidates the CloudFront cache on merge to main.
+
+  ## Steps
+  1. Create `.github/workflows/deploy.yml`
+  2. Configure triggers: `push` to `main` branch, filtered to `code/site/**` paths
+  3. Configure concurrency: group by workflow, cancel in-progress
+  4. Job: `deploy`
+     - runs-on: ubuntu-latest
+     - environment: production
+     - steps:
+       1. Checkout code
+       2. Setup Node.js 20
+       3. Install: `cd code/site && npm ci`
+       4. Build: `cd code/site && npm run build`
+       5. Configure AWS credentials (using secrets):
+          - `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` or OIDC role
+       6. S3 sync: `aws s3 sync code/site/dist/ s3://$AWS_S3_BUCKET --delete`
+       7. CloudFront invalidation: `aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION_ID --paths "/*"`
+  5. Document required GitHub secrets in workflow comments:
+     - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` (or OIDC role ARN)
+     - `AWS_S3_BUCKET`, `AWS_CLOUDFRONT_DISTRIBUTION_ID`, `AWS_REGION`
+
+  ## Verification
+  - YAML is valid
+  - Workflow references correct build paths (code/site/)
+  - S3 sync and CloudFront invalidation commands are correct

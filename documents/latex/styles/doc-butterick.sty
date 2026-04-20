@@ -1,0 +1,408 @@
+% Butterick LaTeX Style Package
+% Implements Matthew Butterick's "Typography for Lawyers" principles
+% For professional, readable documents
+%
+% Version: 1.0
+% Requires: LuaLaTeX for font support
+%
+% Key Principles Implemented:
+% - Point size: 11pt body text (optimal readability)
+% - Line spacing: 130-140% (1.3-1.4 line height)
+% - Line length: 66 characters ideal (~2-3 alphabets)
+% - Generous margins: 1.5 inches minimum
+% - First-line indent OR paragraph spacing, never both
+% - Proper hyphenation for justified text
+% - Widow/orphan prevention
+% - Professional font choices
+% - Restrained use of bold, prefer italics for emphasis
+% - No underlining for emphasis
+% - Proper letterspacing for small caps
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{doc-butterick}[2026/01/02 Butterick Typography Style]
+
+% ============================================================================
+% PACKAGE OPTIONS
+% ============================================================================
+
+\newif\if@butterick@indent
+\newif\if@butterick@ragged
+\newif\if@butterick@serif
+\@butterick@indenttrue        % Default: use first-line indents
+\@butterick@raggedfalse       % Default: justified text
+\@butterick@seriftrue         % Default: serif body font
+
+\DeclareOption{block}{\@butterick@indentfalse}    % Block paragraphs (space between)
+\DeclareOption{indent}{\@butterick@indenttrue}    % Indented paragraphs (default)
+\DeclareOption{ragged}{\@butterick@raggedtrue}    % Ragged right (unjustified)
+\DeclareOption{justified}{\@butterick@raggedfalse} % Justified (default)
+\DeclareOption{sans}{\@butterick@seriffalse}      % Sans-serif body
+\DeclareOption{serif}{\@butterick@seriftrue}      % Serif body (default)
+
+\ProcessOptions\relax
+
+% ============================================================================
+% FONT CONFIGURATION
+% Butterick: "Don't use Times New Roman, Arial, or Courier"
+% Using professional fonts that meet Butterick's standards
+% ============================================================================
+
+\RequirePackage{fontspec}
+
+% Primary fonts - Butterick approved choices
+% Source Serif 4: Modern, highly readable serif (Butterick praises Source Serif)
+% Charter alternative: \setmainfont{XCharter} if Source Serif unavailable
+
+\if@butterick@serif
+    % Serif body text - Butterick's preference for legal/professional docs
+    \setmainfont{Source Serif 4}[
+        Numbers=OldStyle,           % Butterick: old-style figures in body text
+        Ligatures=TeX,
+        Scale=1.0,
+    ]
+\else
+    % Sans-serif body - Butterick: acceptable for some document types
+    \setmainfont{IBM Plex Sans}[
+        Numbers=OldStyle,
+        Ligatures=TeX,
+        Scale=0.95,
+    ]
+\fi
+
+\setsansfont{IBM Plex Sans}[
+    Numbers=Lining,                 % Butterick: lining figures for headings/tables
+    Scale=0.92,
+]
+
+\setmonofont{JetBrains Mono}[
+    Scale=0.85,                     % Butterick: monospace slightly smaller
+    Contextuals=Alternate,
+]
+
+% ============================================================================
+% TYPOGRAPHY SETTINGS
+% Butterick's core recommendations
+% ============================================================================
+
+% POINT SIZE: 10-12pt for body text
+% Document class should set 11pt: \documentclass[11pt]{article}
+% We optimize for 11pt body text
+
+% LINE SPACING: 120-145% of point size
+% For 11pt, that's 13.2-16pt line height
+% 1.3 multiplier = 14.3pt - right in the sweet spot
+\RequirePackage{setspace}
+\setstretch{1.3}
+
+% LINE LENGTH: 45-90 characters, ideally 66
+% For 11pt, this means text width of approximately 4.5-5 inches
+% Our margins are calculated to achieve ~66 characters per line
+
+% PARAGRAPH FORMATTING: Indent OR space, never both
+\if@butterick@indent
+    % Butterick's preference: first-line indent, no space between
+    \setlength{\parindent}{1.5em}   % Standard indent (about 2-3 characters)
+    \setlength{\parskip}{0pt}
+\else
+    % Block style: space between, no indent
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{0.8\baselineskip plus 2pt minus 1pt}
+\fi
+
+% JUSTIFICATION: Butterick prefers justified IF properly hyphenated
+\if@butterick@ragged
+    \raggedright
+    \RequirePackage[none]{hyphenat}  % No hyphenation for ragged
+\else
+    % Justified with proper hyphenation
+    \RequirePackage[english]{babel}
+    \tolerance=1000                   % Allow some flexibility
+    \emergencystretch=1em            % Emergency stretch to avoid overfull boxes
+    \hyphenpenalty=50                % Encourage hyphenation
+    \exhyphenpenalty=50
+\fi
+
+% ============================================================================
+% MICROTYPE: Butterick's "invisible" improvements
+% Character protrusion and font expansion for better justified text
+% ============================================================================
+
+\RequirePackage{microtype}
+\microtypesetup{
+    protrusion=true,     % Margin character protrusion (optical margins)
+    expansion=true,      % Font expansion for better justification
+    tracking=true,       % Letter spacing adjustments
+    final=true,
+}
+% Note: kerning and spacing features require pdftex; LuaLaTeX handles these natively
+
+% SMALL CAPS: Butterick requires letterspacing for small caps
+\SetTracking{encoding=*, shape=sc}{50}  % Add 50/1000 em tracking to small caps
+
+% ============================================================================
+% WIDOW AND ORPHAN CONTROL
+% Butterick: "Widows and orphans are typographic errors"
+% ============================================================================
+
+\widowpenalty=10000      % Prevent widows (last line of paragraph alone at top)
+\clubpenalty=10000       % Prevent orphans (first line alone at bottom)
+\brokenpenalty=10000     % Discourage hyphenation at page break
+\predisplaypenalty=10000 % Keep displays with preceding text
+\postdisplaypenalty=0    % Allow breaks after displays
+
+% Additional controls
+\RequirePackage{needspace}  % For manual control when needed
+
+% ============================================================================
+% PAGE LAYOUT
+% Butterick: Generous margins, optimal line length
+% ============================================================================
+
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    % Butterick recommends 1-1.5 inch margins minimum
+    % We use larger margins to achieve ~66 character line length
+    top=1.5in,
+    bottom=1.5in,
+    left=1.5in,
+    right=1.5in,
+    headheight=14pt,
+    headsep=0.5in,
+    footskip=0.5in,
+    % marginpar controls (for notes if needed)
+    marginparwidth=0.75in,
+    marginparsep=0.125in,
+}
+
+% ============================================================================
+% HEADINGS
+% Butterick: Clear hierarchy, not too large, avoid all caps
+% ============================================================================
+
+\RequirePackage{titlesec}
+
+% Section: Bold, slightly larger, same font family
+\titleformat{\section}
+    {\normalfont\large\bfseries}  % Butterick: "one step up" from body
+    {\thesection}
+    {1em}
+    {}
+
+\titleformat{\subsection}
+    {\normalfont\normalsize\bfseries}  % Same size as body, just bold
+    {\thesubsection}
+    {1em}
+    {}
+
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\itshape}   % Butterick: italics for lower levels
+    {\thesubsubsection}
+    {1em}
+    {}
+
+% Spacing around headings
+\titlespacing*{\section}{0pt}{2\baselineskip}{1\baselineskip}
+\titlespacing*{\subsection}{0pt}{1.5\baselineskip}{0.75\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{1\baselineskip}{0.5\baselineskip}
+
+% ============================================================================
+% HEADERS AND FOOTERS
+% Butterick: Minimal, unobtrusive
+% ============================================================================
+
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+% Minimal header - just page numbers
+\renewcommand{\headrulewidth}{0pt}  % Butterick: no header rule needed
+\fancyfoot[C]{\thepage}             % Page number centered at bottom
+
+% First page of chapters/sections - no header
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% ============================================================================
+% EMPHASIS AND TEXT STYLING
+% Butterick: Italics for emphasis, bold sparingly, never underline
+% ============================================================================
+
+% Redefine \emph to use italics (LaTeX default, but explicit)
+\DeclareTextFontCommand{\emph}{\itshape}
+
+% Strong emphasis - bold, but use sparingly
+\providecommand{\strong}[1]{\textbf{#1}}
+
+% Legal-style all caps with proper tracking
+\newcommand{\allcaps}[1]{\textls[80]{\MakeUppercase{#1}}}
+
+% Small caps with proper tracking (microtype handles this)
+\newcommand{\caps}[1]{\textsc{\MakeLowercase{#1}}}
+
+% ============================================================================
+% LISTS
+% Butterick: Proper spacing, hanging indents
+% ============================================================================
+
+\RequirePackage{enumitem}
+
+% Tighter lists with hanging indentation
+\setlist{
+    topsep=0.5\baselineskip,
+    itemsep=0.25\baselineskip,
+    parsep=0pt,
+    leftmargin=1.5em,
+}
+
+\setlist[itemize]{
+    label=\textbullet,
+    leftmargin=1.5em,
+}
+
+\setlist[enumerate]{
+    label=\arabic*.,
+    leftmargin=2em,
+}
+
+% ============================================================================
+% BLOCK QUOTES
+% Butterick: Indented, possibly smaller, no quote marks needed
+% ============================================================================
+
+\RequirePackage{csquotes}
+
+\renewenvironment{quote}{%
+    \list{}{%
+        \leftmargin=1.5em
+        \rightmargin=1.5em
+        \topsep=0.5\baselineskip
+        \parsep=0pt
+        \listparindent=0pt
+    }%
+    \item\relax\small
+}{%
+    \endlist
+}
+
+% ============================================================================
+% TABLES
+% Butterick: No vertical rules, minimal horizontal rules
+% ============================================================================
+
+\RequirePackage{booktabs}
+\RequirePackage{array}
+
+% Better column types
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% Table font slightly smaller
+\AtBeginEnvironment{tabular}{\small}
+
+% ============================================================================
+% FIGURES AND CAPTIONS
+% Butterick: Clear, readable captions
+% ============================================================================
+
+\RequirePackage{caption}
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    format=hang,
+    margin=1em,
+    aboveskip=1\baselineskip,
+    belowskip=0.5\baselineskip,
+}
+
+% Table captions above
+\captionsetup[table]{position=above}
+
+% ============================================================================
+% HYPERLINKS
+% Butterick: Subtle, not distracting
+% ============================================================================
+
+\RequirePackage[dvipsnames]{xcolor}
+
+% Subtle link colors
+\definecolor{ButterickLink}{HTML}{1e3a5f}   % Dark blue, professional
+\definecolor{ButterickCite}{HTML}{1e3a5f}   % Same for citations
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ButterickLink,
+    citecolor=ButterickCite,
+    urlcolor=ButterickLink,
+    filecolor=ButterickLink,
+    bookmarks=true,
+    bookmarksopen=false,
+    pdfstartview=FitH,
+}
+
+% ============================================================================
+% FOOTNOTES
+% Butterick: At bottom of page, not end of document
+% ============================================================================
+
+\RequirePackage[bottom]{footmisc}
+\setlength{\footnotemargin}{0.5em}
+\setlength{\footnotesep}{0.8\baselineskip}
+
+% ============================================================================
+% CROSS-REFERENCES
+% ============================================================================
+
+\RequirePackage[nameinlink,noabbrev]{cleveref}
+
+% ============================================================================
+% CONVENIENCE COMMANDS
+% ============================================================================
+
+% Butterick's recommended one-em dash with thin spaces
+\newcommand{\dash}{\thinspace---\thinspace}
+
+% Abbreviations in small caps
+\newcommand{\eg}{\caps{e.g.}}
+\newcommand{\ie}{\caps{i.e.}}
+\newcommand{\cf}{\caps{cf.}}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\vs}{\caps{vs.}}
+\newcommand{\amtime}{\caps{a.m.}}
+\newcommand{\pmtime}{\caps{p.m.}}
+
+% ============================================================================
+% TITLE PAGE (Optional - simple, professional)
+% ============================================================================
+
+\newcommand{\buttericktitle}[3]{%
+    \begin{titlepage}
+        \centering
+        \vspace*{2in}
+        {\LARGE\bfseries #1\par}           % Title
+        \vspace{1.5\baselineskip}
+        {\large #2\par}                     % Subtitle/author
+        \vspace{1\baselineskip}
+        {\normalsize #3\par}                % Date/version
+        \vfill
+    \end{titlepage}
+}
+
+% ============================================================================
+% PRINT WARNING IF NOT USING LUALATEX
+% ============================================================================
+
+\RequirePackage{iftex}
+\ifluatex\else
+    \PackageWarning{doc-butterick}{%
+        This package requires LuaLaTeX for proper font rendering.
+        Please compile with lualatex instead of pdflatex.
+    }
+\fi
+
+\endinput

@@ -1,0 +1,45 @@
+% Expected vs Actual Behavior
+\needspace{10cm}
+\section{Expected vs Actual Behavior}
+
+% Clearly distinguish what should happen from what does happen.
+% Include concrete, observable outcomes — not interpretations.
+
+\subsection{Comparison}
+
+\begin{wyrdtab}{l p{5.5cm} p{5.5cm}}
+\textbf{Aspect}     & \textbf{Expected}                     & \textbf{Actual} \\
+Behavior            & Describe correct behavior              & Describe observed behavior \\
+Output / Response   & Expected output or status code         & Actual output or error \\
+Data State          & Expected database or state change      & Actual data state \\
+Performance         & Expected response time or throughput   & Actual measured values \\
+\end{wyrdtab}
+
+\subsection{Error Output}
+
+% Include the exact error message, stack trace, or log output.
+% Use the code environment to preserve formatting.
+
+\begin{criticalpoint}
+Paste the primary error message or exception here for quick reference.
+\end{criticalpoint}
+
+% Uncomment and populate with the full stack trace or log excerpt:
+%
+% \begin{wyrdcode}[Stack Trace]{text}
+% Traceback (most recent call last):
+%   File "module.py", line 42, in function_name
+%     result = operation()
+% TypeError: description of the error
+% \end{wyrdcode}
+
+\subsection{Visual Evidence}
+
+% Include screenshots or recordings if the defect has a visual component.
+% Place image files alongside the project and reference them here.
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{sections/screenshot.png}
+%     \caption{Description of what the screenshot shows}
+% \end{figure}

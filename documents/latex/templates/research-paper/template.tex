@@ -1,0 +1,49 @@
+% Research Paper Template
+% Use with: lualatex
+% Packages: doc-premium, doc-tables, doc-math
+
+\documentclass[12pt,letterpaper]{article}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+% Style packages
+\usepackage{doc-premium}
+\usepackage{doc-tables}
+\usepackage{doc-math}
+
+% Bibliography
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+
+% Document metadata
+\title{{{TITLE}}}
+\author{{{AUTHOR}}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\input{sections/abstract}
+
+\tableofcontents
+\newpage
+
+% Document sections
+\input{sections/introduction}
+\input{sections/related_work}
+\input{sections/methodology}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+% Bibliography
+\bibliography{references}
+
+\end{document}

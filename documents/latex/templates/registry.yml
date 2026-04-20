@@ -1,0 +1,172 @@
+# Template Registry - LaTeX Document System
+# Add new templates here to extend the system
+#
+# Usage: /latex-plan templates
+# Quick create: /latex-plan quick <template-name> <project-name>
+
+version: "1.0"
+
+templates:
+  tech-spec:
+    name: Technical Specification
+    description: Technical design documents with architecture diagrams, API references, and component details
+    category: technical
+    compiler: lualatex
+    bib_tool: bibtex
+    packages:
+      - doc-reed
+      - doc-tables
+      - doc-code
+    sections:
+      - executive_summary
+      - architecture
+      - components
+      - data_model
+      - api_reference
+      - deployment
+      - appendices
+    optional_sections:
+      - security
+      - performance
+      - migration
+      - glossary
+    estimated_pages: "15-40"
+    document_class: article
+
+  research-paper:
+    name: Research Paper
+    description: Academic research with citations, methodology, and formal structure
+    category: academic
+    compiler: lualatex
+    bib_tool: bibtex
+    packages:
+      - doc-reed
+      - doc-tables
+      - doc-math
+    sections:
+      - abstract
+      - introduction
+      - related_work
+      - methodology
+      - results
+      - discussion
+      - conclusion
+      - references
+    optional_sections:
+      - acknowledgments
+      - appendix
+      - supplementary
+    estimated_pages: "10-25"
+    document_class: article
+
+  business-proposal:
+    name: Business Proposal
+    description: Business documents with value propositions, timelines, and budgets
+    category: business
+    compiler: lualatex
+    bib_tool: none
+    packages:
+      - doc-reed
+      - doc-tables
+    sections:
+      - executive_summary
+      - problem_statement
+      - proposed_solution
+      - business_value
+      - timeline
+      - budget
+      - risks
+      - next_steps
+    optional_sections:
+      - team
+      - references
+      - appendix
+    estimated_pages: "8-20"
+    document_class: article
+
+  internal-report:
+    name: Internal Report
+    description: Status reports, progress updates, and internal communications
+    category: internal
+    compiler: pdflatex
+    bib_tool: none
+    packages:
+      - doc-tables
+    sections:
+      - summary
+      - status
+      - accomplishments
+      - issues
+      - next_steps
+    optional_sections:
+      - metrics
+      - appendix
+    estimated_pages: "3-10"
+    document_class: article
+
+  bug-report:
+    name: Bug Report
+    description: Structured defect documentation with environment details, reproduction steps, root cause analysis, and verification
+    category: technical
+    compiler: lualatex
+    bib_tool: none
+    packages:
+      - doc-reed
+      - doc-tables
+      - doc-code
+    sections:
+      - summary
+      - environment
+      - reproduction
+      - expected_vs_actual
+      - root_cause
+      - resolution
+      - verification
+    optional_sections:
+      - impact_assessment
+      - related_issues
+      - timeline
+    estimated_pages: "3-12"
+    document_class: article
+
+  short-memo:
+    name: Short Memo
+    description: Brief memos, quick documents, and single-page communications
+    category: internal
+    compiler: pdflatex
+    bib_tool: none
+    packages: []
+    sections:
+      - header
+      - body
+      - action_items
+    optional_sections: []
+    estimated_pages: "1-3"
+    document_class: article
+
+# Categories for filtering
+categories:
+  technical:
+    name: Technical Documentation
+    description: Specifications, architecture docs, API references
+    icon: wrench
+  academic:
+    name: Academic Writing
+    description: Research papers, theses, academic reports
+    icon: graduation-cap
+  business:
+    name: Business Documents
+    description: Proposals, reports, external communications
+    icon: briefcase
+  internal:
+    name: Internal Documents
+    description: Memos, status reports, internal communications
+    icon: building
+
+# Extension guide
+# To add a new template:
+# 1. Add entry to templates section above
+# 2. Create directory: documents/latex/templates/<name>/
+# 3. Create template.tex in that directory
+# 4. Create section files in sections/ subdirectory
+# 5. Optionally create config.yml for template-specific settings

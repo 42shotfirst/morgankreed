@@ -1,0 +1,327 @@
+# Unified LaTeX Build System
+# Combines best practices from Adrata, Education-Plan, and VSLA projects
+# Version: 1.0.0
+
+# ============================================================================
+# PROJECT CONFIGURATION (Override in project-specific Makefile)
+# ============================================================================
+
+# Project name (used in output filename)
+PROJECT_NAME ?= document
+# Base name for output PDF (e.g., My-Document)
+OUTPUT_BASE ?= $(PROJECT_NAME)
+# Version file location
+VERSION_FILE ?= .version
+# Archive directory for old versions
+ARCHIVE_DIR ?= archive
+# Source directory containing main.tex
+SRC_DIR ?= src
+# Sections directory (optional, for multi-file documents)
+SECTIONS_DIR ?= $(SRC_DIR)/sections
+
+# ============================================================================
+# BUILD CONFIGURATION
+# ============================================================================
+
+# LaTeX compiler (pdflatex or lualatex)
+LATEX_COMPILER ?= pdflatex
+# Compiler flags
+LATEX_FLAGS ?= -interaction=nonstopmode -halt-on-error
+# Bibliography tool (bibtex or biber)
+BIB_TOOL ?= bibtex
+# Number of compilation passes
+COMPILE_PASSES ?= 3
+# Enable draft mode for quick builds
+DRAFT_MODE ?= false
+
+# ============================================================================
+# INTERNAL VARIABLES (Don't modify unless you know what you're doing)
+# ============================================================================
+
+PYTHON = python3
+SCRIPTS_DIR = $(dir $(lastword $(MAKEFILE_LIST)))scripts
+STYLES_DIR = $(abspath $(dir $(lastword $(MAKEFILE_LIST)))styles)
+MAIN_TEX = $(SRC_DIR)/main.tex
+MAIN_PDF = $(SRC_DIR)/main.pdf
+
+# Make styles discoverable by all LaTeX compilers
+export TEXINPUTS := .:$(STYLES_DIR):$(TEXINPUTS)
+
+# Get current version or use default
+CURRENT_VERSION := $(shell if [ -f $(VERSION_FILE) ]; then cat $(VERSION_FILE); else echo "0.1.0"; fi)
+
+# Output PDF name with version
+VERSIONED_PDF = $(OUTPUT_BASE)-V$(CURRENT_VERSION).pdf
+
+# ============================================================================
+# PHONY TARGETS
+# ============================================================================
+
+.PHONY: all help version status clean cleanall \
+        major minor patch quick draft test \
+        check-deps install-help watch init
+
+# ============================================================================
+# DEFAULT TARGET
+# ============================================================================
+
+.DEFAULT_GOAL := help
+
+# ============================================================================
+# MAIN BUILD TARGETS
+# ============================================================================
+
+# Build everything (default: patch version bump)
+all: patch
+
+# Major version bump (N.0.0) - Breaking changes or major rewrites
+major: version-bump-major compile-full archive-and-deploy
+	@echo "✓ Major version build complete: $(VERSIONED_PDF)"
+
+# Minor version bump (x.N.0) - New features or significant additions
+minor: version-bump-minor compile-full archive-and-deploy
+	@echo "✓ Minor version build complete: $(VERSIONED_PDF)"
+
+# Patch version bump (x.x.N) - Bug fixes or minor changes
+patch: version-bump-patch compile-full archive-and-deploy
+	@echo "✓ Patch version build complete: $(VERSIONED_PDF)"
+
+# Quick build without version bump or archiving
+quick: compile-full deploy-quick
+	@echo "✓ Quick build complete: $(OUTPUT_BASE).pdf (no version bump)"
+
+# Draft mode - single pass for rapid iteration
+draft:
+	@echo "Building draft (single pass, no bibliography)..."
+	@cd $(SRC_DIR) && $(LATEX_COMPILER) $(LATEX_FLAGS) main.tex > /dev/null 2>&1 || \
+		(echo "✗ Draft compilation failed. Run 'make test' for details."; exit 1)
+	@cp $(MAIN_PDF) $(OUTPUT_BASE)-draft.pdf
+	@echo "✓ Draft complete: $(OUTPUT_BASE)-draft.pdf"
+
+# Test compilation without deploying (useful for debugging)
+test:
+	@echo "Testing compilation in $(SRC_DIR)..."
+	@cd $(SRC_DIR) && $(LATEX_COMPILER) $(LATEX_FLAGS) main.tex
+	@if [ "$(BIB_TOOL)" != "none" ]; then \
+		cd $(SRC_DIR) && $(BIB_TOOL) main || echo "⚠ Bibliography processing failed (may be OK if no citations)"; \
+	fi
+	@cd $(SRC_DIR) && $(LATEX_COMPILER) $(LATEX_FLAGS) main.tex
+	@echo "✓ Test compilation complete. PDF in $(MAIN_PDF)"
+	@echo "  Use 'make quick' to deploy this build."
+
+# ============================================================================
+# VERSION MANAGEMENT
+# ============================================================================
+
+# Show current version
+version:
+	@echo "Current version: $(CURRENT_VERSION)"
+	@echo "Next versions:"
+	@$(PYTHON) $(SCRIPTS_DIR)/version_manager.py show $(VERSION_FILE)
+
+# Internal version bump targets
+version-bump-major:
+	@echo "Bumping major version..."
+	@$(PYTHON) $(SCRIPTS_DIR)/version_manager.py bump major $(VERSION_FILE)
+	$(eval CURRENT_VERSION := $(shell cat $(VERSION_FILE)))
+
+version-bump-minor:
+	@echo "Bumping minor version..."
+	@$(PYTHON) $(SCRIPTS_DIR)/version_manager.py bump minor $(VERSION_FILE)
+	$(eval CURRENT_VERSION := $(shell cat $(VERSION_FILE)))
+
+version-bump-patch:
+	@echo "Bumping patch version..."
+	@$(PYTHON) $(SCRIPTS_DIR)/version_manager.py bump patch $(VERSION_FILE)
+	$(eval CURRENT_VERSION := $(shell cat $(VERSION_FILE)))
+
+# ============================================================================
+# COMPILATION TARGETS
+# ============================================================================
+
+# Full compilation with bibliography and multiple passes
+compile-full:
+	@echo "Compiling $(PROJECT_NAME) ($(COMPILE_PASSES) passes)..."
+	@cd $(SRC_DIR) && $(LATEX_COMPILER) $(LATEX_FLAGS) main.tex > /dev/null 2>&1 || \
+		(echo "✗ First pass failed. Run 'make test' for details."; exit 1)
+ifeq ($(BIB_TOOL),none)
+	@echo "  Skipping bibliography (BIB_TOOL=none)"
+else
+	@cd $(SRC_DIR) && $(BIB_TOOL) main > /dev/null 2>&1 || \
+		echo "  ⚠ Bibliography processing skipped (may be OK if no citations)"
+endif
+	@cd $(SRC_DIR) && $(LATEX_COMPILER) $(LATEX_FLAGS) main.tex > /dev/null 2>&1
+	@if [ $(COMPILE_PASSES) -ge 3 ]; then \
+		cd $(SRC_DIR) && $(LATEX_COMPILER) $(LATEX_FLAGS) main.tex > /dev/null 2>&1; \
+	fi
+	@echo "✓ Compilation complete"
+
+# ============================================================================
+# DEPLOYMENT TARGETS
+# ============================================================================
+
+# Archive old version and deploy new versioned PDF
+archive-and-deploy:
+	@mkdir -p $(ARCHIVE_DIR)
+	@if [ -f "$(OUTPUT_BASE)-V*.pdf" ]; then \
+		echo "Archiving previous version..."; \
+		mv $(OUTPUT_BASE)-V*.pdf $(ARCHIVE_DIR)/ 2>/dev/null || true; \
+	fi
+	@cp $(MAIN_PDF) "$(VERSIONED_PDF)"
+	@cp $(MAIN_PDF) "$(OUTPUT_BASE).pdf"
+	@echo "✓ Deployed: $(VERSIONED_PDF)"
+
+# Quick deploy without archiving (for quick builds)
+deploy-quick:
+	@cp $(MAIN_PDF) "$(OUTPUT_BASE).pdf"
+
+# ============================================================================
+# MAINTENANCE TARGETS
+# ============================================================================
+
+# Clean build artifacts but keep PDFs
+clean:
+	@echo "Cleaning build artifacts..."
+	@rm -f $(SRC_DIR)/*.aux $(SRC_DIR)/*.log $(SRC_DIR)/*.bbl $(SRC_DIR)/*.blg
+	@rm -f $(SRC_DIR)/*.toc $(SRC_DIR)/*.out $(SRC_DIR)/*.nav $(SRC_DIR)/*.snm
+	@rm -f $(SRC_DIR)/*.fls $(SRC_DIR)/*.fdb_latexmk $(SRC_DIR)/*.synctex.gz
+	@if [ -d "$(SECTIONS_DIR)" ]; then rm -f $(SECTIONS_DIR)/*.aux; fi
+	@echo "✓ Build artifacts cleaned"
+
+# Clean everything including PDFs
+cleanall: clean
+	@echo "Cleaning all generated files..."
+	@rm -f $(OUTPUT_BASE)*.pdf $(MAIN_PDF)
+	@echo "✓ All generated files cleaned (archives preserved)"
+
+# ============================================================================
+# UTILITY TARGETS
+# ============================================================================
+
+# Check LaTeX dependencies
+check-deps:
+	@echo "Checking LaTeX dependencies..."
+	@echo -n "  $(LATEX_COMPILER): "
+	@which $(LATEX_COMPILER) > /dev/null && echo "✓" || echo "✗ MISSING"
+	@echo -n "  $(BIB_TOOL): "
+	@if [ "$(BIB_TOOL)" != "none" ]; then \
+		which $(BIB_TOOL) > /dev/null && echo "✓" || echo "✗ MISSING"; \
+	else \
+		echo "⊘ disabled"; \
+	fi
+	@echo -n "  python3: "
+	@which python3 > /dev/null && echo "✓" || echo "✗ MISSING"
+	@echo ""
+	@echo "Common LaTeX packages:"
+	@echo -n "  amsmath: "
+	@kpsewhich amsmath.sty > /dev/null 2>&1 && echo "✓" || echo "✗"
+	@echo -n "  graphicx: "
+	@kpsewhich graphicx.sty > /dev/null 2>&1 && echo "✓" || echo "✗"
+	@echo -n "  hyperref: "
+	@kpsewhich hyperref.sty > /dev/null 2>&1 && echo "✓" || echo "✗"
+	@echo -n "  biblatex: "
+	@kpsewhich biblatex.sty > /dev/null 2>&1 && echo "✓" || echo "⊘ (using bibtex)"
+
+# Show build status
+status:
+	@echo "════════════════════════════════════════════════════════════════"
+	@echo "  $(PROJECT_NAME) Build Status"
+	@echo "════════════════════════════════════════════════════════════════"
+	@echo "Current version: $(CURRENT_VERSION)"
+	@echo "Output base:     $(OUTPUT_BASE)"
+	@echo ""
+	@echo "Build artifacts:"
+	@echo -n "  Source: "
+	@if [ -f "$(MAIN_TEX)" ]; then echo "✓ $(MAIN_TEX)"; else echo "✗ $(MAIN_TEX) missing"; fi
+	@echo -n "  Compiled: "
+	@if [ -f "$(MAIN_PDF)" ]; then \
+		echo "✓ $(MAIN_PDF) ($$(date -r $(MAIN_PDF) '+%Y-%m-%d %H:%M'))"; \
+	else echo "✗ Not compiled"; fi
+	@echo ""
+	@echo "Deployed versions:"
+	@if [ -f "$(VERSIONED_PDF)" ]; then \
+		echo "  ✓ $(VERSIONED_PDF) ($$(date -r $(VERSIONED_PDF) '+%Y-%m-%d %H:%M'))"; \
+	else echo "  ✗ No versioned PDF"; fi
+	@if [ -f "$(OUTPUT_BASE).pdf" ]; then \
+		echo "  ✓ $(OUTPUT_BASE).pdf ($$(date -r $(OUTPUT_BASE).pdf '+%Y-%m-%d %H:%M'))"; \
+	else echo "  ✗ No current PDF"; fi
+	@echo ""
+	@echo "Archive:"
+	@if [ -d "$(ARCHIVE_DIR)" ] && [ -n "$$(ls -A $(ARCHIVE_DIR) 2>/dev/null)" ]; then \
+		echo "  $$(ls $(ARCHIVE_DIR)/*.pdf 2>/dev/null | wc -l) archived version(s)"; \
+		ls -1 $(ARCHIVE_DIR)/*.pdf 2>/dev/null | tail -3 | sed 's/^/    /'; \
+	else echo "  Empty"; fi
+	@echo "════════════════════════════════════════════════════════════════"
+
+# Initialize project structure
+init:
+	@echo "Initializing project structure..."
+	@mkdir -p $(ARCHIVE_DIR) $(SRC_DIR) $(SECTIONS_DIR)
+	@if [ ! -f $(VERSION_FILE) ]; then echo "0.1.0" > $(VERSION_FILE); fi
+	@echo "✓ Project initialized"
+	@echo "  - Archive directory: $(ARCHIVE_DIR)"
+	@echo "  - Source directory: $(SRC_DIR)"
+	@echo "  - Sections directory: $(SECTIONS_DIR)"
+	@echo "  - Version file: $(VERSION_FILE) ($(CURRENT_VERSION))"
+
+# Watch for changes and rebuild (requires inotifywait)
+watch:
+	@echo "Watching $(SRC_DIR) for changes..."
+	@echo "Press Ctrl+C to stop."
+	@echo "Note: Using quick build (no version bump)"
+	@while true; do \
+		inotifywait -qq -r -e modify $(SRC_DIR) --exclude '\.pdf$$' 2>/dev/null; \
+		make quick; \
+	done
+
+# ============================================================================
+# HELP TARGET
+# ============================================================================
+
+help:
+	@echo "════════════════════════════════════════════════════════════════"
+	@echo "  Unified LaTeX Build System"
+	@echo "════════════════════════════════════════════════════════════════"
+	@echo ""
+	@echo "Quick Start:"
+	@echo "  make          Show this help"
+	@echo "  make patch    Build with patch version bump (x.x.N)"
+	@echo "  make quick    Build without version bump"
+	@echo "  make draft    Fast draft build (1 pass, no bib)"
+	@echo ""
+	@echo "Version Bumps:"
+	@echo "  make major    Major version (N.0.0) - Breaking changes"
+	@echo "  make minor    Minor version (x.N.0) - New features"
+	@echo "  make patch    Patch version (x.x.N) - Bug fixes [DEFAULT]"
+	@echo ""
+	@echo "Development:"
+	@echo "  make quick    Compile without version bump or archiving"
+	@echo "  make draft    Single-pass draft for rapid iteration"
+	@echo "  make test     Test compile without deploying"
+	@echo "  make watch    Auto-rebuild on file changes"
+	@echo ""
+	@echo "Maintenance:"
+	@echo "  make clean    Remove build artifacts (keep PDFs)"
+	@echo "  make cleanall Remove all generated files"
+	@echo ""
+	@echo "Information:"
+	@echo "  make version  Show current and next versions"
+	@echo "  make status   Show detailed build status"
+	@echo "  make check-deps  Check LaTeX dependencies"
+	@echo ""
+	@echo "Setup:"
+	@echo "  make init     Initialize project structure"
+	@echo ""
+	@echo "Current Configuration:"
+	@echo "  Project:   $(PROJECT_NAME)"
+	@echo "  Version:   $(CURRENT_VERSION)"
+	@echo "  Compiler:  $(LATEX_COMPILER)"
+	@echo "  Bib tool:  $(BIB_TOOL)"
+	@echo "════════════════════════════════════════════════════════════════"
+	@echo ""
+	@echo "Examples:"
+	@echo "  make patch              # Most common: bug fix release"
+	@echo "  make minor              # New feature release"
+	@echo "  make quick && make test # Quick compile then check"
+	@echo "  make watch              # Auto-rebuild during editing"
+	@echo ""
