@@ -1,0 +1,124 @@
+{
+  "CallerReference": "9d972738-28a9-45ff-9d82-c428492fc8f1",
+  "Aliases": {
+    "Quantity": 2,
+    "Items": [
+      "ctoondemandinc.com",
+      "www.ctoondemandinc.com"
+    ]
+  },
+  "DefaultRootObject": "index.html",
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "ctoondemandinc.com.s3.us-east-1.amazonaws.com-mo6yshqpjp1",
+        "DomainName": "ctoondemandinc.com.s3.us-east-1.amazonaws.com",
+        "OriginPath": "",
+        "CustomHeaders": {
+          "Quantity": 0
+        },
+        "S3OriginConfig": {
+          "OriginAccessIdentity": "",
+          "OriginReadTimeout": 30
+        },
+        "ConnectionAttempts": 3,
+        "ConnectionTimeout": 10,
+        "OriginShield": {
+          "Enabled": false
+        },
+        "OriginAccessControlId": "E133O0U7QJJ47K"
+      }
+    ]
+  },
+  "OriginGroups": {
+    "Quantity": 0
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "ctoondemandinc.com.s3.us-east-1.amazonaws.com-mo6yshqpjp1",
+    "TrustedSigners": {
+      "Enabled": false,
+      "Quantity": 0
+    },
+    "TrustedKeyGroups": {
+      "Enabled": false,
+      "Quantity": 0
+    },
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "AllowedMethods": {
+      "Quantity": 2,
+      "Items": [
+        "HEAD",
+        "GET"
+      ],
+      "CachedMethods": {
+        "Quantity": 2,
+        "Items": [
+          "HEAD",
+          "GET"
+        ]
+      }
+    },
+    "SmoothStreaming": false,
+    "Compress": true,
+    "LambdaFunctionAssociations": {
+      "Quantity": 0
+    },
+    "FunctionAssociations": {
+      "Quantity": 0
+    },
+    "FieldLevelEncryptionId": "",
+    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+    "GrpcConfig": {
+      "Enabled": false
+    }
+  },
+  "CacheBehaviors": {
+    "Quantity": 0
+  },
+  "CustomErrorResponses": {
+    "Quantity": 2,
+    "Items": [
+      {
+        "ErrorCode": 403,
+        "ResponsePagePath": "/index.html",
+        "ResponseCode": "200",
+        "ErrorCachingMinTTL": 10
+      },
+      {
+        "ErrorCode": 404,
+        "ResponsePagePath": "/index.html",
+        "ResponseCode": "200",
+        "ErrorCachingMinTTL": 10
+      }
+    ]
+  },
+  "Comment": "",
+  "Logging": {
+    "Enabled": false,
+    "IncludeCookies": false,
+    "Bucket": "",
+    "Prefix": ""
+  },
+  "PriceClass": "PriceClass_All",
+  "Enabled": true,
+  "ViewerCertificate": {
+    "CloudFrontDefaultCertificate": false,
+    "ACMCertificateArn": "arn:aws:acm:us-east-1:887401460371:certificate/4ee75e46-0c8b-44af-a50e-e38e819c3c4e",
+    "SSLSupportMethod": "sni-only",
+    "MinimumProtocolVersion": "TLSv1.3_2025",
+    "Certificate": "arn:aws:acm:us-east-1:887401460371:certificate/4ee75e46-0c8b-44af-a50e-e38e819c3c4e",
+    "CertificateSource": "acm"
+  },
+  "Restrictions": {
+    "GeoRestriction": {
+      "RestrictionType": "none",
+      "Quantity": 0
+    }
+  },
+  "WebACLId": "arn:aws:wafv2:us-east-1:887401460371:global/webacl/CreatedByCloudFront-4d3a7b02/6473ede3-a340-47e0-bedc-ac295d5358e7",
+  "HttpVersion": "http2",
+  "IsIPV6Enabled": true,
+  "ContinuousDeploymentPolicyId": "",
+  "Staging": false
+}
