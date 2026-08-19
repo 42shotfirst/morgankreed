@@ -14,6 +14,7 @@ interface Experience {
   company: string;
   logo?: string;
   title: string;
+  location?: string;
   dateRange: string;
   description?: string;
   linkedInUrl?: string;
@@ -22,48 +23,59 @@ interface Experience {
 const experiences: Experience[] = [
   {
     company: "Transbridge Advisors",
-    title: "CTO",
-    dateRange: "2026",
+    title: "Chief Technology Officer",
+    location: "Phoenix, AZ",
+    dateRange: "January 2026 – June 2026",
   },
   {
     company: "Western Alliance Bank",
     title: "AI Software Architect",
-    dateRange: "2025",
+    location: "Phoenix, AZ",
+    dateRange: "May 2025 – December 2025",
   },
   {
-    company: "Fruth Group",
-    title: "Cybersecurity Manager and Fractional CTO",
-    dateRange: "2023 – 2024",
+    company: "The Fruth Group",
+    title: "Engineering and Cybersecurity Manager",
+    location: "Phoenix, AZ",
+    dateRange: "October 2023 – October 2024",
   },
   {
     company: "Foundations Investment Advisors",
-    title: "CTO",
-    dateRange: "2020 – 2023",
+    title: "Chief Technology Officer",
+    location: "Phoenix, AZ",
+    dateRange: "November 2020 – March 2023",
   },
   {
     company: "USAA",
-    title: "Program Manager",
-    dateRange: "2020",
+    title: "Senior Program Leader (Contractor)",
+    location: "Phoenix, AZ",
+    dateRange: "May 2020 – November 2020",
   },
   {
     company: "Progress Residential",
-    title: "Project Manager",
-    dateRange: "2019",
+    title: "Senior Project Manager",
+    location: "Scottsdale, AZ",
+    dateRange: "September 2019 – April 2020",
+  },
+  {
+    company: "TriWest Healthcare",
+    title: "Agile Coach",
+    dateRange: "June 2019 – September 2019",
   },
   {
     company: "AAA",
     title: "Senior Manager",
-    dateRange: "2017 – 2018",
+    dateRange: "October 2017 – December 2018",
   },
   {
     company: "Pearson",
-    title: "PMO Head",
-    dateRange: "2016 – 2017",
+    title: "PMO Head / Product Manager",
+    dateRange: "January 2016 – July 2017",
   },
   {
     company: "American Express",
-    title: "Scrum Master",
-    dateRange: "2013 – 2016",
+    title: "Scrum Master, Mobile Applications",
+    dateRange: "October 2013 – September 2015",
   },
 ];
 
@@ -164,6 +176,12 @@ const ExperienceTimeline = () => {
                   {/* Date range */}
                   <p className="text-sm text-muted-foreground mb-3 font-medium">
                     {exp.dateRange}
+                    {exp.location && (
+                      <span className="text-muted-foreground/70 font-normal">
+                        {" · "}
+                        {exp.location}
+                      </span>
+                    )}
                   </p>
 
                   {/* Description — optional */}
