@@ -47,17 +47,24 @@ Two decades of engineering, architecture, and executive leadership, primarily
 inside regulated financial institutions where security and compliance are
 non-negotiable:
 
-- **Western Alliance Bank** (2022–present) — VP, Software Development Engineer.
-  Leading digital transformation and AI implementation for enterprise banking.
-- **Foundations Investment Advisors** (2019–2022) — Director of Technology.
-  Cloud-first strategy, IT governance, enterprise-wide modernization.
-- **American Express** (2016–2019) — Senior Software Engineer. Secure payment
-  processing and enterprise-scale applications.
-- **USAA** (2012–2016) — Software Developer. Member-facing applications for
-  millions of military members and their families; security and accessibility
-  at consumer-fintech scale.
-- **2005–2012** — Progressive technology roles in software development, systems
-  administration, and IT consulting.
+- **Transbridge Advisors** (January 2026–June 2026) — Chief Technology Officer.
+  Technology strategy and execution ownership at the executive level.
+- **Western Alliance Bank** (May 2025–December 2025) — AI Software Architect.
+  AI architecture and implementation for enterprise banking.
+- **The Fruth Group** (October 2023–October 2024) — Engineering and Cybersecurity
+  Manager. Fractional CIO/CISO coverage across an SMB client base.
+- **Foundations Investment Advisors** (November 2020–March 2023) — Chief
+  Technology Officer. Cloud-first strategy, IT governance, enterprise-wide
+  modernization.
+- **USAA** (May 2020–November 2020) — Senior Program Leader (contract). SAFe
+  release train delivery for member-facing applications at consumer-fintech
+  scale.
+- **Progress Residential** (September 2019–April 2020) — Senior Project Manager.
+  Automated home-acquisition engine and multi-team Agile delivery.
+- **Earlier (2013–2019)** — Agile Coach at TriWest Healthcare, Senior Manager at
+  AAA, PMO Head / Product Manager at Pearson, and Scrum Master for mobile
+  applications at American Express, plus progressive engineering roles before
+  that.
 
 Based in Phoenix, Arizona. Works remote-first with in-person presence for exec
 rooms, board meetings, and offsites where it matters.

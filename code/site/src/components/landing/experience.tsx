@@ -11,9 +11,9 @@ interface Position {
 
 const recentPositions: Position[] = [
   {
-    title: "PreSales Engineering Manager",
+    title: "Engineering and Cybersecurity Manager",
     company: "The Fruth Group",
-    period: "October 2023 - Present",
+    period: "October 2023 - October 2024",
     highlights: [
       "Created automation and simplified processes to cut issue resolution time by 25%",
       "Led several important initiatives to convert infrastructure and operations to cloud-based services",
@@ -32,7 +32,7 @@ const recentPositions: Position[] = [
     ],
   },
   {
-    title: "Senior Program Leader",
+    title: "Senior Program Leader (Contractor)",
     company: "USAA",
     period: "May 2020 - November 2020",
     highlights: [
@@ -55,7 +55,7 @@ const recentPositions: Position[] = [
 
 const previousPositions: Position[] = [
   {
-    title: "Agile Coach (Contractor)",
+    title: "Agile Coach",
     company: "TriWest Healthcare",
     period: "June 2019 - September 2019",
     highlights: [
@@ -75,7 +75,7 @@ const previousPositions: Position[] = [
     ],
   },
   {
-    title: "Senior Manager (Contractor)",
+    title: "Senior Manager",
     company: "AAA",
     period: "October 2017 - December 2018",
     highlights: [
@@ -95,7 +95,7 @@ const previousPositions: Position[] = [
     ],
   },
   {
-    title: "PMO Head/Product Manager (Contractor)",
+    title: "PMO Head / Product Manager",
     company: "Pearson",
     period: "January 2016 - July 2017",
     highlights: [
@@ -105,7 +105,7 @@ const previousPositions: Position[] = [
     ],
   },
   {
-    title: "Scrum Master, Mobile Applications (Contractor)",
+    title: "Scrum Master, Mobile Applications",
     company: "American Express",
     period: "October 2013 - September 2015",
     highlights: [
