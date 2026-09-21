@@ -24,77 +24,30 @@ export interface MediaAppearance {
 }
 
 export const mediaAppearances: MediaAppearance[] = [
-  // TODO(morgan): Replace these with real appearances. Keep the shape intact.
+  // Add new appearances here. `featured: true` pins one item to the top.
   {
-    id: "sample-1",
+    id: "cyber-trench-ep-111",
     type: "podcast",
-    title: "Why fractional CTO is the default for SMBs under 500 people",
-    show: "The CTO Playbook",
-    host: "Jane Doe",
-    date: "March 2025",
-    duration: "48 min",
+    title: "The Leadership Mistake That Breaks Security Systems",
+    show: "Musings from the Cyber Trench",
+    date: "April 2026",
+    duration: "57 min",
     summary:
-      "On the shape of a fractional engagement, how to scope one, and the signals that mean a company is ready for one.",
-    url: "https://example.com/replace-me",
-    platform: "spotify",
+      "Why security programs fail in companies that already have the tools, the policies, and the compliance frameworks — and why the cause is almost always design, not technology. On how added controls can increase risk, how poor system design drives human workarounds, and why usability is now a security requirement.",
+    url: "https://www.youtube.com/watch?v=-EBF4-CfhgE",
+    platform: "youtube",
     featured: true,
   },
   {
-    id: "sample-2",
-    type: "interview",
-    title: "Practical AI implementation for mid-market financial services",
-    show: "Forbes Tech Council",
-    date: "January 2025",
-    summary:
-      "A written interview on the gap between AI pilots and AI in production — what breaks, and what to budget for.",
-    url: "https://example.com/replace-me",
-    platform: "web",
-  },
-  {
-    id: "sample-3",
-    type: "speaking",
-    title: "SOC 2 without the theater: what auditors actually look at",
-    show: "FinTech Phoenix 2024",
-    date: "October 2024",
-    duration: "35 min",
-    summary:
-      "A conference talk on how to pass SOC 2 Type II in under six months at a 30-person company.",
-    url: "https://example.com/replace-me",
-    platform: "youtube",
-  },
-  {
-    id: "sample-4",
-    type: "webinar",
-    title: "When to hire a CTO, when to rent one, when to do neither",
-    show: "Vistage Executive Briefing",
-    date: "August 2024",
-    duration: "60 min",
-    summary:
-      "A decision framework for founders deciding between full-time, fractional, and advisor-only technology leadership.",
-    url: "https://example.com/replace-me",
-    platform: "web",
-  },
-  {
-    id: "sample-5",
-    type: "podcast",
-    title: "Leading offshore engineering teams without burning them out",
-    show: "The Agile CTO",
-    date: "June 2024",
-    duration: "55 min",
-    summary:
-      "On running global teams across four time zones, the rituals that work, and the ones that don't.",
-    url: "https://example.com/replace-me",
-    platform: "apple",
-  },
-  {
-    id: "sample-6",
+    id: "business-reporter-dtt-dec-2023",
     type: "panel",
-    title: "What small businesses get wrong about cybersecurity spend",
-    show: "Phoenix Technology Roundtable",
-    date: "April 2024",
+    title: "Digital Transformation Talk: Cyber Security",
+    show: "Business Reporter",
+    date: "December 2023",
+    duration: "46 min",
     summary:
-      "Panel discussion on budget allocation for sub-500-employee companies facing the same threats as the enterprise.",
-    url: "https://example.com/replace-me",
-    platform: "linkedin",
+      "Panel discussion on cyber security, in Business Reporter's Digital Transformation Talk series.",
+    url: "https://www.youtube.com/watch?v=tegO0D8dTGk&t=1065s",
+    platform: "youtube",
   },
 ];

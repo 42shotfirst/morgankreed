@@ -11,7 +11,6 @@ interface ClientOutcome {
   client: string;
   role: string;
   tech?: string[];
-  logo?: string;
 }
 
 interface OwnedProduct {
@@ -30,23 +29,18 @@ const clientOutcomes: ClientOutcome[] = [
     client: "AAA",
     role: "Self-Service Customer Portal",
     tech: ["Salesforce", "API Integration", "Process Automation"],
-    logo:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/AAA_logo.svg/1200px-AAA_logo.svg.png",
   },
   {
     outcome: "Home acquisition compressed from weeks to hours",
     client: "Progress Residential",
     role: "Automated Purchase System",
     tech: ["Salesforce", "Workflow Automation", "Real Estate Tech"],
-    logo:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Progress_Residential_logo.svg/2560px-Progress_Residential_logo.svg.png",
   },
   {
     outcome: "90% reduction in database crashes",
     client: "TriWest",
     role: "Data Warehouse Transformation",
     tech: ["Data Warehouse", "Agile", "Business Intelligence"],
-    logo: "https://www.triwest.com/content/dam/triwest/images/logo/triwest-logo.png",
   },
   {
     outcome: "Ran digital transformation as acting CIO",
@@ -209,15 +203,6 @@ export default function Projects() {
                   "hover:border-primary/40 hover:bg-card transition-all duration-300"
                 )}
               >
-                {item.logo && (
-                  <div className="h-8 mb-4 flex items-center">
-                    <img
-                      src={item.logo}
-                      alt={`${item.client} logo`}
-                      className="max-h-7 max-w-[140px] object-contain opacity-70 group-hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                )}
                 <h4 className="text-lg font-semibold text-foreground leading-snug mb-3">
                   {item.outcome}
                 </h4>

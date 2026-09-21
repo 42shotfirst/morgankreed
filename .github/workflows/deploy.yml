@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'code/site/**'
+  # Callable by refresh-medium.yml: a push made with the default GITHUB_TOKEN
+  # does not trigger workflows, so the scheduled refresh invokes this directly.
+  workflow_call:
+  workflow_dispatch:
 
 concurrency:
   group: deploy-${{ github.ref }}

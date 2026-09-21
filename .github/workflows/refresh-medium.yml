@@ -1,0 +1,57 @@
+name: Refresh Medium feed
+
+# Pulls Morgan's Medium RSS once a day, commits the regenerated data file when
+# it actually changed, then calls the Deploy workflow. Deploy is invoked
+# directly rather than relied upon to trigger from the commit: pushes made with
+# the default GITHUB_TOKEN do not start other workflows.
+
+on:
+  schedule:
+    # 13:00 UTC daily (~06:00 Phoenix, MST year-round).
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-medium
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install workspace dependencies
+        run: npm ci -w code/site
+
+      - name: Fetch Medium feed
+        run: node code/site/scripts/fetch-medium.mjs
+
+      - name: Commit if the feed changed
+        id: commit
+        run: |
+          if git diff --quiet -- code/site/src/data/medium.generated.json; then
+            echo "No change in the Medium feed."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add code/site/src/data/medium.generated.json
+            git commit -m "chore: refresh Medium feed"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy:
+    needs: refresh
+    if: needs.refresh.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
